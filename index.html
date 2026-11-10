@@ -508,6 +508,14 @@ document.addEventListener('keydown',e=>{
   }
 });
 
+/* debug/test hook (read-only views + position setter) */
+window.__app = {
+  get cur(){return cur();},
+  get order(){return order;},
+  get pos(){return pos;},
+  set pos(p){pos=Math.max(0,Math.min(order.length-1,p));render();}
+};
+
 buildTiles();
 </script>
 </body>
