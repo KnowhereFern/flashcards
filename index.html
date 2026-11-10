@@ -47,8 +47,11 @@ color:var(--acc);background:rgba(90,169,255,.12);border-radius:999px;padding:3px
 .qnum{color:var(--mut);font-size:12px;margin-top:6px}
 .q{font-size:17px;line-height:1.55;margin:12px 0 0;font-weight:500;white-space:pre-line;overflow-wrap:break-word}
 .ctx{margin-top:12px;font-size:13px}
-.ctx summary{cursor:pointer;color:var(--acc);font-weight:600;padding:6px 0}
-.ctx .ctx-body{color:var(--mut);white-space:pre-line;margin-top:6px;border-left:3px solid var(--line);padding:6px 12px;max-height:280px;overflow:auto}
+.ctx summary{cursor:pointer;color:var(--acc);font-weight:600;padding:8px 0}
+.ctx-body{border-left:3px solid var(--line);padding:8px 14px;line-height:1.6}
+.ctx-body .hl{font-weight:700;color:var(--ink);margin:12px 0 3px;font-size:13.5px}
+.ctx-body .hl:first-child{margin-top:0}
+.ctx-body .ln{margin:3px 0;color:var(--mut)}
 .opts{display:flex;flex-direction:column;gap:9px;margin-top:14px}
 .opt{display:flex;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left;width:100%;color:var(--ink)}
 .opt .k{flex:0 0 auto;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-weight:800;background:#2b3542;color:#cdd7e2;font-size:13px}
@@ -180,8 +183,21 @@ const save=()=>{
 };
 
 const cur=()=>byN[order[pos]];
+const CASE_HEADERS=/^(Overview|Existing Environment|Foundry Environment|Knowledge Base|Problem Statements|Requirements|Business Requirements|Safety Requirements?|Security Requirements|Performance Requirements|Consultant Proposal|Planned Changes|Technical Requirements|Claim Project|The Claim Approval workflow|Claim Approval|Contoso, Ltd\.|Litware, Inc\.)$/;
+function renderCtx(body,text){
+  body.innerHTML='';
+  text.split('\n').forEach(line=>{
+    const t=line.trim();
+    if(!t)return;
+    const d=document.createElement('div');
+    if(CASE_HEADERS.test(t)){d.className='hl';}
+    else{d.className='ln';}
+    d.textContent=t;
+    body.appendChild(d);
+  });
+}
 function setCtx(elWrap,elBody,c){
-  if(c.ctx>=0&&CONTEXTS[c.ctx]){elWrap.classList.remove('hidden');elBody.textContent=CONTEXTS[c.ctx]}
+  if(c.ctx>=0&&CONTEXTS[c.ctx]){elWrap.classList.remove('hidden');renderCtx(elBody,CONTEXTS[c.ctx])}
   else elWrap.classList.add('hidden');
 }
 
