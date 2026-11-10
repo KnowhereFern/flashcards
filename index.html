@@ -26,9 +26,6 @@ button.primary{background:var(--acc);border-color:var(--acc);color:#04121f;font-
 button.primary.revealed{background:var(--panel2);border-color:var(--line);color:var(--ink);font-weight:500}
 button.on{background:#2a2110;border-color:var(--warn);color:var(--warn);font-weight:700}
 .controls{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px;align-items:center}
-.controls label{color:var(--mut);font-size:14px;display:flex;gap:7px;align-items:center;cursor:pointer;
-background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-height:44px}
-.controls label input{width:17px;height:17px;accent-color:var(--acc)}
 .counter{color:var(--mut);font-size:13px;display:flex;justify-content:space-between;margin-bottom:8px}
 .bar{height:5px;border-radius:5px;background:var(--panel2);overflow:hidden;margin:0 0 14px}
 .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),#7fd0ff);width:0;transition:.25s}
@@ -99,7 +96,6 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
 <div id="v-study" class="hidden">
   <div class="controls">
     <button id="f-shuffle">Shuffle</button>
-    <label><input type="checkbox" id="f-front" checked> Choices on front</label>
   </div>
 
   <div class="counter"><span id="pos"></span><span id="deck-info"></span></div>
@@ -161,7 +157,6 @@ function openExam(id){
   $('home').classList.remove('hidden');
   $('brand-name').textContent=META.title;
   $('brand-sub').textContent=META.subtitle;
-  $('f-front').checked=store.sess.front!==false;
   pos=store.sess.pos||0;
   order=QUESTIONS.map(q=>q.n);
   if(store.sess.shuffled)shuffleOrder(false);
@@ -180,7 +175,7 @@ $('home').onclick=()=>{
 
 /* ---------- persistence ---------- */
 const save=()=>{
-  store.sess={pos,front:$('f-front').checked,shuffled:!!store.sess.shuffled};
+  store.sess={pos,shuffled:!!store.sess.shuffled};
   localStorage.setItem('fc-'+examId,JSON.stringify(store));
 };
 
@@ -214,10 +209,9 @@ function render(){
 }
 function letters(c){return Object.keys(c.choices).sort()}
 function renderOpts(c,reveal){
-  const front=$('f-front').checked;
-  const showList=front||reveal;
-  $('fc-opts').classList.toggle('hidden',!showList&&!(c.visual));
-  $('fc-opts').innerHTML=!showList?'':letters(c).map(L=>
+  // choices are ALWAYS visible; reveal only highlights the correct one(s)
+  $('fc-opts').classList.remove('hidden');
+  $('fc-opts').innerHTML=letters(c).map(L=>
     `<div class="opt${reveal&&c.answer.includes(L)?' correct':''}"><span class="k">${L}</span><span class="t">${esc(c.choices[L]||'')}</span></div>`).join('');
 }
 
@@ -250,7 +244,6 @@ function shuffleOrder(saveState=true){
   if(saveState){store.sess.shuffled=true;save()}
 }
 $('f-shuffle').onclick=()=>{shuffleOrder();pos=0;render()};
-$('f-front').onchange=()=>{revealed=false;render()};
 
 /* ---------- export / import ---------- */
 $('io-export').onclick=()=>{
