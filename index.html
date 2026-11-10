@@ -45,17 +45,19 @@ color:var(--acc);background:rgba(90,169,255,.12);border-radius:999px;padding:3px
 .badge.warnb{color:var(--warn);background:rgba(232,169,60,.12)}
 .badges{display:flex;gap:6px;flex-wrap:wrap}
 .qnum{color:var(--mut);font-size:12px;margin-top:6px}
-.q{font-size:17px;line-height:1.55;margin:12px 0 0;font-weight:500;white-space:pre-line;overflow-wrap:break-word}
+.q{font-size:17px;line-height:1.6;margin:12px 0 0;font-weight:500;overflow-wrap:break-word}
+.q p{margin:0 0 10px;white-space:pre-line}
+.q p:last-child{margin-bottom:0}
 .ctx{margin-top:12px;font-size:13px}
 .ctx summary{cursor:pointer;color:var(--acc);font-weight:600;padding:8px 0}
-.ctx-body{border-left:3px solid var(--line);padding:8px 14px;line-height:1.6}
-.ctx-body .hl{font-weight:700;color:var(--ink);margin:12px 0 3px;font-size:13.5px}
+.ctx-body{border-left:3px solid var(--line);padding:10px 16px;line-height:1.65}
+.ctx-body .hl{font-weight:700;color:var(--ink);margin:16px 0 5px;font-size:13.5px}
 .ctx-body .hl:first-child{margin-top:0}
-.ctx-body .ln{margin:3px 0;color:var(--mut)}
+.ctx-body .ln{margin:6px 0;color:var(--mut)}
 .opts{display:flex;flex-direction:column;gap:9px;margin-top:14px}
 .opt{display:flex;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left;width:100%;color:var(--ink)}
 .opt .k{flex:0 0 auto;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-weight:800;background:#2b3542;color:#cdd7e2;font-size:13px}
-.opt .t{flex:1;min-width:0;overflow-wrap:break-word}
+.opt .t{flex:1;min-width:0;overflow-wrap:break-word;white-space:pre-line}
 .opt.correct{border-color:var(--ok);background:rgba(55,214,122,.10)}
 .opt.correct .k{background:var(--ok);color:#04140b}
 .opt.hidden-opt{display:none}
@@ -197,8 +199,8 @@ function renderCtx(body,text){
   });
 }
 function setCtx(elWrap,elBody,c){
-  if(c.ctx>=0&&CONTEXTS[c.ctx]){elWrap.classList.remove('hidden');renderCtx(elBody,CONTEXTS[c.ctx])}
-  else elWrap.classList.add('hidden');
+  if(c.ctx>=0&&CONTEXTS[c.ctx]){elWrap.classList.remove('hidden');elWrap.open=true;renderCtx(elBody,CONTEXTS[c.ctx])}
+  else{elWrap.classList.add('hidden');elWrap.open=false}
 }
 
 /* ---------- render ---------- */
@@ -209,7 +211,12 @@ function render(){
   $('fc-visual').classList.toggle('hidden',!c.visual);
   $('fc-num').textContent='Question '+c.n;
   setCtx($('fc-ctx'),$('fc-ctx-body'),c);
-  $('fc-q').textContent=c.q;
+  // render question as paragraphs: blank lines split, single newlines preserved
+  const qEl=$('fc-q');qEl.textContent='';
+  String(c.q||'').split(/\n{2,}/).map(s=>s.trim()).filter(Boolean).forEach(par=>{
+    const p=document.createElement('p');p.textContent=par;qEl.appendChild(p);
+  });
+  if(!qEl.children.length)qEl.textContent=String(c.q||'');
   renderOpts(c,false);
   $('fc-ansimg').innerHTML='';
   $('fc-ansimg').classList.remove('show');
