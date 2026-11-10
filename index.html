@@ -16,8 +16,6 @@ background:radial-gradient(1200px 700px at 60% -15%,#16202c,transparent),var(--b
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .brand{font-weight:700}.brand small{color:var(--mut);font-weight:500;display:block;font-size:12px}
 .brand button{margin-right:8px;padding:3px 10px;font-size:12px}
-.stats{color:var(--mut);font-size:12.5px;text-align:right}
-.stats b{color:var(--ink)}
 button,input,select{font:inherit}
 button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink);
 padding:8px 12px;border-radius:10px;transition:.15s}
@@ -25,11 +23,8 @@ button:hover{border-color:#3a4654}
 button.primary{background:var(--acc);border-color:var(--acc);color:#04121f;font-weight:700}
 button.on{background:#2a2110;border-color:var(--warn);color:var(--warn);font-weight:700}
 button:disabled{opacity:.4;cursor:default}
-.tabs{display:flex;gap:8px;margin:0 0 12px}
-.tabs button{padding:9px 16px}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px;align-items:center}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;align-items:center}
 .controls label{color:var(--mut);font-size:13px;display:flex;gap:6px;align-items:center;cursor:pointer}
-select{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 10px}
 .counter{color:var(--mut);font-size:13px;display:flex;justify-content:space-between;margin-bottom:8px}
 .bar{height:6px;border-radius:6px;background:var(--panel2);overflow:hidden;margin:0 0 16px}
 .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),#7fd0ff);width:0;transition:.25s}
@@ -41,7 +36,6 @@ select{background:var(--panel2);border:1px solid var(--line);color:var(--ink);bo
 .tile p{margin:6px 0 0;color:var(--mut);font-size:14px}
 .tile .code{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--acc);
 background:rgba(90,169,255,.12);border-radius:999px;padding:3px 10px;margin-bottom:4px}
-.tile .prog{font-size:12px;color:var(--ok)}
 .io{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 /* flashcard */
 .flip{perspective:1600px;margin-bottom:14px}
@@ -59,39 +53,15 @@ color:var(--acc);background:rgba(90,169,255,.12);border-radius:999px;padding:3px
 .ctx{margin-top:12px;font-size:13px}
 .ctx summary{cursor:pointer;color:var(--acc);font-weight:600}
 .ctx .ctx-body{color:var(--mut);white-space:pre-line;margin-top:8px;border-left:3px solid var(--line);padding:6px 12px;max-height:240px;overflow:auto}
-.opts{display:flex;flex-direction:column;gap:9px;margin-top:auto;padding-top:16px}
-.face.front .opts{margin-top:12px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-top:12px}
 .opt{display:flex;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;width:100%;color:var(--ink)}
 .opt .k{flex:0 0 auto;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-weight:800;background:#2b3542;color:#cdd7e2;font-size:13px}
 .opt.correct{border-color:var(--ok);background:rgba(55,214,122,.10)}
 .opt.correct .k{background:var(--ok);color:#04140b}
-.opt.wrong{border-color:var(--bad);background:rgba(255,93,108,.10)}
-.opt.wrong .k{background:var(--bad);color:#1a0508}
-.opt.sel{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
-.opt.dim{opacity:.55}
 .opt img{max-width:100%;border-radius:8px}
 .anslabel{font-weight:800;color:var(--ok);margin-top:12px}
-.dueline{color:var(--mut);font-size:12px;margin-top:6px}
 .ansimg img{max-width:100%;border-radius:8px;margin-top:8px}
 .flip-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.starred{color:var(--star);border-color:var(--star)!important}
-/* quiz */
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
-.qz-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.score{font-weight:700;margin-left:auto}
-.ok{color:var(--ok)}.bad{color:var(--bad)}
-/* browse */
-.item{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:0 0 12px}
-.item .no{color:var(--ok);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.item .flag{color:var(--warn);border:1px solid var(--warn);border-radius:999px;padding:1px 8px;font-size:11px}
-.item .done{color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:1px 8px;font-size:11px}
-.item .dm{color:var(--mut);font-weight:500;text-transform:none;letter-spacing:0}
-.ans{border-left:3px solid var(--ok);background:rgba(55,214,122,.08);border-radius:8px;padding:9px 13px;margin-top:10px}
-.ans .txt{display:none;white-space:pre-line}
-.ans.shown .txt{display:inline}
-.ans.hidden-q{border-left-color:var(--line);background:var(--panel2);color:var(--mut);cursor:pointer}
-.ans.hidden-q::before{content:'Answer hidden — click to reveal'}
-.ans img{max-width:100%;border-radius:8px}
 .hint{color:var(--mut);font-size:12px;text-align:center;margin-top:14px;line-height:1.7}
 kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:11px}
 .hidden{display:none}
@@ -103,7 +73,6 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
 
 <div class="top">
   <div class="brand"><button id="home" class="hidden">&larr; Exams</button><span id="brand-name">Cert Flashcards</span><small id="brand-sub">select an exam</small></div>
-  <div class="stats" id="stats"></div>
 </div>
 
 <!-- EXAM PICKER -->
@@ -118,86 +87,43 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
   Unofficial community question sets — answer keys are best-effort, verify against official docs.</p>
 </div>
 
+<!-- STUDY -->
 <div id="v-study" class="hidden">
-  <div class="tabs">
-    <button data-mode="flip" class="primary">Flashcards</button>
-    <button data-mode="quiz">Quiz</button>
-    <button data-mode="browse">Browse</button>
-  </div>
-
   <div class="controls">
-    <select id="f-domain"><option value="">All domains</option></select>
-    <button id="f-due">Due</button>
-    <button id="f-star">Starred</button>
-    <button id="f-again">Needs review</button>
-    <button id="f-hide">Hide learned</button>
     <button id="f-shuffle">Shuffle</button>
-    <label><input type="checkbox" id="f-front"> Choices on front</label>
-    <button id="f-reset">Reset progress</button>
+    <label><input type="checkbox" id="f-front" checked> Choices on front</label>
   </div>
 
-  <div class="counter"><span id="pos"></span><span id="filter-info"></span></div>
+  <div class="counter"><span id="pos"></span><span id="deck-info"></span></div>
   <div class="bar"><i id="bar"></i></div>
 
-  <!-- FLASHCARDS -->
-  <div id="v-flip">
-    <div class="flip" id="flip">
-      <div class="flip-inner">
-        <div class="face front">
-          <div class="badges"><span class="badge" id="fc-domain"></span><span class="badge warnb hidden" id="fc-visual">visual question</span></div>
-          <div class="qnum" id="fc-num"></div>
-          <details class="ctx hidden" id="fc-ctx"><summary>Case study context</summary><div class="ctx-body" id="fc-ctx-body"></div></details>
-          <p class="q" id="fc-q"></p>
-          <div class="opts hidden" id="fc-front-opts"></div>
-        </div>
-        <div class="face back">
-          <div class="badges"><span class="badge">Answer</span><span class="badge warnb hidden" id="fc-visual2">visual question</span></div>
-          <div class="qnum" id="fc-num2"></div>
-          <div class="opts" id="fc-opts"></div>
-          <div class="ansimg hidden" id="fc-ansimg"></div>
-          <div class="anslabel" id="fc-ans"></div>
-          <div class="dueline" id="fc-due"></div>
-        </div>
+  <div class="flip" id="flip">
+    <div class="flip-inner">
+      <div class="face front">
+        <div class="badges"><span class="badge" id="fc-domain"></span><span class="badge warnb hidden" id="fc-visual">visual question</span></div>
+        <div class="qnum" id="fc-num"></div>
+        <details class="ctx hidden" id="fc-ctx"><summary>Case study context</summary><div class="ctx-body" id="fc-ctx-body"></div></details>
+        <p class="q" id="fc-q"></p>
+        <div class="opts" id="fc-front-opts"></div>
+      </div>
+      <div class="face back">
+        <div class="badges"><span class="badge">Answer</span><span class="badge warnb hidden" id="fc-visual2">visual question</span></div>
+        <div class="qnum" id="fc-num2"></div>
+        <div class="opts" id="fc-opts"></div>
+        <div class="ansimg hidden" id="fc-ansimg"></div>
+        <div class="anslabel" id="fc-ans"></div>
       </div>
     </div>
-    <div class="flip-actions">
-      <button class="primary" id="fc-show">Show answer (space)</button>
-      <button id="fc-got">Got it (g)</button>
-      <button id="fc-again">Again (a)</button>
-      <button id="fc-star">Star (s)</button>
-      <button id="fc-prev">&larr; Prev</button>
-      <button id="fc-next">Next &rarr;</button>
-    </div>
   </div>
 
-  <!-- QUIZ -->
-  <div id="v-quiz" class="hidden">
-    <div class="card">
-      <div class="badges"><span class="badge" id="qz-domain"></span><span class="badge warnb hidden" id="qz-visual">visual question — reveal only</span></div>
-      <details class="ctx hidden" id="qz-ctx"><summary>Case study context</summary><div class="ctx-body" id="qz-ctx-body"></div></details>
-      <p class="q" id="qz-q" style="font-size:16.5px"></p>
-      <div class="opts" id="qz-opts"></div>
-      <div class="qz-actions">
-        <button id="qz-reveal">Reveal (Enter)</button>
-        <button id="qz-prev">&larr; Prev</button>
-        <button id="qz-next" class="primary">Next &rarr;</button>
-        <span class="score" id="qz-score"></span>
-      </div>
-      <div class="counter" style="margin-top:12px"><span id="qz-progress"></span></div>
-    </div>
+  <div class="flip-actions">
+    <button class="primary" id="fc-show">Show answer (space)</button>
+    <button id="fc-prev">&larr; Prev</button>
+    <button id="fc-next">Next &rarr;</button>
   </div>
 
-  <!-- BROWSE -->
-  <div id="v-browse" class="hidden">
-    <div class="controls"><input id="br-search" placeholder="Search questions and answers…" style="flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:9px 12px"></div>
-    <div id="br-list"></div>
-  </div>
-
-  <div class="hint" id="hint-flip">
-    <kbd>space</kbd> flip · <kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate · <kbd>g</kbd> got it · <kbd>a</kbd> again · <kbd>s</kbd> star
-  </div>
-  <div class="hint hidden" id="hint-quiz">
-    <kbd>A</kbd>–<kbd>F</kbd> or <kbd>1</kbd>–<kbd>6</kbd> toggle answers (multi-select questions need all correct letters) · <kbd>Enter</kbd> reveal/next · <kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate
+  <div class="hint">
+    <kbd>space</kbd> flip · <kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate
   </div>
 </div>
 
@@ -209,56 +135,38 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const REG=window.EXAM_DATA||{};
-const DAY=86400000, IVL=[0,1,3,7,14,30]; // days between reviews after each "Got it"
 
 /* ---------- exam picker ---------- */
 let examId=null, META=null, CONTEXTS=[], QUESTIONS=[], store=null;
-let byN={}, order=[], pos=0;
-let mode='flip', flipped=false, qzSel=new Set(), qzRevealed=false, qzRight=0, qzAsked=0;
-let fStar=false,fAgain=false,fHide=false,fDue=false;
+let byN={}, order=[], pos=0, flipped=false;
 
-function tileProgress(id){
-  try{
-    const s=JSON.parse(localStorage.getItem('fc-'+id)||'{}');
-    const l=Object.keys(s.learned||{}).length;
-    return l?`<span class="prog">${l} learned</span>`:'';
-  }catch(e){return ''}
-}
 function buildTiles(){
   $('exam-tiles').innerHTML=Object.entries(REG).map(([id,e])=>`
     <button class="tile" data-exam="${id}">
       <span class="code">${esc(e.exam.code)}</span>
       <h2>${esc(e.exam.title)}</h2>
       <p>${esc(e.exam.subtitle)} · ${e.questions.length} questions${e.contexts&&e.contexts.length?` · ${e.contexts.length} case studies`:''}</p>
-      ${tileProgress(id)}
     </button>`).join('');
   $('exam-tiles').querySelectorAll('.tile').forEach(b=>b.onclick=()=>openExam(b.dataset.exam));
 }
-function openExam(id,restore){
+function openExam(id){
   examId=id;
   const e=REG[id]; META=e.exam; CONTEXTS=e.contexts||[]; QUESTIONS=e.questions;
   byN={}; QUESTIONS.forEach(q=>byN[q.n]=q);
   try{store=JSON.parse(localStorage.getItem('fc-'+examId)||'{}')}catch(err){store={}}
-  store=Object.assign({learned:{},again:{},starred:{},due:{},ivl:{},sess:{}},store);
+  store=Object.assign({sess:{}},store);
   $('v-exams').classList.add('hidden');
   $('v-study').classList.remove('hidden');
   $('home').classList.remove('hidden');
   $('brand-name').textContent=META.title;
   $('brand-sub').textContent=META.subtitle;
-  const domains=[...new Set(QUESTIONS.map(q=>q.domain).filter(Boolean))].sort();
-  $('f-domain').innerHTML='<option value="">All domains</option>'+domains.map(d=>`<option value="${esc(d)}">${esc(d)}</option>`).join('');
-  const s=restore&&store.sess?store.sess:{};
-  mode=s.mode||'flip'; pos=s.pos||0; fStar=!!s.star; fAgain=!!s.again; fHide=!!s.hide; fDue=!!s.due;
-  $('f-domain').value=s.domain&&domains.includes(s.domain)?s.domain:'';
-  $('f-star').classList.toggle('on',fStar);$('f-again').classList.toggle('on',fAgain);
-  $('f-hide').classList.toggle('on',fHide);$('f-due').classList.toggle('on',fDue);
-  $('f-front').checked=!!s.front;
-  document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('primary',x.dataset.mode===mode));
-  ['flip','quiz','browse'].forEach(m=>$('v-'+m).classList.toggle('hidden',m!==mode));
-  $('hint-flip').classList.toggle('hidden',mode!=='flip');
-  $('hint-quiz').classList.toggle('hidden',mode!=='quiz');
-  qzSel.clear();qzRevealed=false;qzRight=0;qzAsked=0;
-  applyFilter();
+  $('f-front').checked=store.sess.front!==false;
+  pos=store.sess.pos||0;
+  order=QUESTIONS.map(q=>q.n);
+  if(store.sess.shuffled)shuffleOrder(false);
+  $('deck-info').textContent=QUESTIONS.length+' cards';
+  flipped=false;
+  render();
 }
 $('home').onclick=()=>{
   $('v-study').classList.add('hidden');
@@ -266,59 +174,14 @@ $('home').onclick=()=>{
   $('home').classList.add('hidden');
   $('brand-name').textContent='Cert Flashcards';
   $('brand-sub').textContent='select an exam';
-  $('stats').textContent='';
   buildTiles();
 };
 
 /* ---------- persistence ---------- */
 const save=()=>{
-  store.sess={mode,pos,domain:$('f-domain').value,star:fStar,again:fAgain,hide:fHide,due:fDue,front:$('f-front').checked};
+  store.sess={pos,front:$('f-front').checked,shuffled:!!store.sess.shuffled};
   localStorage.setItem('fc-'+examId,JSON.stringify(store));
 };
-
-/* ---------- filters ---------- */
-function applyFilter(){
-  const d=$('f-domain').value, now=Date.now();
-  let ns=QUESTIONS.filter(q=>(!d||q.domain===d)
-    &&(!fStar||store.starred[q.n])
-    &&(!fAgain||store.again[q.n])
-    &&(!fDue||!store.learned[q.n]||!(store.due[q.n]>now))
-    &&(!fHide||!store.learned[q.n]||(fDue&&store.due[q.n]<=now))).map(q=>q.n);
-  order=ns.length?ns:QUESTIONS.map(q=>q.n);
-  pos=Math.min(pos,order.length-1);
-  $('filter-info').textContent=(ns.length?'':'no matches — showing all · ')+order.length+' cards';
-  render();
-}
-$('f-domain').onchange=()=>{pos=0;applyFilter();save()};
-$('f-due').onclick=e=>{fDue=!fDue;e.target.classList.toggle('on',fDue);pos=0;applyFilter();save()};
-$('f-star').onclick=e=>{fStar=!fStar;e.target.classList.toggle('on',fStar);pos=0;applyFilter();save()};
-$('f-again').onclick=e=>{fAgain=!fAgain;e.target.classList.toggle('on',fAgain);pos=0;applyFilter();save()};
-$('f-hide').onclick=e=>{fHide=!fHide;e.target.classList.toggle('on',fHide);pos=0;applyFilter();save()};
-$('f-front').onchange=()=>{renderFlip();save()};
-$('f-shuffle').onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}pos=0;render();save()};
-$('f-reset').onclick=()=>{if(confirm('Clear all progress for '+META.code+'?')){store={learned:{},again:{},starred:{},due:{},ivl:{},sess:{}};save();applyFilter()}};
-
-/* ---------- scheduling ---------- */
-function dueCount(){
-  const now=Date.now();
-  return QUESTIONS.filter(q=>!store.learned[q.n]||!(store.due[q.n]>now)).length;
-}
-function markGot(c){
-  const i=Math.min((store.ivl[c.n]||0)+1,IVL.length-1);
-  store.ivl[c.n]=i;
-  store.due[c.n]=Date.now()+IVL[i]*DAY;
-  store.learned[c.n]=1;delete store.again[c.n];
-}
-function markAgain(c){
-  store.ivl[c.n]=0;store.due[c.n]=Date.now();
-  store.again[c.n]=1;delete store.learned[c.n];
-}
-
-/* ---------- stats ---------- */
-function stats(){
-  const l=Object.keys(store.learned).length,r=Object.keys(store.again).length,s=Object.keys(store.starred).length;
-  $('stats').innerHTML=`learned <b>${l}</b>/${QUESTIONS.length} · review <b>${r}</b> · starred <b>${s}</b> · due now <b>${dueCount()}</b>`;
-}
 
 const cur=()=>byN[order[pos]];
 function setCtx(elWrap,elBody,c){
@@ -328,15 +191,16 @@ function setCtx(elWrap,elBody,c){
 
 /* ---------- render ---------- */
 function render(){
-  if(mode==='flip')renderFlip();else if(mode==='quiz')renderQuiz();else renderBrowse();
+  renderFlip();
   $('bar').style.width=Math.round(((pos+1)/order.length)*100)+'%';
   $('pos').textContent=`${pos+1} / ${order.length}`;
-  stats();save();
+  save();
 }
 function letters(c){return Object.keys(c.choices).sort()}
 
 function renderFlip(){
   flipped=false;$('flip').classList.remove('flipped');
+  $('fc-show').textContent='Show answer (space)';
   const c=cur();
   $('fc-domain').textContent=c.domain||META.code;
   $('fc-visual').classList.toggle('hidden',!c.visual);
@@ -354,107 +218,20 @@ function renderFlip(){
   if(c.answerHtml){$('fc-ansimg').innerHTML=c.answerHtml;$('fc-ansimg').classList.remove('hidden')}
   else{$('fc-ansimg').innerHTML='';$('fc-ansimg').classList.add('hidden')}
   $('fc-ans').textContent=c.answer?('Correct: '+c.answer):(c.visual?'Answer shown above (image)':'');
-  const ivl=store.ivl[c.n]||0;
-  $('fc-due').textContent=store.learned[c.n]
-    ?`Next review: ${new Date(store.due[c.n]||Date.now()).toLocaleDateString()} (interval ${IVL[ivl]}d)`
-    :'Not scheduled yet — mark Got it to add to spaced review';
-  $('fc-got').classList.toggle('on',!!store.learned[c.n]);
-  $('fc-again').classList.toggle('on',!!store.again[c.n]);
-  $('fc-star').classList.toggle('starred',!!store.starred[c.n]);
-  $('fc-star').textContent=store.starred[c.n]?'Starred (s)':'Star (s)';
 }
 $('flip').onclick=()=>flipCard();
 function flipCard(){flipped=!flipped;$('flip').classList.toggle('flipped',flipped);$('fc-show').textContent=flipped?'Hide answer (space)':'Show answer (space)'}
 $('fc-show').onclick=flipCard;
-$('fc-got').onclick=()=>{const c=cur();markGot(c);save();go(1)};
-$('fc-again').onclick=()=>{const c=cur();markAgain(c);save();render()};
-$('fc-star').onclick=()=>{const c=cur();if(store.starred[c.n])delete store.starred[c.n];else store.starred[c.n]=1;save();render()};
 $('fc-prev').onclick=()=>go(-1);
 $('fc-next').onclick=()=>go(1);
-function go(d){pos=Math.max(0,Math.min(order.length-1,pos+d));qzSel.clear();qzRevealed=false;render()}
+function go(d){pos=Math.max(0,Math.min(order.length-1,pos+d));render()}
 
-/* ---------- quiz ---------- */
-function renderQuiz(){
-  const c=cur();
-  $('qz-domain').textContent=c.domain||META.code;
-  $('qz-visual').classList.toggle('hidden',!c.visual);
-  setCtx($('qz-ctx'),$('qz-ctx-body'),c);
-  $('qz-q').textContent=c.q;
-  if(c.visual){
-    $('qz-opts').innerHTML='<div class="empty">Visual / drag-and-drop question — use Reveal to see the answer image.</div>';
-  }else{
-    $('qz-opts').innerHTML=letters(c).map(L=>
-      `<button class="opt" data-l="${L}" style="width:100%"><span class="k">${L}</span><span>${esc(c.choices[L]||'')}</span></button>`).join('');
-    $('qz-opts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>qzToggle(b.dataset.l));
-  }
-  qzRender();
+function shuffleOrder(saveState=true){
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
+  if(saveState){store.sess.shuffled=true;save()}
 }
-function qzRender(){
-  const c=cur();
-  if(!c.visual){
-    $('qz-opts').querySelectorAll('.opt').forEach(b=>{
-      const L=b.dataset.l;
-      b.classList.remove('correct','wrong','sel','dim');
-      if(!qzRevealed){if(qzSel.has(L))b.classList.add('sel');return}
-      if(c.answer.includes(L))b.classList.add('correct');
-      else if(qzSel.has(L))b.classList.add('wrong');
-      else b.classList.add('dim');
-    });
-  }
-  $('qz-reveal').textContent=qzRevealed?'Revealed':'Reveal (Enter)';
-  $('qz-reveal').disabled=qzRevealed||(!c.visual&&qzSel.size===0);
-  if(qzRevealed){
-    const right=c.visual||letters(c).every(L=>c.answer.includes(L)===qzSel.has(L));
-    $('qz-score').textContent=(c.visual?'revealed':(right?'✓ correct':'✗ picked: '+[...qzSel].sort().join('')+' · answer: '+c.answer));
-    $('qz-score').className='score '+(c.visual||right?'ok':'bad');
-  }else{$('qz-score').textContent='';$('qz-score').className='score'}
-  $('qz-progress').textContent=`answered ${qzAsked} · right ${qzRight}`;
-}
-function qzToggle(L){
-  const c=cur();
-  if(qzRevealed||c.visual)return;
-  qzSel.has(L)?qzSel.delete(L):qzSel.add(L);
-  qzRender();
-}
-function qzSubmit(){
-  const c=cur();
-  if(qzRevealed)return;
-  if(!c.visual&&qzSel.size===0)return;
-  qzRevealed=true;qzAsked++;
-  const right=c.visual||letters(c).every(L=>c.answer.includes(L)===qzSel.has(L));
-  if(right)qzRight++;
-  if(right){markGot(c)}else{markAgain(c)}
-  save();qzRender();stats();
-}
-$('qz-reveal').onclick=qzSubmit;
-$('qz-prev').onclick=()=>go(-1);
-$('qz-next').onclick=()=>{qzSel.clear();qzRevealed=false;go(1)};
-
-/* ---------- browse ---------- */
-function renderBrowse(){
-  const q=($('br-search').value||'').trim().toLowerCase();
-  const hay=c=>(c.q+' '+Object.values(c.choices).join(' ')).toLowerCase();
-  const rows=order.map(n=>byN[n]).filter(c=>!q||hay(c).includes(q));
-  $('br-list').innerHTML=rows.map(c=>{
-    const ans=c.visual
-      ? (c.answerHtml?`<span class="txt">${c.answerHtml}</span>`:'<span class="txt">(image answer — review in flashcards)</span>')
-      : `<span class="txt">${esc(c.choices[c.answer[0]]||'')}${c.answer.length>1?`<br><b>Correct: ${esc(c.answer)}</b>`:''}</span>`;
-    return `<div class="item"><div class="no">Question ${c.n}${c.visual?' <span class="flag">visual</span>':''}${store.again[c.n]?' <span class="flag">review</span>':''}${store.learned[c.n]?' <span class="done">learned</span>':''}<span class="dm">${esc(c.domain||'')}</span></div>
-    <p class="q" style="font-size:15.5px;margin:0 0 4px">${esc(c.q)}</p>
-    <div class="ans hidden-q" onclick="this.classList.toggle('hidden-q');this.classList.toggle('shown')">${ans}</div></div>`;
-  }).join('')||'<div class="empty">No matches.</div>';
-}
-$('br-search').addEventListener('input',renderBrowse);
-
-/* ---------- mode tabs ---------- */
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
-  mode=b.dataset.mode;pos=0;
-  document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('primary',x===b));
-  ['flip','quiz','browse'].forEach(m=>$('v-'+m).classList.toggle('hidden',m!==mode));
-  $('hint-flip').classList.toggle('hidden',mode!=='flip');
-  $('hint-quiz').classList.toggle('hidden',mode!=='quiz');
-  qzSel.clear();qzRevealed=false;render();
-});
+$('f-shuffle').onclick=()=>{shuffleOrder();pos=0;render()};
+$('f-front').onchange=()=>{renderFlip();save()};
 
 /* ---------- export / import ---------- */
 $('io-export').onclick=()=>{
@@ -486,26 +263,12 @@ $('io-file').onchange=e=>{
 };
 
 /* ---------- keyboard ---------- */
-const KEYLETTERS=['a','b','c','d','e','f'];
 document.addEventListener('keydown',e=>{
   if($('v-exams').classList.contains('hidden')===false)return;
   if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
-  const k=e.key.toLowerCase();
-  if(mode==='flip'){
-    if(e.key===' '){e.preventDefault();flipCard()}
-    else if(e.key==='ArrowRight')go(1);
-    else if(e.key==='ArrowLeft')go(-1);
-    else if(k==='g')$('fc-got').click();
-    else if(k==='a'&&!e.metaKey&&!e.ctrlKey)$('fc-again').click();
-    else if(k==='s')$('fc-star').click();
-  }else if(mode==='quiz'){
-    const c=cur();
-    const idx=KEYLETTERS.indexOf(k)>=0?KEYLETTERS.indexOf(k):('123456'.indexOf(k)>=0?'123456'.indexOf(k):-1);
-    if(idx>=0&&idx<letters(c).length)qzToggle(letters(c)[idx]);
-    else if(e.key==='Enter'){if(!qzRevealed)qzSubmit();else $('qz-next').click()}
-    else if(e.key==='ArrowRight')go(1);
-    else if(e.key==='ArrowLeft')go(-1);
-  }
+  if(e.key===' '){e.preventDefault();flipCard()}
+  else if(e.key==='ArrowRight')go(1);
+  else if(e.key==='ArrowLeft')go(-1);
 });
 
 /* debug/test hook (read-only views + position setter) */
