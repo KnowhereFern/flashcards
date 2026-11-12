@@ -30,7 +30,7 @@ Flashcard study app for three certification exams, served via GitHub Pages:
 
 ## Data provenance
 
-- **CCA-F**: 134-question community dump (itexams.com), fact-checked against official Anthropic/MCP docs on 2026-11-09 — no answer-key discrepancies found in the fact-sensitive subset. Exam is live as CCAR-F on Pearson VUE; the Dec 7 2026 content update does not affect it.
+- **CCA-F**: 134-question community dump (itexams.com), fact-checked against official Anthropic/MCP docs on 2026-11-09 — no answer-key discrepancies found in the fact-sensitive subset. The original standalone exam page with per-question `verified`/`confidence` metadata is archived at `docs/cca-f.html`. Exam is live as CCAR-F on Pearson VUE; the Dec 7 2026 content update does not affect it.
 - **AI-500 (95 questions)**: itexams/ExamTopics/freecram/certlibrary/Braindump2go multi-source scrape, merged 2026-11-10 with ExamCademy's verified 92-question bank (includes per-question explanations). Full itexams pool is 107; a few hotspot/drag-drop items are image-only.
 - **CIS-DF (249 questions)**: itexams/GitHub-pool scrape (204) merged 2026-11-10 with ExamCademy's verified 259-question bank; union deduped by content → 249 unique. itexams advertises a 283-question pool; remaining slots may be retired/duplicate variants.
 - Answer keys are community recalls (ExamCademy keys are community-voted with explanations) — treat as calibration, not truth. AI-500 is a brand-new exam; expect the dump to evolve, re-scrape periodically.
