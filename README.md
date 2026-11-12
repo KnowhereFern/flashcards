@@ -8,7 +8,13 @@ Flashcard study app for three certification exams, served via GitHub Pages:
 | **AI-500** — Designing & Implementing Multi-Agent AI Solutions | Microsoft | 95 |
 | **CIS-DF** — Certified Implementation Specialist: Data Foundations (CMDB & CSDM) | ServiceNow | 249 |
 
-**Study it here:** https://knowherefern.github.io/flashcards/ — on iPhone, open in Safari and use Share > Add to Home Screen for an app-like icon.
+**Study it here:** https://knowherefern.github.io/flashcards/ — on iPhone, open in Safari and use Share > Add to Home Screen. It installs as an app with its own icon, runs offline, and resumes where you left off.
+
+## PWA
+
+- **Installable** — web manifest + service worker (`sw.js`); Add to Home Screen on iOS gives a standalone app with the flashcards icon, no browser chrome
+- **Offline** — app shell, icons, and question data are precached and refreshed in the background (stale-while-revalidate); bump `VER` in `sw.js` when changing the shell
+- **Resume** — the last-open exam, position, shuffle state, and revealed card are saved to localStorage and restored on load (or after force-quitting/reinstalling… well, until iOS evicts storage — export/import is the backup)
 
 ## Features
 

@@ -4,7 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Flashcards">
+<meta name="theme-color" content="#0e1116">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Cert Flashcards</title>
 <style>
 :root{--bg:#0e1116;--panel:#161b22;--panel2:#1d242e;--ink:#e7edf3;--mut:#8b98a7;--line:#2a333f;
@@ -93,7 +99,8 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
     <button id="io-import">Import progress</button>
     <input type="file" id="io-file" accept="application/json" class="hidden">
   </div>
-  <p class="hint">v2026-11-10c · Progress is saved per exam on this device (localStorage). Export/import to move it between devices.<br>
+  <p class="hint">v2026-11-12a · Installable app (Add to Home Screen) — works offline and resumes where you left off.<br>
+  Progress is saved per exam on this device (localStorage). Export/import to move it between devices.<br>
   Unofficial community question sets — answer keys are best-effort, verify against official docs.</p>
 </div>
 
@@ -129,9 +136,9 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
 </div>
 
 </div>
-<script src="data-ccaf.js?v=20261110c"></script>
-<script src="data-ai500.js?v=20261110c"></script>
-<script src="data-cisdf.js?v=20261110c"></script>
+<script src="data-ccaf.js?v=20261112a"></script>
+<script src="data-ai500.js?v=20261112a"></script>
+<script src="data-cisdf.js?v=20261112a"></script>
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -168,6 +175,8 @@ function openExam(id){
   $('deck-info').textContent=QUESTIONS.length+' cards';
   revealed=false;
   render();
+  // resume mid-card: re-open the answer the user had revealed
+  if(store.sess.revealedN&&cur()&&cur().n===store.sess.revealedN)toggleReveal();
 }
 $('home').onclick=()=>{
   $('v-study').classList.add('hidden');
@@ -175,13 +184,15 @@ $('home').onclick=()=>{
   $('home').classList.add('hidden');
   $('brand-name').textContent='Cert Flashcards';
   $('brand-sub').textContent='select an exam';
+  localStorage.removeItem('fc-last-exam');
   buildTiles();
 };
 
 /* ---------- persistence ---------- */
 const save=()=>{
-  store.sess={pos,shuffled:!!store.sess.shuffled};
+  store.sess={pos,shuffled:!!store.sess.shuffled,revealedN:store.sess.revealedN||null};
   localStorage.setItem('fc-'+examId,JSON.stringify(store));
+  localStorage.setItem('fc-last-exam',examId);
 };
 
 const cur=()=>byN[order[pos]];
@@ -228,6 +239,7 @@ function render(){
   btn.disabled=false;
   $('bar').style.width=Math.round(((pos+1)/order.length)*100)+'%';
   $('pos').textContent=`${pos+1} / ${order.length}`;
+  if(store.sess.revealedN&&(!cur()||cur().n!==store.sess.revealedN))store.sess.revealedN=null;
   save();
 }
 function letters(c){return Object.keys(c.choices).sort()}
@@ -250,11 +262,13 @@ function toggleReveal(){
     const b=$('fc-show');
     b.textContent='Hide answer';
     b.classList.add('revealed');
+    store.sess.revealedN=c.n;save();
   }else{
     $('fc-ans').classList.remove('show');
     const b=$('fc-show');
     b.textContent='Show answer';
     b.classList.remove('revealed');
+    store.sess.revealedN=null;save();
   }
 }
 $('fc-show').onclick=toggleReveal;
@@ -314,7 +328,15 @@ window.__app = {
   set pos(p){pos=Math.max(0,Math.min(order.length-1,p));render();}
 };
 
-buildTiles();
+/* ---------- boot: resume where you left off ---------- */
+let last=null;
+try{last=localStorage.getItem('fc-last-exam')}catch(e){}
+if(last&&REG[last]){openExam(last)}else{buildTiles()}
+
+/* ---------- PWA: offline support ---------- */
+if('serviceWorker' in navigator){
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
