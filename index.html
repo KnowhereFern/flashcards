@@ -17,9 +17,10 @@
 --ok:#37d67a;--acc:#5aa9ff;--warn:#e8a93c}
 *{box-sizing:border-box}
 body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-background:radial-gradient(1200px 700px at 60% -15%,#16202c,transparent),var(--bg);color:var(--ink);min-height:100vh;
+background:radial-gradient(1200px 700px at 50% -15%,#16202c,transparent),var(--bg);color:var(--ink);min-height:100vh;
 -webkit-text-size-adjust:100%}
-.wrap{max-width:860px;margin:0 auto;padding:14px 14px calc(90px + env(safe-area-inset-bottom))}
+.wrap{max-width:860px;margin:0 auto;
+padding:calc(14px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))}
 .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .brand{font-weight:700;font-size:15px;min-width:0}
 .brand small{color:var(--mut);font-weight:500;display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis}
@@ -31,8 +32,9 @@ button:hover{border-color:#3a4654}
 button.primary{background:var(--acc);border-color:var(--acc);color:#04121f;font-weight:700}
 button.primary.revealed{background:var(--panel2);border-color:var(--line);color:var(--ink);font-weight:500}
 button.on{background:#2a2110;border-color:var(--warn);color:var(--warn);font-weight:700}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px;align-items:center}
-.counter{color:var(--mut);font-size:13px;display:flex;justify-content:space-between;margin-bottom:8px}
+.counter{color:var(--mut);font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pillrow{display:flex;gap:8px}
+#f-shuffle,#f-auto{min-height:44px;padding:6px 16px;font-size:13px;border-radius:999px}
 .bar{height:5px;border-radius:5px;background:var(--panel2);overflow:hidden;margin:0 0 14px}
 .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),#7fd0ff);width:0;transition:.25s}
 /* exam picker */
@@ -43,7 +45,7 @@ button.on{background:#2a2110;border-color:var(--warn);color:var(--warn);font-wei
 .tile p{margin:0;color:var(--mut);font-size:14px}
 .tile .code{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--acc);
 background:rgba(90,169,255,.12);border-radius:999px;padding:3px 10px}
-.io{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.io{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;justify-content:center}
 /* card */
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:12px}
 .badge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
@@ -72,16 +74,35 @@ color:var(--acc);background:rgba(90,169,255,.12);border-radius:999px;padding:3px
 .ansimg{display:none;margin-top:12px}
 .ansimg.show{display:block}
 .ansimg img{max-width:100%;border-radius:8px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.actions .primary{flex:1 1 auto}
+.actions{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.actions .primary{width:100%}
+.nav{display:flex;gap:8px}
+.nav button{flex:1}
 .hint{color:var(--mut);font-size:12px;text-align:center;margin-top:12px;line-height:1.7}
+@media(hover:none) and (pointer:coarse){.kbd-hint{display:none}}
 kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:11px}
 .hidden{display:none}
 .empty{color:var(--mut);text-align:center;padding:32px 0}
+/* responsive: purely width-driven so the layout adapts automatically to any device and orientation */
+@media(min-width:600px){
+  /* phones in landscape + tablets in portrait: exam tiles 2-across */
+  .tiles{grid-template-columns:1fr 1fr}
+}
+@media(min-width:980px){
+  /* tablets in landscape + desktop: tiles 3-across; study = card + sticky action rail */
+  .tiles{grid-template-columns:repeat(3,1fr)}
+  .wrap{max-width:1040px}
+  .q{font-size:18px}
+  #v-study:not(.hidden){display:grid;grid-template-columns:minmax(0,1fr) 230px;column-gap:20px;align-items:start;
+  grid-template-areas:"counter rail" "bar rail" "card rail" "hint hint"}
+  #v-study .counter{grid-area:counter}
+  #v-study .bar{grid-area:bar}
+  #v-study .card{grid-area:card;margin-bottom:0}
+  #v-study .actions{grid-area:rail;position:sticky;top:calc(16px + env(safe-area-inset-top));margin-bottom:0}
+  #v-study .hint{grid-area:hint}
+}
 @media(max-width:600px){
   .q{font-size:16px}
-  .actions button{flex:1 1 100%}
-  .actions .primary{flex:1 1 100%}
 }
 </style>
 </head>
@@ -99,18 +120,14 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
     <button id="io-import">Import progress</button>
     <input type="file" id="io-file" accept="application/json" class="hidden">
   </div>
-  <p class="hint">v2026-11-12a · Installable app (Add to Home Screen) — works offline and resumes where you left off.<br>
+  <p class="hint">v2026-11-12d · Installable app (Add to Home Screen) — works offline and resumes where you left off.<br>
   Progress is saved per exam on this device (localStorage). Export/import to move it between devices.<br>
   Unofficial community question sets — answer keys are best-effort, verify against official docs.</p>
 </div>
 
 <!-- STUDY -->
 <div id="v-study" class="hidden">
-  <div class="controls">
-    <button id="f-shuffle">Shuffle</button>
-  </div>
-
-  <div class="counter"><span id="pos"></span><span id="deck-info"></span></div>
+  <div class="counter"><span id="pos"></span><span class="pillrow"><button id="f-auto">Answers</button><button id="f-shuffle">Shuffle</button></span></div>
   <div class="bar"><i id="bar"></i></div>
 
   <div class="card">
@@ -128,11 +145,13 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
 
   <div class="actions">
     <button class="primary" id="fc-show">Show answer</button>
-    <button id="fc-next">Next &rarr;</button>
-    <button id="fc-prev">&larr; Prev</button>
+    <div class="nav">
+      <button id="fc-prev">&larr; Prev</button>
+      <button id="fc-next">Next &rarr;</button>
+    </div>
   </div>
 
-  <div class="hint"><kbd>space</kbd> show answer · <kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate</div>
+  <div class="hint kbd-hint"><kbd>space</kbd> show answer · <kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate</div>
 </div>
 
 </div>
@@ -146,7 +165,7 @@ const REG=window.EXAM_DATA||{};
 
 /* ---------- state ---------- */
 let examId=null, META=null, CONTEXTS=[], QUESTIONS=[], store={sess:{}};
-let byN={}, order=[], pos=0, revealed=false;
+let byN={}, order=[], pos=0, revealed=false, autoAns=false;
 
 /* ---------- exam picker ---------- */
 function buildTiles(){
@@ -172,11 +191,10 @@ function openExam(id){
   pos=store.sess.pos||0;
   order=QUESTIONS.map(q=>q.n);
   if(store.sess.shuffled)shuffleOrder(false);
-  $('deck-info').textContent=QUESTIONS.length+' cards';
+  autoAns=!!store.sess.autoAns;
+  $('f-auto').classList.toggle('on',autoAns);
   revealed=false;
   render();
-  // resume mid-card: re-open the answer the user had revealed
-  if(store.sess.revealedN&&cur()&&cur().n===store.sess.revealedN)toggleReveal();
 }
 $('home').onclick=()=>{
   $('v-study').classList.add('hidden');
@@ -190,7 +208,7 @@ $('home').onclick=()=>{
 
 /* ---------- persistence ---------- */
 const save=()=>{
-  store.sess={pos,shuffled:!!store.sess.shuffled,revealedN:store.sess.revealedN||null};
+  store.sess={pos,shuffled:!!store.sess.shuffled,revealedN:store.sess.revealedN||null,autoAns:!!autoAns};
   localStorage.setItem('fc-'+examId,JSON.stringify(store));
   localStorage.setItem('fc-last-exam',examId);
 };
@@ -216,7 +234,6 @@ function setCtx(elWrap,elBody,c){
 
 /* ---------- render ---------- */
 function render(){
-  revealed=false;
   const c=cur();
   $('fc-domain').textContent=c.domain||META.code;
   $('fc-visual').classList.toggle('hidden',!c.visual);
@@ -228,18 +245,10 @@ function render(){
     const p=document.createElement('p');p.textContent=par;qEl.appendChild(p);
   });
   if(!qEl.children.length)qEl.textContent=String(c.q||'');
-  renderOpts(c,false);
-  $('fc-ansimg').innerHTML='';
-  $('fc-ansimg').classList.remove('show');
-  $('fc-ans').classList.remove('show');
-  $('fc-ans').textContent='';
-  const btn=$('fc-show');
-  btn.textContent='Show answer';
-  btn.classList.remove('revealed');
-  btn.disabled=false;
+  // answers-on mode or a card the user had revealed stays revealed
+  setRevealed(c,autoAns||store.sess.revealedN===c.n);
   $('bar').style.width=Math.round(((pos+1)/order.length)*100)+'%';
   $('pos').textContent=`${pos+1} / ${order.length}`;
-  if(store.sess.revealedN&&(!cur()||cur().n!==store.sess.revealedN))store.sess.revealedN=null;
   save();
 }
 function letters(c){return Object.keys(c.choices).sort()}
@@ -251,26 +260,24 @@ function renderOpts(c,reveal){
 }
 
 /* ---------- reveal ---------- */
-function toggleReveal(){
-  const c=cur();
-  revealed=!revealed;
-  renderOpts(c,revealed);
-  if(c.answerHtml){$('fc-ansimg').innerHTML=c.answerHtml;$('fc-ansimg').classList.toggle('show',revealed)}
-  if(revealed){
+function setRevealed(c,on){
+  revealed=on;
+  renderOpts(c,on);
+  if(c.answerHtml){$('fc-ansimg').innerHTML=c.answerHtml;$('fc-ansimg').classList.toggle('show',on)}
+  if(on){
     $('fc-ans').textContent=c.answer?('Correct: '+c.answer):(c.visual?'Answer shown above (image)':'');
     $('fc-ans').classList.add('show');
-    const b=$('fc-show');
-    b.textContent='Hide answer';
-    b.classList.add('revealed');
-    store.sess.revealedN=c.n;save();
+    store.sess.revealedN=c.n;
   }else{
     $('fc-ans').classList.remove('show');
-    const b=$('fc-show');
-    b.textContent='Show answer';
-    b.classList.remove('revealed');
-    store.sess.revealedN=null;save();
+    store.sess.revealedN=null;
   }
+  const b=$('fc-show');
+  b.textContent=on?'Hide answer':'Show answer';
+  b.classList.toggle('revealed',on);
+  save();
 }
+function toggleReveal(){setRevealed(cur(),!revealed)}
 $('fc-show').onclick=toggleReveal;
 $('fc-prev').onclick=()=>go(-1);
 $('fc-next').onclick=()=>go(1);
@@ -281,6 +288,13 @@ function shuffleOrder(saveState=true){
   if(saveState){store.sess.shuffled=true;save()}
 }
 $('f-shuffle').onclick=()=>{shuffleOrder();pos=0;render()};
+
+/* answers-on: power through cards with the answer always visible */
+$('f-auto').onclick=()=>{
+  autoAns=!autoAns;
+  $('f-auto').classList.toggle('on',autoAns);
+  setRevealed(cur(),autoAns);
+};
 
 /* ---------- export / import ---------- */
 $('io-export').onclick=()=>{

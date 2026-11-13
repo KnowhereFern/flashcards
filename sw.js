@@ -1,5 +1,5 @@
 /* Cert Flashcards service worker — offline app shell + stale-while-revalidate data */
-const VER = 'v2026-11-12a';
+const VER = 'v2026-11-12d';
 const SHELL = [
   './',
   './index.html',
