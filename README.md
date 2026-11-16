@@ -6,6 +6,7 @@ Flashcard study app for three certification exams, served via GitHub Pages:
 |---|---|---|
 | **CCA-F / CCAR-F** — Claude Certified Architect: Foundations | Anthropic | 134 |
 | **AI-500** — Designing & Implementing Multi-Agent AI Solutions | Microsoft | 95 |
+| **AI-103** — Developing AI Apps and Agents on Azure | Microsoft | 182 |
 | **CIS-DF** — Certified Implementation Specialist: Data Foundations (CMDB & CSDM) | ServiceNow | 249 |
 
 **Study it here:** https://knowherefern.github.io/flashcards/ — on iPhone, open in Safari and use Share > Add to Home Screen. It installs as an app with its own icon, runs offline, and resumes where you left off.
@@ -32,6 +33,7 @@ Flashcard study app for three certification exams, served via GitHub Pages:
 
 - **CCA-F**: 134-question community dump (itexams.com), fact-checked against official Anthropic/MCP docs on 2026-11-09 — no answer-key discrepancies found in the fact-sensitive subset. The original standalone exam page with per-question `verified`/`confidence` metadata is archived at `docs/cca-f.html`. Exam is live as CCAR-F on Pearson VUE; the Dec 7 2026 content update does not affect it.
 - **AI-500 (95 questions)**: itexams/ExamTopics/freecram/certlibrary/Braindump2go multi-source scrape, merged 2026-11-10 with ExamCademy's verified 92-question bank (includes per-question explanations). Full itexams pool is 107; a few hotspot/drag-drop items are image-only.
+- **AI-103 (182 questions)**: guest-harvested 2026-11-16 from ExamCademy per-question pages (`/exams/microsoft/ai-103/q/<n>-<slug>`, 308 redirects to canonical slug; data parsed from the Next.js RSC payload). 185 numbered slots → 182 questions captured (153/160/163 unavailable); formats: 122 multiple-choice, 35 dropdown, 15 drag-drop, 10 yes/no statement sets. ExamCademy questions are community-maintained/verified; not an official dump — for study/calibration only; cross-check against official Microsoft Learn/skills measured.
 - **CIS-DF (249 questions)**: itexams/GitHub-pool scrape (204) merged 2026-11-10 with ExamCademy's verified 259-question bank; union deduped by content → 249 unique. itexams advertises a 283-question pool; remaining slots may be retired/duplicate variants.
 - Answer keys are community recalls (ExamCademy keys are community-voted with explanations) — treat as calibration, not truth. AI-500 is a brand-new exam; expect the dump to evolve, re-scrape periodically.
 
