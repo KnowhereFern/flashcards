@@ -348,7 +348,9 @@ if(last&&REG[last]){openExam(last)}else{buildTiles()}
 
 /* ---------- PWA: offline support ---------- */
 if('serviceWorker' in navigator){
-  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(hadController) location.reload(); });
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{}));
 }
 </script>
 </body>
