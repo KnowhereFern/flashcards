@@ -15,7 +15,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Prompt shields action:</b> Set action to block.<br><b>Additional mitigation:</b> Enable Spotlighting."
+      "answerHtml": "<b>Answers:</b><br><b>Prompt shields action:</b> Set action to block.<br><b>Additional mitigation:</b> Enable Spotlighting.",
+      "exp": "Prompt Shields for document attacks inspects content that originates outside the user's direct input, such as text embedded in an uploaded image or document, for indirect (cross-prompt) injection attempts. Setting the shield's action to Block causes the service to block the request when it detects embedded instructions that attempt to hijack the model, which is what stops the prompt injection attack. Spotlighting is the complementary Prompt Shields capability that marks ingested third-party content, such as text extracted from a screenshot, as distinct from and lower-trust than the user's and system's own instructions, so the model does not treat embedded text as an authoritative command, which directly satisfies the requirement to treat third-party content as lower trust. A custom blocklist only matches known bad strings, and running OCR first does not itself establish provenance or trust separation.\n\n**Learn more:** [Prompt Shields in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields) · [Introducing Spotlighting in Azure AI Foundry: Detect and Block Cross Prompt Injection Attacks](https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/better-detecting-cross-prompt-injection-attacks-introducing-spotlighting-in-azur/4458404)"
     },
     {
       "n": 2,
@@ -25,7 +26,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>To retain user preferences across conversations, use:</b> Agent memory that uses persistent storage<br><b>To enable users to provide contextual grounding during chats, use the:</b> File search tool"
+      "answerHtml": "<b>Answers:</b><br><b>To retain user preferences across conversations, use:</b> Agent memory that uses persistent storage<br><b>To enable users to provide contextual grounding during chats, use the:</b> File search tool",
+      "exp": "Agent memory that uses persistent storage keeps curated, long-lived information such as user preferences outside of any single conversation thread, so it can be recalled in later sessions and satisfies the requirement to retain preferences across conversations; plain conversation history and orchestration-managed session context are scoped to the current thread or session and do not persist afterward. The File search tool lets users attach documents directly during a chat and grounds responses in that uploaded content on the fly, whereas the Azure AI Search tool queries a pre-built, pre-indexed search index rather than files uploaded in the moment, and the code interpreter tool executes code rather than performing document retrieval.\n\n**Learn more:** [Memory in Microsoft Foundry Agent Service (preview)](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory) · [Create and use memory in Foundry Agent Service (preview)](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage)"
     },
     {
       "n": 3,
@@ -63,7 +65,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Authentication method:</b> An Azure Login action that uses OpenID Connect (OIDC)<br><b>If the evaluation results are NOT met, configure the workflow to:</b> Fail"
+      "answerHtml": "<b>Answers:</b><br><b>Authentication method:</b> An Azure Login action that uses OpenID Connect (OIDC)<br><b>If the evaluation results are NOT met, configure the workflow to:</b> Fail",
+      "exp": "GitHub Actions workflows should authenticate to Azure using the Azure Login action configured for OpenID Connect (OIDC) federated credentials, which lets the workflow obtain a short-lived Microsoft Entra ID token without storing a personal access token or a managed-identity secret in the repository. This is the recommended secretless authentication pattern for GitHub-hosted runners that need to call Azure resources such as a Foundry project. To gate a pull request on the evaluation outcome, the workflow step that runs the evaluation must be configured to fail (return a non-zero exit code) when the results do not meet the defined thresholds; when the repository's branch protection rules require that check to pass, a failing step blocks the PR from merging. Sending an alert or locking the target branch does not tie the PR status check to the evaluation result, so neither action prevents the merge.\n\n**Learn more:** [How to run an evaluation in GitHub Action - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluation-github-action) · [Set up CI/CD for hosted agents with the Azure Developer CLI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/set-up-ci-cd-cli)"
     },
     {
       "n": 6,
@@ -123,7 +126,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Guardrails:</b> Select User input, Output, Tool response, and Tool call and set Action to Block.<br><b>Storage access:</b> A system-assigned managed identity that is assigned the Storage Blob Data Contributor role"
+      "answerHtml": "<b>Answers:</b><br><b>Guardrails:</b> Select User input, Output, Tool response, and Tool call and set Action to Block.<br><b>Storage access:</b> A system-assigned managed identity that is assigned the Storage Blob Data Contributor role",
+      "exp": "Foundry Agent Service guardrails support four intervention points - user input, tool call, tool response, and output - and for agents (as opposed to models) the only available response action is Annotate and block; a plain Annotate-only action is not offered for agents, so any control meant to prevent harmful content from being returned must use Block. Because the screenshot's blob URL is produced by the ticketing tool and only becomes available to the agent as content returned by that tool, the guardrail must cover the tool response - along with user input, tool call, and output - so image content is screened wherever it can enter or leave the run, with Block enforcing that flagged harmful content is stopped rather than merely logged. For storage access, Azure AI Content Safety's documented requirement is that its resource identity hold the Storage Blob Data Contributor (or Owner) role to read a blob via a blobUrl; Storage Blob Data Reader is not a supported role for this scenario. The least-privileged working configuration is therefore a system-assigned managed identity granted Storage Blob Data Contributor, which avoids both storage account keys and an unrelated user-assigned queue role.\n\n**Learn more:** [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image) · [Guardrails and controls overview in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview)"
     },
     {
       "n": 11,
@@ -161,7 +165,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "tool_choice={“type”:“knowledge_base”}",
         "D": "tool_choice ={“type”:“mcp”}"
       },
-      "answer": "D"
+      "answer": "D",
+      "exp": "The Azure AI Agents SDK's tool_choice parameter accepts either a mode string (auto, required, none) or a named tool choice object that pins the run to one specific tool by its type — for example a value equivalent to {\"type\": \"mcp\"} — which forces the agent to invoke that particular tool rather than whichever tool the model happens to pick. Setting tool_choice to \"required\" only guarantees that some tool is called; if the agent had more than one tool available it would not guarantee the MCP tool specifically is the one invoked. Because the goal is to deterministically force invocation of the MCP tool specifically (not merely any tool), the typed/named tool_choice value targeting the mcp tool type is required.\n\n**Learn more:** [azure.ai.agents.models.AgentsNamedToolChoice class](https://learn.microsoft.com/en-us/python/api/azure-ai-agents/azure.ai.agents.models.agentsnamedtoolchoice) · [Tool best practices for Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice)"
     },
     {
       "n": 14,
@@ -286,7 +291,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Deployment type:</b> Standard<br><b>Version update policy:</b> Opt out of automatic model version upgrades"
+      "answerHtml": "<b>Answers:</b><br><b>Deployment type:</b> Standard<br><b>Version update policy:</b> Opt out of automatic model version upgrades",
+      "exp": "Azure OpenAI/Foundry Models Standard (regional) deployments process inference only in the Azure region where the resource is deployed, giving the strongest data-residency guarantee, whereas Global Standard and Global Provisioned route requests across Azure's global infrastructure with no fixed-region guarantee. Because the project is deployed to an EU region and its data must remain within the EU, a Standard deployment is required; Global Provisioned is additionally unsuitable because Provisioned tiers reserve dedicated throughput capacity, which conflicts with a requirement to scale dynamically without reserved capacity. For the model version, opting out of automatic model version upgrades pins the deployment to a fixed model version so behavior and response quality stay consistent over time, rather than shifting whenever Microsoft retires or promotes a new default version.\n\n**Learn more:** [Understanding deployment types in Microsoft Foundry Models](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types)"
     },
     {
       "n": 24,
@@ -313,7 +319,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "model fine-tuning",
         "D": "a groundedness evaluator"
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "The technical requirement states that responses built from the product-sheet content must be relevant, complete, and accurate. Microsoft Foundry's Retrieval-Augmented Generation (RAG) evaluator set is the built-in evaluator category purpose-built for grounded, retrieval-based scenarios and combines retrieval quality, groundedness (factual accuracy against the retrieved source), relevance, and response-completeness metrics — directly covering all three qualities the requirement calls out. A standalone groundedness evaluator only scores factual accuracy/faithfulness to the retrieved context and does not by itself score relevance or completeness, so it would not fully validate the stated requirement on its own.\n\n**Learn more:** [Retrieval-Augmented Generation (RAG) Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) · [Built-in Evaluators Reference - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators)"
     },
     {
       "n": 26,
@@ -340,7 +347,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Azure Content Understanding in Foundry Tools",
         "D": "Image Analysis"
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "The finance department's vendor invoices arrive with tables, logos, and highly varied layouts and must be verified against vendor contract terms, and the planned change calls for a solution that evaluates both the visual layout and the textual content of the invoices. Microsoft's own guidance for choosing between Content Understanding and Document Intelligence places invoices with inconsistent, high-variation templates in the \"high-variation semi-structured documents\" scenario, for which it recommends a Content Understanding analyzer because it generalizes across template and layout variation without labeling and can reason over extracted content, including cross-referencing values (such as against contract terms) — a reasoning capability Document Intelligence's structured field-extraction models do not provide. Document Intelligence's prebuilt invoice model is instead recommended for standardized, single-template forms, which does not match the varied-layout, cross-document-verification requirement described here; chat completions and Image Analysis provide neither document-structured field extraction nor layout-aware document reasoning.\n\n**Learn more:** [Choose the right Azure AI tool for document processing](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/choosing-right-ai-tool)"
     },
     {
       "n": 28,
@@ -380,7 +388,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Metrics to enable:</b> Model Availability Rate and Provisioned Utilization<br><b>Diagnostic log to collect:</b> RequestResponse"
+      "answerHtml": "<b>Answers:</b><br><b>Metrics to enable:</b> Model Availability Rate and Provisioned Utilization<br><b>Diagnostic log to collect:</b> RequestResponse",
+      "exp": "Enabling the Model Availability Rate metric shows drops in model uptime that explain inference/unavailability-driven failures such as a rise in \"No relevant information found\" responses, while the Provisioned Utilization metric shows how much of the deployment's provisioned capacity is being consumed, which explains HTTP 429 rate-limit errors during peak load caused by resource limits. Collecting the RequestResponse diagnostic log records each call's operation name, duration, and HTTP status code, letting you correlate specific failed or throttled calls (including 429s) back to the metric-level signal for root-cause analysis; the Audit and Trace log categories do not provide this per-call status/duration detail, and AllMetrics is a metrics export category rather than a diagnostic log.\n\n**Learn more:** [Monitoring data reference for Azure OpenAI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/monitor-openai-reference) · [Enable diagnostic logging - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/diagnostic-logging)"
     },
     {
       "n": 31,
@@ -473,7 +482,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "the Azure Content Understanding in Foundry Tools prebuilt-layout analyzer",
         "D": "the Azure Content Understanding in Foundry Tools prebuilt-documentSearch analyzer and search.score from the Azure AI Search results for routing"
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "A custom Content Understanding analyzer lets you define the exact schema of fields to extract — invoice number, invoice date, vendor name, and total amount — regardless of the invoice template, and enabling estimateFieldSourceAndConfidence (or estimateSourceAndConfidence per field) causes the analyzer to return a confidence score for each extracted field. Those scores can then be compared against the 0.80 threshold to route low-confidence results for supervisor review. The prebuilt-layout analyzer only extracts generic layout elements (text, tables) without the named business fields, prebuilt-documentSearch plus Azure AI Search's search.score reflects retrieval relevance rather than field-extraction confidence, and a Foundry agent with groundedness guardrails evaluates response grounding, not per-field extraction confidence.\n\n**Learn more:** [Document analysis with confidence, grounding, and labeled samples - Content Understanding](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/analyzer-improvement) · [What is an analyzer? Configuration and reference - Content Understanding](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference)"
     },
     {
       "n": 38,
@@ -497,7 +507,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br>The LangChain service will appear in Traces without configuring a tracer. — <b>No</b><br>Setting different OTEL_SERVICE_NAME values separates the services in Application Insights. — <b>Yes</b><br>When using enable_content_recording=False, prompts and tool data will be captured in the telemetry. — <b>No</b>"
+      "answerHtml": "<b>Answers:</b><br>The LangChain service will appear in Traces without configuring a tracer. — <b>No</b><br>Setting different OTEL_SERVICE_NAME values separates the services in Application Insights. — <b>Yes</b><br>When using enable_content_recording=False, prompts and tool data will be captured in the telemetry. — <b>No</b>",
+      "exp": "AzureAIOpenTelemetryTracer must be explicitly created and attached to a LangChain/LangGraph run (for example, via config={\"callbacks\": [tracer]}) for that service's spans to be exported to Application Insights; without configuring a tracer for a given process, that process's telemetry is not automatically captured there. Application Insights differentiates telemetry from multiple services within a single resource by the underlying OpenTelemetry service.name resource attribute, commonly set through the OTEL_SERVICE_NAME environment variable, which becomes the cloud role name shown in Azure Monitor - giving each service its own identifiable role even though both write to the same Application Insights resource. Setting enable_content_recording=False on AzureAIOpenTelemetryTracer redacts message content and tool call arguments from the emitted spans, so prompts and tool data are NOT captured in the telemetry when this flag is False, which is what satisfies the requirement that secrets and credentials not be stored in prompts, tool arguments, or span attributes.\n\n**Learn more:** [Trace LangChain and LangGraph apps with Microsoft Foundry and Azure Monitor](https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/langchain-traces)"
     },
     {
       "n": 40,
@@ -549,7 +560,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "a multi-agent group chat session",
         "D": "separate agent runs coordinated in the application code"
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "Microsoft Foundry Agent Service workflows provide a low-code, graph-based way to orchestrate multiple agents through a deterministic, step-based process: executors (agents or logic steps) are connected by edges that support conditional branching (if/else) and can pass shared state between steps, including an optional downstream action such as invoking a ticketing tool based on an earlier agent's triage result. This satisfies the requirement for deterministic branching with shared state while minimizing development effort, since the branching and state-passing logic does not need to be hand-written. Using threads and runs directly, or coordinating separate agent runs in application code, requires custom-written orchestration logic, and a multi-agent group chat session is a conversational, non-deterministic collaboration pattern rather than a deterministic branching process.\n\n**Learn more:** [Build a workflow in Microsoft Foundry (Preview)](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow)"
     },
     {
       "n": 44,
@@ -631,7 +643,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "protected material text",
         "D": "prompt shields for user prompts"
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "Azure AI Content Safety Prompt Shields analyzes two distinct attack surfaces: User Prompts, for direct jailbreak attempts typed by the user, and Documents, for indirect (cross-domain) prompt-injection attacks in which malicious instructions are hidden inside third-party content — such as documents, emails, or, as here, OCR text extracted from an image — that is appended to the prompt as additional context rather than authored by the user. Because the embedded text arrives as external content folded into the prompt, Prompt Shields for documents is the control designed to detect and block instructions hidden in it. Image moderation screens for visual harm categories, not instructions; protected material detection targets copyrighted content; and Prompt Shields for user prompts addresses direct user-typed jailbreak attempts, not third-party content.\n\n**Learn more:** [Prompt Shields in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection) · [Quickstart: Detect prompt attacks with Prompt Shields](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-jailbreak)"
     },
     {
       "n": 50,
@@ -731,7 +744,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "a skillset to run the OCR skill directly against the content field of the index",
         "D": "the outputFieldMappings parameter to write image data to a searchable field"
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "In Azure AI Search, setting an indexer's imageAction to generateNormalizedImages during document cracking extracts embedded images from source files (such as PDFs) into a normalized_images field/collection. Skills that operate on images, including the built-in OCR skill, expect this normalized_images collection as their input context (\"/document/normalized_images/*\"); images cannot be fed to OCR without first being normalized this way. A Shaper skill only restructures existing enrichment output, running OCR directly against the content field is invalid because OCR requires image input rather than the document's text content, and outputFieldMappings maps enrichment results to searchable index fields but does not extract images in the first place.\n\n**Learn more:** [OCR skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-ocr) · [Extract text from images by using AI enrichment (image scenarios)](https://learn.microsoft.com/en-us/azure/search/cognitive-search-concept-image-scenarios)"
     },
     {
       "n": 58,
@@ -745,7 +759,8 @@ window.EXAM_DATA["ai103"] = {
         "D": "the Azure Monitor Agent",
         "E": "Microsoft Sentinel"
       },
-      "answer": "BC"
+      "answer": "BC",
+      "exp": "OpenTelemetry lets you instrument the external Python service to emit standardized spans covering LLM calls, tool invocations, latency, and exceptions even though it runs outside the Foundry portal, and Application Insights (Azure Monitor) is the backend Microsoft Foundry uses to ingest, store, and visualize those OpenTelemetry traces end to end. Together they form a complete, code-level tracing solution for an agent invoked from external code. A Log Analytics workspace is only the underlying data store behind Application Insights rather than a tracing capability in its own right, and Azure Monitor Agent and Microsoft Sentinel are infrastructure-monitoring and SIEM tools, not per-run agent tracing mechanisms.\n\n**Learn more:** [Configure tracing for AI agent frameworks - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-framework) · [Add client-side tracing to Foundry agents - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-client-side)"
     },
     {
       "n": 59,
@@ -847,7 +862,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b></b> create<br><b></b> retrieve"
+      "answerHtml": "<b>Answers:</b><br><b></b> create<br><b></b> retrieve",
+      "exp": "The OpenAI/Azure OpenAI Python SDK's videos resource supports create, retrieve, list, and download_content operations. `client.videos.create(model=..., prompt=...)` submits a new asynchronous video generation job and returns a video object with an id and status. Because video generation is asynchronous, the status must be polled until it reaches a terminal state (completed, failed, or cancelled). This is done by calling `client.videos.retrieve(video.id)`, which fetches the current state of the specific video generation job by its id, allowing the loop to check `video.status` again. `list` would enumerate multiple video jobs rather than check one specific job, and `download_content` is used only after the job completes to fetch the resulting video bytes, so neither fits the polling loop.\n\n**Learn more:** [Quickstart: Generate video with Sora - Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/video-generation-quickstart) · [Sora 2 video generation overview (preview) - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/video-generation-quickstart)"
     },
     {
       "n": 67,
@@ -871,7 +887,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b></b> DefaultAzureCredential()<br><b></b> get"
+      "answerHtml": "<b>Answers:</b><br><b></b> DefaultAzureCredential()<br><b></b> get",
+      "exp": "Contoso's security and compliance requirements mandate that API keys must not be used to access Foundry-deployed resources and that developers authenticate via Microsoft Entra ID. DefaultAzureCredential implements Entra ID (Azure AD) based authentication (using the developer's signed-in identity, managed identity, or other Entra-integrated credential sources) and contains no embedded key, satisfying both constraints; AzureKeyCredential relies on a static API key, which is explicitly disallowed, and None is not a valid credential for AIProjectClient.\n\nFor retrieving the existing agent named 'Agent1' so its name can be printed, the AgentsOperations.get(agent_name) method is the correct call — it retrieves an agent's definition (AgentDetails) by its unique name using only the agent_name argument, matching the single-argument call in the code. create_version() creates a new version rather than retrieving one, and get_version() requires an additional agent_version parameter, so both are incompatible with the code as written.\n\n**Learn more:** [AgentsOperations class - Azure AI Projects Python SDK](https://learn.microsoft.com/en-us/python/api/azure-ai-projects/azure.ai.projects.operations.agentsoperations?view=azure-python) · [Authenticate to Azure AI Foundry using Microsoft Entra ID](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/rbac-azure-ai-foundry)"
     },
     {
       "n": 69,
@@ -885,7 +902,8 @@ window.EXAM_DATA["ai103"] = {
         "D": "Groundedness",
         "E": "Response Completeness"
       },
-      "answer": "AD"
+      "answer": "AD",
+      "exp": "Azure AI Foundry's built-in RAG evaluators include Groundedness and Retrieval. The Groundedness evaluator measures whether a generated response's claims are fully supported by the retrieved source content, catching hallucinated or unsupported statements. The Retrieval evaluator assesses the quality and relevance of the retrieved chunks relative to the query, allowing detection of cases where retrieved content does not align with the expected labeled context. Fluency and Coherence measure the linguistic quality of the response text rather than factual grounding or retrieval accuracy, and Response Completeness measures coverage relative to a ground-truth answer rather than retrieval alignment, so these do not satisfy the stated requirements.\n\n**Learn more:** [Evaluation and monitoring metrics for generative AI - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-metrics-built-in) · [Groundedness evaluator - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)"
     },
     {
       "n": 70,
@@ -898,7 +916,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "conversation",
         "D": "response"
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "The conversation object in Foundry Agent Service is the durable, server-side record—identified by a conversation ID—that stores the full interaction history, including user messages, tool calls, and tool outputs. Because it is persisted independently of any single session (stored durably, e.g., in Cosmos DB), referencing the same conversation ID in later requests, even days later, lets the agent automatically pull in and continue from the entire prior history without the caller needing to resend it. This satisfies the requirement for a durable ID that preserves full context across turns and sessions, distinguishing it from an agent (the reusable definition of instructions/tools/model), a response (a single generation turn's output), or an output item (an individual message or tool-call entry within a response).\n\n**Learn more:** [Build with agents, conversations, and responses in Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/runtime-components) · [Manage hosted agent sessions - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/manage-hosted-sessions)"
     },
     {
       "n": 71,
@@ -908,7 +927,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>To measure whether the responses are supported by the provided context and address the user query:</b> Groundedness and Relevance<br><b>To measure whether responses contain sensitive or proprietary information:</b> Protected material"
+      "answerHtml": "<b>Answers:</b><br><b>To measure whether the responses are supported by the provided context and address the user query:</b> Groundedness and Relevance<br><b>To measure whether responses contain sensitive or proprietary information:</b> Protected material",
+      "exp": "In Azure AI Foundry (formerly Azure AI Studio) evaluation SDK, the Groundedness metric measures whether a response is factually consistent with and supported by the provided context, while the Relevance metric measures how well the response addresses the user's query. Together these directly satisfy the requirement to check both context support and query relevance. For detecting sensitive or proprietary content, the Protected material evaluator/metric checks generated content against known copyrighted or proprietary text, songs, or other protected material. The other options (Hateful and unfair content, Indirect attack, Violent content) are content-safety risk evaluators unrelated to proprietary/copyrighted material detection, and Coherence/Fluency, GPT similarity/F1 score, and ROUGE score measure linguistic quality or similarity to ground truth rather than context grounding or query relevance.\n\n**Learn more:** [Evaluation and monitoring metrics for generative AI - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-metrics-built-in) · [Groundedness and Relevance evaluators - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)"
     },
     {
       "n": 72,
@@ -922,7 +942,8 @@ window.EXAM_DATA["ai103"] = {
         "D": "AI quality (NLP) metrics",
         "E": "AI quality (AI assisted) metrics"
       },
-      "answer": "AE"
+      "answer": "AE",
+      "exp": "Groundedness and relevance are AI-assisted quality metrics in Microsoft Foundry — they require a model to judge outputs against retrieved context and the user query, so they belong to the 'AI quality (AI assisted) metrics' category (unlike 'AI quality (NLP) metrics,' which covers traditional statistical NLP metrics that don't include groundedness or relevance). Harmful content categories, such as hateful and unfair content, sexual content, violent content, and self-harm-related content, are evaluated through the 'risk and safety metrics' category. Together, these two categories provide the required groundedness, relevance, and harmful content scores for a RAG chat app evaluation.\n\n**Learn more:** [Observability in Generative AI - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability) · [Microsoft Foundry risk and safety evaluations Transparency Note - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/concepts/safety-evaluations-transparency-note)"
     },
     {
       "n": 73,
@@ -935,7 +956,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "“auto”",
         "D": "“required”"
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "In the Foundry Agent Service, `tool_choice` is the mechanism that deterministically controls which tool an agent invokes on a given run. You can set it to \"auto\" (model decides), \"required\" (model must call some tool, but not necessarily a specific one), \"none\" (no tools called), or to a specific tool type object such as {\"type\": \"bing_grounding\"} or {\"type\": \"azure_ai_search\"} to force that exact tool to be used. To guarantee that a run retrieves information only from the internet (and not from the private Azure AI Search index), you must explicitly force the Bing/web search grounding tool by setting tool_choice to the tool-type object referencing the web search tool, rather than leaving the decision to the model (\"auto\") or only requiring some unspecified tool call (\"required\"). Forcing {\"type\": \"azure_ai_search\"} would instead guarantee use of the private documentation index, which is not the goal here.\n\n**Learn more:** [Tool best practices for Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice) · [Use Grounding with Bing Search tools with the agents API - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/bing-tools)"
     },
     {
       "n": 74,
@@ -948,7 +970,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Decrease the temperature parameter.",
         "D": "Increase the temperature parameter."
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "The temperature parameter controls how much randomness is introduced when the model samples the next token: higher values increase diversity and unpredictability of output, while lower values make the model favor the most probable tokens, producing more deterministic and repeatable responses for the same input prompt. Lowering (decreasing) the temperature therefore reduces response variability across repeated calls with identical prompts, satisfying the automated testing requirement, without requiring any change to the prompt text and without degrading factual accuracy—in fact, low temperature settings are commonly recommended for accuracy-sensitive, deterministic use cases such as RAG and conversational Q&A validation. Changing max_tokens only affects response length limits, and removing stop sequences only affects where generation is cut off; neither controls sampling randomness.\n\n**Learn more:** [How to use the reproducible output feature in Azure OpenAI (temperature/top_p guidance)](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/reproducible-output) · [Reducing randomness of responses in turbo model - Microsoft Q&A](https://learn.microsoft.com/en-us/answers/questions/1439994/reducing-randomness-of-responses-in-turbo-model)"
     },
     {
       "n": 75,
@@ -975,7 +998,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "{{$userId}}",
         "D": "global"
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "In Foundry Agent Service, the memory tool's `scope` parameter determines which pool of stored memory items a given request can read from and write to. Setting scope to the dynamic {{$conversationId}} variable ties memory items to the unique ID of the current conversation/thread, so each new session (which gets a new conversation ID) cannot see memory captured in a different, earlier conversation. In contrast, scoping to {{$userId}} intentionally keeps the same identity key across sessions so memory persists and personalizes future sessions for that user — the opposite of the requirement — while a static 'session' or 'global' value would create one shared, non-varying bucket used by all calls rather than isolating memory per individual session.\n\n**Learn more:** [What is Memory? - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory) · [Create and use memory in Foundry Agent Service (preview) - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage)"
     },
     {
       "n": 77,
@@ -985,7 +1009,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b></b> &quot;{{$userId}}&quot;<br><b></b> [memory_tool]"
+      "answerHtml": "<b>Answers:</b><br><b></b> &quot;{{$userId}}&quot;<br><b></b> [memory_tool]",
+      "exp": "The scope parameter of MemorySearchTool defines the isolation boundary for stored memories. To persist and recall user preferences across separate conversations, the scope must be tied to the user identity rather than the session or conversation. The dynamic token \"{{$userId}}\" automatically resolves to the authenticated user's ID from the calling context, so memories are isolated per user without requiring the client application to generate or supply user IDs manually. In contrast, \"session\" or \"{{$conversationId}}\" scope memories to a single conversation, which would not allow recall across separate conversations. The tools parameter of PromptAgentDefinition must reference the already-configured memory_tool instance (passed as [memory_tool]) so the agent uses the MemorySearchTool object with the correct memory_store_name and scope already set, rather than instantiating a new, differently configured tool.\n\n**Learn more:** [Azure AI Foundry Agent Service - Memory (preview)](https://learn.microsoft.com/en-us/azure/ai-services/agents/how-to/tools/memory)"
     },
     {
       "n": 78,
@@ -998,7 +1023,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Enable application tracing in Project1.",
         "D": "Route requests through the Azure OpenAI endpoint."
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "Microsoft Foundry provides built-in application/agent tracing based on OpenTelemetry that captures every step of a request as correlated spans — including both the model invocation via the Responses API and any tool calls made through Foundry connections, such as Azure AI Content Safety. When application tracing is enabled in the project (typically by connecting an Application Insights resource), Foundry automatically instruments and correlates these steps into a single end-to-end trace that can be viewed in the Foundry portal's Traces view, giving visibility into inputs, outputs, latency, and errors at each stage of the workflow. Enabling logging only within the Content Safety client SDK would isolate that single call and not correlate it with the model request, Foundry Local applies to local model execution rather than this cloud-hosted workflow, and simply routing requests through the Azure OpenAI endpoint does not by itself produce any tracing or visibility into the workflow steps.\n\n**Learn more:** [Set Up Tracing for AI Agents in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-setup) · [Agent tracing in Microsoft Foundry (preview) - Concepts](https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept)"
     },
     {
       "n": 79,
@@ -1025,7 +1051,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "prebuilt-read",
         "D": "prebuilt-layout"
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "Azure Content Understanding provides a dedicated category of RAG analyzers that extract content with layout represented as markdown and apply semantic analysis to improve retrieval quality for downstream applications. Within this category, prebuilt-documentSearch extracts paragraphs, tables, and figures; generates detailed figure/chart/diagram descriptions; captures handwritten annotations; and produces a document summary, and it is the analyzer Microsoft explicitly recommends for document ingestion in RAG workflows. The other options do not meet this requirement: prebuilt-layout and prebuilt-read are content extraction analyzers focused on OCR and raw layout/structure extraction rather than RAG-optimized semantic markdown, and prebuilt-documentFieldSchema is a utility analyzer used to propose field schemas, not to generate RAG-ready markdown.\n\n**Learn more:** [Azure Content Understanding in Foundry Tools prebuilt analyzers](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/prebuilt-analyzers) · [What is Azure Content Understanding in Foundry Tools?](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview)"
     },
     {
       "n": 81,
@@ -1066,7 +1093,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "GenAI Prompt",
         "D": "Document Layout"
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "The Azure Content Understanding skill (Microsoft.Skills.Util.ContentUnderstandingSkill) uses Azure Content Understanding document analyzers in Foundry Tools to extract both text and images while returning locationMetadata (page numbers and bounding-polygon/source position data) for each text chunk and each normalized image, which is exactly what's needed to build page-level citations with bounding regions for both content types. Critically, Microsoft's documentation states that for tables spanning multiple pages, the Azure Content Understanding skill can recognize and extract cross-page tables as a single unit — a capability the alternative Document Layout skill lacks (it outputs tables as plain text on a per-page basis and does not merge them across pages without additional custom logic). The Document Extraction skill does not provide text location metadata (no polygon/page-number data for text), and the GenAI Prompt skill is a generative/LLM skill for producing new content (e.g., summaries or image captions), not a content-extraction skill, so neither meets the stated requirements.\n\n**Learn more:** [Azure Content Understanding Skill - Azure AI Search | Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-content-understanding) · [Document Layout Skill - Azure AI Search | Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-document-intelligence-layout)"
     },
     {
       "n": 84,
@@ -1090,7 +1118,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Field value type:</b> string<br><b>Field method:</b> generate"
+      "answerHtml": "<b>Answers:</b><br><b>Field value type:</b> string<br><b>Field method:</b> generate",
+      "exp": "In Azure Content Understanding's fieldSchema, each field defines a 'type' (value type) and a 'method' (how the value is populated). The value type 'string' is used for natural-language text output such as a description of a color scheme. The method 'generate' is used when the model must infer or interpret content rather than extract literal text or classify into a fixed enum — this is required for video analyzers since 'extract' is supported only for document analyzers. Microsoft's official video documentation explicitly cites 'Color scheme' as an example custom field used to convey mood and atmosphere in each video segment, and demonstrates comparable descriptive fields (e.g., brandLogo) configured with \"type\": \"string\" and \"method\": \"generate\". Since describing a segment's color scheme requires the generative model to interpret and synthesize a description from the visual frames rather than copy literal text or pick from a fixed category list, 'string' + 'generate' is the correct configuration.\n\n**Learn more:** [Azure Content Understanding in Foundry Tools video overview](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview) · [Azure Content Understanding in Foundry Tools - What is an analyzer? Configuration and reference](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference)"
     },
     {
       "n": 86,
@@ -1103,7 +1132,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "a multiple-file task in pro mode that uses the vendor contract files as reference data",
         "D": "a multi-file task in standard mode that uses the invoice and purchase order as input to the analyzer"
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "Azure Content Understanding Pro mode is specifically designed for advanced use cases requiring multi-step reasoning and complex decision-making, such as identifying inconsistencies between documents. Pro mode is enabled by configuring a multi-file task, which supports multiple input documents (the invoice and purchase order) and lets you supply reference data (the vendor contract/contact documents) at analyzer creation time. The service then applies reasoning to validate the input documents against the reference data according to a defined schema, flagging discrepancies for review, and returns this as a single structured output through one analyzer endpoint. Standard mode only supports single-file tasks and does not support multiple input document processing, reference dataset integration, or multi-step reasoning, so it cannot fulfill the comparison and validation requirements.\n\n**Learn more:** [Azure Content Understanding in Foundry Tools standard and pro modes (preview)](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/standard-pro-modes) · [Create an Azure AI Content Understanding multi-file task in the Azure AI Foundry portal](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-ai-foundry-pro-mode)"
     },
     {
       "n": 87,
@@ -1130,7 +1160,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Add the image URL to the request metadata section, so the model can resolve the processing issue automatically.",
         "D": "Place the image URL inside the System Message and set type to image_url so the model loads the image at initialization."
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "Microsoft Foundry (Azure OpenAI) chat completion models that support vision expect the user message's 'content' field to be an array of content-part objects rather than a plain string when the message includes both text and images. Each element in the array must specify a 'type': one element with type 'text' containing the text field, and another with type 'image_url' containing an 'image_url' object with the image's URL (or base64 data URI). This structured format allows the model to distinguish text from image references and process the image correctly, as documented in Microsoft's guidance on using image and audio input in chat completions with Foundry Models.\n\n**Learn more:** [How to use image and audio in chat completions with Azure AI Foundry Models - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/model-inference/how-to/use-chat-multi-modal) · [How to use vision-enabled chat models - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/gpt-with-vision)"
     },
     {
       "n": 89,
@@ -1143,7 +1174,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "SIP",
         "D": "WebSocket"
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "WebRTC is purpose-built for peer-to-peer, real-time audio (and video) communication and is the connection method Microsoft recommends for client-side applications—such as browser-based or mobile apps—that use the Azure OpenAI GPT Realtime API to stream microphone audio to the model and play back generated speech with minimal delay, typically achieving round-trip latencies around 100 ms. WebSocket, while supported by the Realtime API, is intended for server-to-server integrations where strict low latency is not required, since it introduces higher end-to-end delay than WebRTC. SIP is intended for telephony/PSTN call integration rather than in-browser or in-app client streaming, and RTMP is not a supported protocol for the Realtime API at all.\n\n**Learn more:** [Use the GPT Realtime API via WebRTC - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/realtime-audio-webrtc) · [Use the GPT Realtime API via WebSockets - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/realtime-audio-websockets)"
     },
     {
       "n": 90,
@@ -1167,7 +1199,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Managed identity scope:</b> Enable a system-assigned managed identity at the project level.<br><b>Key Vault authorization method:</b> Assign the Key Vault Secrets User role to the managed identity."
+      "answerHtml": "<b>Answers:</b><br><b>Managed identity scope:</b> Enable a system-assigned managed identity at the project level.<br><b>Key Vault authorization method:</b> Assign the Key Vault Secrets User role to the managed identity.",
+      "exp": "A system-assigned managed identity eliminates the need for stored credentials such as access keys, satisfying the keyless-credentials requirement. Scoping the managed identity to the project (rather than the whole Foundry resource) keeps the identity's permissions and blast radius as narrow as possible, which aligns with least privilege. For Key Vault access, Azure RBAC is the modern, recommended authorization model over the legacy access-policy model; the built-in 'Key Vault Secrets User' role grants only the ability to read (get/list) secret contents, without granting rights to manage the vault or other object types, making it the least-privileged role assignment needed for the agent's managed identity to retrieve secrets.\n\n**Learn more:** [Agent identity concepts in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity) · [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide)"
     },
     {
       "n": 92,
@@ -1177,7 +1210,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br>Changing the content filtering configuration to low severity will resolve the fine-tuning job issues. — <b>No</b><br>The difference between the 12% and 4% content harm defect rate is consistent with the different severity thresholds used in Run1 and Run2. — <b>Yes</b><br>The identical 6% protected material evaluation values across Run1 and Run2 indicate that this metric is unaffected by the change in the severity threshold. — <b>Yes</b>"
+      "answerHtml": "<b>Answers:</b><br>Changing the content filtering configuration to low severity will resolve the fine-tuning job issues. — <b>No</b><br>The difference between the 12% and 4% content harm defect rate is consistent with the different severity thresholds used in Run1 and Run2. — <b>Yes</b><br>The identical 6% protected material evaluation values across Run1 and Run2 indicate that this metric is unaffected by the change in the severity threshold. — <b>Yes</b>",
+      "exp": "A content filtering/severity threshold set to 'High' is the most permissive configuration — it blocks only the most severe (high-severity) content, while a 'Low' threshold is the strictest, blocking content at low, medium, and high severity levels. Because the fine-tuning job already fails RAI checks while the filter is at the permissive 'High' setting, the training data contains content severe enough to trigger blocking even under minimal filtering; switching to 'Low' would only make filtering stricter (catching more content), so it would not resolve — and would likely worsen — the failures. Additionally, per Microsoft's fine-tuning safety evaluation documentation, the RAI checks performed during fine-tuning use predefined thresholds that are not tied to any custom content filtering configuration, so changing a filter configuration doesn't affect this evaluation at all.\n\nContent harm defect rate is defined as the percentage of dataset responses whose severity score exceeds the configured threshold. A medium threshold (used in Run1) is more sensitive and flags content at medium and high severity, resulting in a higher defect rate (12%); a high threshold (used in Run2) only flags the most severe content, resulting in a lower defect rate (4%). This drop is exactly the expected behavior when moving from a stricter to a more lenient threshold, confirming the difference is consistent with the threshold change.\n\nThe protected material evaluator is a binary classifier that detects the presence of copyrighted text (e.g., song lyrics, articles) in model output; it operates independently of the configurable severity scale used for harmful content categories (hate, sexual, violence, self-harm). Because the severity threshold setting has no bearing on protected material detection, it is expected that Run1 and Run2 — which differ only in harmful content severity threshold — produce the same protected material evaluation result (6% in both).\n\n**Learn more:** [Safety evaluation for fine-tuning (preview) - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/fine-tuning-safety-evaluation) · [Content filtering for Microsoft Foundry Models (classic)](https://learn.microsoft.com/en-us/azure/foundry-classic/foundry-models/concepts/content-filter)"
     },
     {
       "n": 93,
@@ -1187,7 +1221,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Capture all the nested operations across the entire agent run:</b> Hierarchical spans<br><b>Record tool invocation arguments and results:</b> Tool call attributes"
+      "answerHtml": "<b>Answers:</b><br><b>Capture all the nested operations across the entire agent run:</b> Hierarchical spans<br><b>Record tool invocation arguments and results:</b> Tool call attributes",
+      "exp": "In Microsoft Foundry's OpenTelemetry-based agent tracing, a trace consists of spans that can be nested as parent/child spans, forming a hierarchical tree that reflects the full call stack of an agent run — including sub-agent calls and tool invocations. This hierarchical span structure is what allows capture of all nested operations across an entire agent run, and is rendered as a hierarchical trajectory/tree in the Foundry portal's Observability > Traces view. Separately, each tool-call span carries attributes (metadata) that record the tool's invocation arguments and returned results, following OpenTelemetry semantic conventions for tool calls, which makes this data queryable and auditable. KQL query filters and sampling/trace sampling policies relate to querying stored telemetry or controlling which traces are collected, not to the structural capture of nested operations or the recording of tool call inputs/outputs.\n\n**Learn more:** [Agent tracing in Microsoft Foundry (preview) - Concepts](https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept) · [Configure tracing for AI agent frameworks - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-framework)"
     },
     {
       "n": 94,
@@ -1197,7 +1232,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>HTTP 429:</b> Implement exponential backoff and jitter in the retry logic.<br><b>HTTP 400:</b> Split content into smaller files before uploading the files."
+      "answerHtml": "<b>Answers:</b><br><b>HTTP 429:</b> Implement exponential backoff and jitter in the retry logic.<br><b>HTTP 400:</b> Split content into smaller files before uploading the files.",
+      "exp": "Microsoft Foundry Agent Service documentation explicitly defines a limit error reference table: a 429 rate_limit_exceeded error from a model deployment is mitigated by implementing exponential backoff with jitter in the client's retry logic, which spaces out retries to let throttling recover without exceeding the tokens-per-minute/requests-per-minute quota. A 400 file_size_exceeded error from file uploads is mitigated by splitting the content into smaller files (or reducing file size) before uploading, since the per-file size limit is a fixed service limit that cannot be increased. Both remedies work within the existing service and model limits, as required, rather than requesting new quota (which is scoped to the subscription/deployment, not tenant-wide, and is a separate action from reducing failures within current limits).\n\n**Learn more:** [Quotas and limits for Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions) · [Azure OpenAI in Microsoft Foundry Models Quotas and Limits](https://learn.microsoft.com/en-us/azure/foundry/openai/quotas-limits)"
     },
     {
       "n": 95,
@@ -1235,7 +1271,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>Knowledge grounding:</b> Configure retrieval from approved data sources.<br><b>Memory:</b> Enable agent memory that uses persistent storage."
+      "answerHtml": "<b>Answers:</b><br><b>Knowledge grounding:</b> Configure retrieval from approved data sources.<br><b>Memory:</b> Enable agent memory that uses persistent storage.",
+      "exp": "For grounding, Microsoft Foundry agents should be configured to retrieve knowledge only from approved, curated data sources (such as a knowledge base or index built from vetted repositories) rather than uploading files directly to the agent or embedding content into instructions, both of which bypass repository-level governance and curation controls. For memory, the Microsoft Foundry Agent Service supports agent memory backed by persistent storage (e.g., Cosmos DB-backed memory stores), which allows customer preferences and context to be retained across separate chat sessions. Orchestration-managed session context only persists for the life of a single session/thread, and storing preferences in client application state ties retention to that client rather than the agent, so neither meets the cross-session retention requirement.\n\n**Learn more:** [Overview of Memory - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/concepts/what-is-memory) · [Create and Use Memory - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage)"
     },
     {
       "n": 98,
@@ -1248,7 +1285,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Increase the value of the presence_penalty parameter",
         "D": "Replace the model with a smaller deployment."
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "Microsoft Foundry provides built-in response-quality evaluators (including a completeness/answer-completeness metric) that can be called from application code to assess a generated response before it is returned to the user. By adding a retry-evaluation step in the app logic—evaluating the draft response for completeness and triggering a retry (regeneration or additional retrieval) when it fails the threshold—the application enforces completeness at runtime, prior to returning the final response. This differs from adjusting model sampling parameters (temperature, presence_penalty) or swapping to a smaller model, none of which are code-level pre-return quality gates and none of which reliably guarantee response completeness.\n\n**Learn more:** [Agent Evaluators for Generative AI - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/agent-evaluators) · [Evaluate your AI agents - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-agent)"
     },
     {
       "n": 99,
@@ -1261,7 +1299,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Microsoft Foundry and the Azure Command Line Interface (CLI)",
         "D": "the Azure portal and Microsoft Graph API"
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "Deploying an Azure OpenAI model such as DALL-E requires creating a model deployment inside an Azure OpenAI/Azure AI resource. Microsoft Foundry (the current portal experience for Azure AI/Azure OpenAI resources) is the primary interface for creating and deploying such models, and the Azure CLI (using the cognitiveservices extension, e.g., `az cognitiveservices account deployment create`) provides a supported command-line/automation method for creating those deployments. This combination is documented in Microsoft's official guidance on deploying models in Microsoft Foundry, whereas the other tool combinations listed (Azure ML Studio, Microsoft Graph API, or the Python/PowerShell SDK/cmdlet pairing) are not the supported mechanism for deploying Azure OpenAI's DALL-E model.\n\n**Learn more:** [Deploy models using Azure CLI and Bicep - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/create-model-deployments) · [How to Use Image Generation Models from OpenAI - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e)"
     },
     {
       "n": 100,
@@ -1282,7 +1321,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b></b> &#x27;AzureKeyVault&#x27;<br><b></b> &#x27;AccountManagedIdentity&#x27;"
+      "answerHtml": "<b>Answers:</b><br><b></b> &#x27;AzureKeyVault&#x27;<br><b></b> &#x27;AccountManagedIdentity&#x27;",
+      "exp": "To connect a Microsoft Foundry (Azure AI Foundry) resource or project to a customer-owned Azure Key Vault using Bicep, the Microsoft.CognitiveServices/accounts/connections resource must specify category: 'AzureKeyVault', which tells Foundry this connection targets a Key Vault rather than an AI service or Azure OpenAI resource. The authType must be set to 'AccountManagedIdentity' so that the Foundry resource authenticates to the Key Vault using its managed identity instead of a stored key or API key; the managed identity is then granted an RBAC role (for example, Key Vault Secrets Officer) on the vault so Foundry can read and write secrets. This is the exact pattern documented by Microsoft for bringing your own Key Vault to a Foundry resource, and it also aligns with the best practice of using Microsoft Entra ID–based (managed identity) authentication rather than key-based authentication for Key Vault access.\n\n**Learn more:** [Set up an Azure Key Vault Connection - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/how-to/set-up-key-vault-connection) · [Microsoft.CognitiveServices/accounts/connections reference](https://learn.microsoft.com/en-us/azure/templates/microsoft.cognitiveservices/accounts/connections)"
     },
     {
       "n": 102,
@@ -1295,7 +1335,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Add more support tickets as training data and label more ContactInfo entities.",
         "D": "Replace ContactInfo by using Phone, Email, and SocialMedia entities. Relabel every matching span."
       },
-      "answer": "D"
+      "answer": "D",
+      "exp": "Azure's custom NER schema-design guidance states that you should avoid 'complex entities' — entity types that bundle together multiple distinct kinds of information with different surface patterns — because such entities are difficult for the model to pick out precisely from text, leading to boundary confusion and false positives. The documented remedy is to break the complex entity into multiple, more specific entity types so each has a narrower, more consistent pattern that requires fewer labels to learn accurately (the official example replaces a single 'Address' entity with 'Street Name,' 'PO Box,' 'City,' 'State,' and 'Zip'). In this project, ContactInfo mixes phone numbers, email addresses, and social media handles — three very different textual patterns — under one label, which is exactly the kind of complex/ambiguous entity design that causes low precision and nearby-text false positives. Replacing ContactInfo with separate Phone, Email, and SocialMedia entities and relabeling the corresponding spans in the training data addresses the root schema issue before retraining, whereas adjusting the confidence threshold, running auto-labeling, or simply adding more training data with the same flawed schema would not resolve the underlying ambiguity.\n\n**Learn more:** [Preparing data and designing a schema for custom named entity recognition (NER) - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/custom-named-entity-recognition/how-to/design-schema) · [Custom Named Entity Recognition (NER) FAQ - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/custom-named-entity-recognition/faq)"
     },
     {
       "n": 103,
@@ -1305,7 +1346,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b></b> AnalyzeTextOptions(text=comment)<br><b></b> client.analyze_text(request)"
+      "answerHtml": "<b>Answers:</b><br><b></b> AnalyzeTextOptions(text=comment)<br><b></b> client.analyze_text(request)",
+      "exp": "The Azure AI Content Safety Python SDK's AnalyzeTextOptions class requires a 'text' parameter of type str, so the request must be constructed as AnalyzeTextOptions(text=comment) — passing the raw string, not a list, and not misusing the 'categories' parameter or attempting to call TextCategory.SELF_HARM as a constructor. To submit the request, the ContentSafetyClient exposes an analyze_text(request) method (analyze_image is for images, moderate_text does not exist in this SDK, and the .path(...).post(...) syntax belongs to the JavaScript REST client, not the Python SDK). The resulting AnalyzeTextResult exposes a categories_analysis collection that is filtered for TextCategory.SELF_HARM to obtain and return its severity value, matching the pattern shown in Microsoft's official Content Safety Python quickstart.\n\n**Learn more:** [Quickstart: Analyze text content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text) · [AnalyzeTextOptions Class - Python API reference](https://learn.microsoft.com/en-us/python/api/azure-ai-contentsafety/azure.ai.contentsafety.models.analyzetextoptions)"
     },
     {
       "n": 104,
@@ -1319,7 +1361,8 @@ window.EXAM_DATA["ai103"] = {
         "D": "Use Speech Synthesis Markup Language (SSML) to adjust the prosody of the voice.",
         "E": "From Azure OpenAI use the Whisper model."
       },
-      "answer": "B"
+      "answer": "B",
+      "exp": "The SSML phoneme element allows you to specify the exact pronunciation of a word using a phonetic alphabet such as IPA or SAPI. This directly addresses mispronunciation of specific technical terms with minimal effort, since you only need to annotate the problematic words in the SSML markup rather than retrain a model. In contrast, say-as is meant for interpreting content types (like dates or numbers) rather than correcting phonetic pronunciation, prosody adjusts pitch/rate/volume rather than pronunciation, custom neural voice training requires substantial data collection and model training effort, and Whisper is a speech-to-text model, not applicable to a text-to-speech pronunciation issue.\n\n**Learn more:** [Pronunciation with Speech Synthesis Markup Language (SSML) - Speech service - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-synthesis-markup-pronunciation) · [Phonetic sets for Speech Synthesis Markup Language (SSML) - Microsoft Learn](https://github.com/MicrosoftDocs/azure-ai-docs/blob/main/articles/ai-services/speech-service/speech-ssml-phonetic-sets.md)"
     },
     {
       "n": 105,
@@ -1329,7 +1372,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b></b> OpenAI<br><b></b> --encryption"
+      "answerHtml": "<b>Answers:</b><br><b></b> OpenAI<br><b></b> --encryption",
+      "exp": "Generating fictional stories from prompts is a generative AI task performed by Azure OpenAI Service, so the Cognitive Services resource must be created with --kind OpenAI. To protect the resource's data with a customer-managed key, the az cognitiveservices account create command uses the --encryption parameter, which accepts a JSON payload specifying keySource as Microsoft.KeyVault along with keyVaultProperties (keyName, keyVersion, keyVaultUri) — exactly the structure shown in the script. --assign-identity only grants the resource a managed identity (needed to access Key Vault) but does not configure encryption itself, and --api-properties is unrelated to encryption configuration.\n\n**Learn more:** [az cognitiveservices account create](https://learn.microsoft.com/en-us/cli/azure/cognitiveservices/account?view=azure-cli-latest#az-cognitiveservices-account-create) · [Configure customer-managed keys for Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/encryption/cognitive-services-encryption-keys-portal)"
     },
     {
       "n": 106,
@@ -1367,7 +1411,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Azure AI Immersive Reader",
         "D": "Azure Translator in Foundry Tools"
       },
-      "answer": "C"
+      "answer": "C",
+      "exp": "Azure AI Immersive Reader is specifically designed to improve reading comprehension for people with learning differences such as dyslexia, as well as for new readers and language learners. It provides built-in, proven accessibility features—text-to-speech read-aloud, syllabification, parts-of-speech highlighting, line focus, adjustable spacing/fonts, and a picture dictionary—through a ready-to-use client library and UI, which can be embedded into an application with minimal custom development. This distinguishes it from Document Intelligence (document data extraction), Language (general NLP tasks like sentiment/key phrase analysis), and Translator (language translation), none of which target reading comprehension accessibility.\n\n**Learn more:** [What is Azure AI Immersive Reader? - Azure AI services | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/immersive-reader/overview) · [Azure AI Immersive Reader | Microsoft Azure](https://azure.microsoft.com/en-us/products/ai-services/ai-immersive-reader)"
     },
     {
       "n": 109,
@@ -1380,7 +1425,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "the endpoint URI and a shared access signature (SAS) token",
         "D": "a system assigned managed identity and an X.509 certificate"
       },
-      "answer": "D"
+      "answer": "D",
+      "exp": "A system-assigned managed identity provides App1 with an automatically created and managed identity in Microsoft Entra ID. Behind the scenes, Azure issues and automatically rotates an X.509 certificate as the credential for this identity, so no keys, tokens, or secrets need to be manually created, stored, or rotated by an administrator. After enabling the managed identity, you simply assign App1's identity an appropriate RBAC role (such as Cognitive Services User) on CSAccount1, and the app authenticates using Microsoft Entra ID tokens obtained transparently through this managed credential. This keyless approach requires the least ongoing administrative effort compared to manually managing a subscription key, OAuth token, or SAS token.\n\n**Learn more:** [Managed identities for Azure resources - overview](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/overview) · [How to use managed identities for App Service and Azure Functions](https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity)"
     },
     {
       "n": 110,
@@ -1412,7 +1458,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br>For sample_text, audit will include entity records for Contact and SSN. — <b>No</b><br>For sample_text, text_for_model will include john.doe@contoso.com and 859-98-0987. — <b>Yes</b><br>For sample_text, text_for_model will contain entity type masks for John Doe and 312-555-1234. — <b>Yes</b>"
+      "answerHtml": "<b>Answers:</b><br>For sample_text, audit will include entity records for Contact and SSN. — <b>No</b><br>For sample_text, text_for_model will include john.doe@contoso.com and 859-98-0987. — <b>Yes</b><br>For sample_text, text_for_model will contain entity type masks for John Doe and 312-555-1234. — <b>Yes</b>",
+      "exp": "The piiCategories parameter in the Azure AI Language PII detection request limits which entity categories are detected and returned by the service — here only \"Person\" and \"PhoneNumber\". Entities outside those categories, such as Social Security Numbers or email addresses, are not detected at all, so they never appear in doc[\"entities\"] (meaning audit won't include SSN records, and 'Contact' isn't a PII entity to begin with) and they are never redacted in redactedText (so the email and SSN remain visible in text_for_model). Conversely, detected entities within the specified categories — the person name 'John Doe' and phone number '312-555-1234' — are redacted according to the entityMask redactionPolicy, which replaces the entity text with a token denoting its entity type (e.g., [PERSON_1], [PHONENUMBER_1]) in the redactedText output.\n\n**Learn more:** [Identify and extract Personally Identifiable Information (PII) from text - Azure AI Language](https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii) · [What is the Personally Identifiable Information (PII) detection feature in Azure Language?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/overview)"
     },
     {
       "n": 113,
@@ -1463,7 +1510,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br><b>JSON data:</b> Object projection<br><b>Extracted text data:</b> File projection"
+      "answerHtml": "<b>Answers:</b><br><b>JSON data:</b> Object projection<br><b>Extracted text data:</b> File projection",
+      "exp": "Azure AI Search knowledge stores support three projection types, each mapping to a specific Azure Storage destination and data shape. Table projections write to Azure Table Storage and require a schematized shape of rows and columns, which is best suited to structured, tabular enrichment output. Object projections write JSON documents to Azure Blob Storage and are used when you need the full JSON representation of an enrichment tree or whole document — this makes Object projection the correct choice for unstructured JSON data, since it preserves the JSON structure without forcing it into a rigid table schema. File projections also write to Azure Blob Storage but are specifically used to persist the binary content extracted/normalized from source documents (such as normalized images and the text/content derived from scanned PDF documents processed through OCR), making File projection the correct choice for the extracted text data originating from the scanned PDFs. This distinction — Table for tabular data, Object for whole-document JSON, File for extracted/normalized binary content from source documents — is documented in the Azure AI Search knowledge store projections concepts.\n\n**Learn more:** [Knowledge store \"projections\" in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/knowledge-store-projection-overview) · [Define Projections - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/knowledge-store-projections-examples)"
     },
     {
       "n": 117,
@@ -1653,7 +1701,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "Azure Vision in Foundry Tools Image Analysis",
         "D": "Azure Language in Foundry Tools"
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "Microsoft's own OCR guidance draws a direct line between the input type and the recommended service: general, in-the-wild images such as labels, street signs, and posters should use the Azure Vision Read OCR API, while digital and scanned text-heavy documents such as books, articles, and reports should use the Document Intelligence Read model, which is purpose-built and optimized for automating intelligent document processing at scale with an asynchronous API. A million scanned magazine articles is exactly the text-heavy, document-scale scenario Document Intelligence targets, and using its prebuilt Read model requires only calling a managed API rather than building custom OCR pipeline logic, which minimizes development effort compared to lower-level image APIs.\n\n**Learn more:** [OCR - Optical Character Recognition - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr) · [Document Intelligence read model - Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/read)"
     },
     {
       "n": 132,
@@ -2063,7 +2112,8 @@ window.EXAM_DATA["ai103"] = {
         "C": "violence content filtering",
         "D": "self-harm content filtering"
       },
-      "answer": "A"
+      "answer": "A",
+      "exp": "The Agent1 security requirements are that it must never reveal customer data even if a customer document lands in the product-sheet repository, and that it must be protected from malicious instructions hidden in the product sheets (including text embedded in images). That is an indirect (document) prompt-injection and data-exfiltration threat, which Prompt Shields addresses: document attack detection flags instructions embedded in documents, including attempts at unauthorized data exfiltration, and for agents it can scan content at the tool-response intervention point. Protected material detection only scans model output for known copyrighted text (lyrics, news, recipes, web content) or GitHub code, so it does not prevent leaking customer data or hijacking by injected instructions. Violence and self-harm filters are harm-category content filters that do not detect injected instructions or data exfiltration.\n\n**Learn more:** [Prompt Shields in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection) · [Protected material detection in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/protected-material)"
     },
     {
       "n": 164,
@@ -2194,7 +2244,8 @@ window.EXAM_DATA["ai103"] = {
       "choices": {},
       "answer": "",
       "visual": true,
-      "answerHtml": "<b>Answers:</b><br>request_a returns a vectorized response. — <b>Yes</b><br>request_b returns a JSON-formatted response. — <b>No</b><br>request_b always returns a case summary that includes risks. — <b>No</b>"
+      "answerHtml": "<b>Answers:</b><br>request_a returns a vectorized response. — <b>Yes</b><br>request_b returns a JSON-formatted response. — <b>No</b><br>request_b always returns a case summary that includes risks. — <b>No</b>",
+      "exp": "1. **Yes:** A successful embeddings request returns a numeric vector representing the input text, assuming the specified deployment exists. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/embeddings?utm_source=openai))\n2. **No:** Although `request_b` specifies structured JSON output, it lacks the required `model` field and `additionalProperties: false` in its object schema. It therefore cannot produce the requested JSON completion as written; an error response could itself be formatted as JSON. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/chat-create-chat-completion?utm_source=openai))\n3. **No:** The request is invalid. Even if corrected, requiring `keyRisks` only requires the field to be present; its array can be empty, so actual risks are not guaranteed. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?source=recommendations&utm_source=openai))\n\n**Learn more:** [Generate embeddings with Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/embeddings) · [Create a chat completion](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/chat-create-chat-completion)"
     },
     {
       "n": 174,

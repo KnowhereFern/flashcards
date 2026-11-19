@@ -1,6 +1,6 @@
 # Cert question-dump sources & scraping playbook
 
-Last full update: **2026-11-16** (AI-103 guest harvest). Read this before re-scraping.
+Last full update: **2026-11-19** (AI-103 explanations backfill). Read this before re-scraping.
 
 ## Current bank status
 
@@ -8,7 +8,7 @@ Last full update: **2026-11-16** (AI-103 guest harvest). Read this before re-scr
 |---|---|---|---|
 | CCA-F / CCAR-F (Anthropic) | 134/134 | 134 (itexams) | itexams dump, fact-checked vs official docs 2026-11-09 |
 | AI-500 (Microsoft Foundry multi-agent) | 95 | 107 (itexams) | itexams 1–27 + ExamTopics 30-free + freecram/certlibrary/Braindump2go extras + **ExamCademy verified bank (92 q)** |
-| AI-103 (Microsoft Azure AI apps & agents) | 182 | 185 (ExamCademy numbered pool) | **ExamCademy guest per-question harvest 2026-11-16** (`/q/<n>-<slug>`, RSC `stemRaw`/`choices`/`answers`/`blanks`/`slots`/`statements`); 185 slots → 182 captured (153/160/163 unavailable); can be supplemented from itexams/ExamTopics per playbook |
+| AI-103 (Microsoft Azure AI apps & agents) | 182 | 185 (ExamCademy numbered pool) | **ExamCademy guest per-question harvest 2026-11-16** (`/q/<n>-<slug>`, RSC `stemRaw`/`choices`/`answers`/`blanks`/`slots`/`statements`); 185 slots → 182 captured (153/160/163 unavailable); **51 missing `explanation=` fields backfilled 2026-11-19** (chunk-ref/literal parsing) → 182/182 explanations; can be supplemented from itexams/ExamTopics per playbook |
 | CIS-DF (ServiceNow CMDB/CSDM) | 249 | 283 (itexams) | itexams/GitHub pools (204) ∪ **ExamCademy verified bank (259 q)**, content-deduped |
 
 ## Where the questions live (ranked by usefulness)

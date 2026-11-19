@@ -106,6 +106,12 @@ frame.onload=()=>{
     // Regression for the reported AI-103 "blank solution" cards: q19/q20 explanations must render.
     try{
       w.openExam('ai103');
+      w.__app.pos=0;
+      $('fc-show').click();
+      chk($('fc-exp').textContent.includes('Prompt Shields'),'ai103 q1 backfilled explanation');
+      w.__app.pos=12;
+      $('fc-show').click();
+      chk($('fc-exp').textContent.includes('tool_choice'),'ai103 q13 backfilled explanation');
       w.__app.pos=18;
       $('fc-show').click();
       chk($('fc-ans').textContent.includes('Correct: B'),'ai103 q19 answer key');
