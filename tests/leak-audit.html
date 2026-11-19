@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>pending</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:20px}iframe{width:900px;height:700px;border:1px solid #ccc}pre{white-space:pre-wrap}</style>
+</head>
+<body>
+<iframe id="app" title="flashcards app under test"></iframe>
+<pre id="out">running…</pre>
+<script>
+const frame=document.getElementById('app');
+frame.onload=()=>{
+  const w=frame.contentWindow, d=frame.contentDocument;
+  if(!w||!w.__app)return; // ignore the initial about:blank load
+  try{
+    const $=id=>d.getElementById(id);
+    const out={cards:0,transitions:0,answersWithHtml:0,answersWithImg:0,noAnswers:0,failures:[]};
+    const chk=(cond,msg)=>{if(!cond&&out.failures.length<40)out.failures.push(msg)};
+
+    w.__app.exams.forEach(id=>{
+      w.openExam(id);
+      const total=w.__app.order.length;
+      for(let i=0;i<total;i++){
+        w.__app.pos=i;
+        const c=w.__app.cur, img=$('fc-ansimg'), ans=$('fc-ans');
+        if(img.classList.contains('show'))$('fc-show').click();
+        $('fc-show').click(); // reveal current
+        out.cards++;
+        const html=c.answerHtml||'', hasHtml=!!html, hasImg=/<img\b/i.test(html);
+        if(hasHtml)out.answersWithHtml++;
+        if(hasImg)out.answersWithImg++;
+        if(!c.answer&&!hasHtml)out.noAnswers++;
+        chk(img.classList.contains('show')===hasHtml, id+' q'+c.n+' answer-html visibility');
+        chk(!!img.querySelector('img')===hasImg, id+' q'+c.n+' image presence');
+        chk(ans.classList.contains('show')&&ans.textContent.trim().length>0, id+' q'+c.n+' answer line');
+        if(hasImg&&!c.answer)chk(ans.textContent.includes('(image)'), id+' q'+c.n+' image label');
+        else if(hasImg)chk(ans.textContent.includes('Correct:'), id+' q'+c.n+' image + answer line');
+        else if(hasHtml)chk(!ans.textContent.includes('(image)'), id+' q'+c.n+' text label');
+        else if(!c.answer)chk(ans.textContent.includes('No answer key'), id+' q'+c.n+' missing-answer fallback');
+        else chk(ans.textContent.includes('Correct:'), id+' q'+c.n+' answer-key line');
+        if(hasImg){
+          [...img.querySelectorAll('img')].forEach((el,k)=>{
+            chk(!!el.getAttribute('alt'), id+' q'+c.n+' image '+k+' alt');
+          });
+        }
+        [i+1,i-1].forEach(j=>{
+          if(j<0||j>=total)return;
+          w.__app.pos=j;
+          const c2=w.__app.cur;
+          out.transitions++;
+          chk(!img.classList.contains('show'), id+' q'+c.n+'->q'+c2.n+' image visible after nav');
+          chk(!img.querySelector('img'), id+' q'+c.n+'->q'+c2.n+' image node after nav');
+          chk(!ans.classList.contains('show'), id+' q'+c.n+'->q'+c2.n+' answer line after nav');
+        });
+        w.__app.pos=i;
+        if(!img.classList.contains('show'))$('fc-show').click(); // ensure revealed
+        $('fc-show').click(); // hide
+        chk(!img.classList.contains('show')&&!img.querySelector('img'), id+' q'+c.n+' hide did not clear image');
+        chk(!ans.classList.contains('show')&&ans.textContent==='', id+' q'+c.n+' hide did not clear answer text');
+      }
+    });
+
+    // Answers-on mode must show the image for the current card only.
+    w.openExam('cis-df');
+    $('f-auto').click();
+    for(let i=0;i<Math.min(5,w.__app.order.length);i++){
+      w.__app.pos=i;
+      const c=w.__app.cur, img=$('fc-ansimg');
+      chk(img.classList.contains('show')===!!c.answerHtml,'answers-on q'+c.n+' image visibility');
+    }
+
+    // A corrupt/imported out-of-range position must clamp, not throw and leave the old card visible.
+    try{
+      w.localStorage.setItem('fc-cis-df','{"sess":{"pos":9999}}');
+      w.openExam('cis-df');
+      chk(w.__app.pos===w.__app.order.length-1,'bad saved pos not clamped: '+w.__app.pos);
+    }catch(e){
+      out.failures.push('bad saved pos throws: '+e.name+': '+e.message);
+    }
+
+    // A persisted shuffle order must be restored exactly, with its position.
+    try{
+      const saved=[...w.__app.order].reverse();
+      w.localStorage.setItem('fc-cis-df',JSON.stringify({sess:{shuffled:true,order:saved,pos:3}}));
+      w.openExam('cis-df');
+      chk(JSON.stringify(w.__app.order)===JSON.stringify(saved),'shuffle order not restored');
+      chk(w.__app.pos===3,'shuffle position not restored: '+w.__app.pos);
+    }catch(e){
+      out.failures.push('shuffle restore throws: '+e.name+': '+e.message);
+    }
+
+    // An empty bank must render an empty state, not throw from Show/Space/Answers.
+    try{
+      w.EXAM_DATA.empty={exam:{code:'EMPTY',title:'Empty',subtitle:''},contexts:[],questions:[]};
+      w.openExam('empty');
+      const btn=$('fc-show');
+      chk(btn.disabled,'empty exam Show answer not disabled');
+      chk($('fc-q').textContent.includes('No questions'),'empty exam message missing');
+      btn.click();
+      d.dispatchEvent(new w.KeyboardEvent('keydown',{key:' ',bubbles:true}));
+      $('f-auto').click();
+      w.__app.pos=0;
+    }catch(e){
+      out.failures.push('empty exam throws: '+e.name+': '+e.message);
+    }
+
+    out.pass=out.failures.length===0;
+    document.title='AUDIT '+JSON.stringify(out);
+    document.getElementById('out').textContent=JSON.stringify(out,null,2);
+  }catch(e){
+    document.title='AUDIT ERROR '+e.name+': '+e.message;
+    document.getElementById('out').textContent='ERROR '+e.stack;
+  }
+};
+try{localStorage.clear()}catch(e){}
+frame.src='../index.html';
+</script>
+</body>
+</html>

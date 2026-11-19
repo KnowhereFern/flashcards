@@ -1,5 +1,5 @@
 /* Cert Flashcards service worker — offline app shell + stale-while-revalidate data */
-const VER = 'v2026-11-19a';
+const VER = 'v2026-11-19b';
 const SHELL = [
   './',
   './index.html',
@@ -25,6 +25,8 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
+  // Cross-origin answer images are left to the browser HTTP cache (they carry a long max-age);
+  // caching opaque responses here would inflate Cache Storage quota.
   if (url.origin !== location.origin || e.request.method !== 'GET') return;
   e.respondWith(
     caches.open(VER).then(async (cache) => {

@@ -1,6 +1,6 @@
 # Cert Flashcards
 
-Flashcard study app for three certification exams, served via GitHub Pages:
+Flashcard study app for four certification exams, served via GitHub Pages:
 
 | Exam | Vendor | Questions |
 |---|---|---|
@@ -15,19 +15,19 @@ Flashcard study app for three certification exams, served via GitHub Pages:
 
 - **Installable** — web manifest + service worker (`sw.js`); Add to Home Screen on iOS gives a standalone app with the flashcards icon, no browser chrome
 - **Offline** — app shell, icons, and question data are precached and refreshed in the background (stale-while-revalidate); bump `VER` in `sw.js` when changing the shell
-- **Resume** — the last-open exam, position, shuffle state, and revealed card are saved to localStorage and restored on load (or after force-quitting/reinstalling… well, until iOS evicts storage — export/import is the backup)
+- **Offline answer images** — remote answer images have a long HTTP cache; they are warmed in the background when you open an exam on a non-slow connection and get an offline placeholder if they were never cached
+- **Resume** — the last-open exam, position, shuffle order, and revealed card are saved to localStorage and restored on load (or after force-quitting/reinstalling… well, until iOS evicts storage — export/import is the backup)
 
 ## Features
 
-- **Flashcards** — click/space to flip; back shows all choices with correct one(s) highlighted; optional choices-on-front mode
-- **Quiz** — toggle answers (supports multi-select "choose two/three"), Enter to reveal; wrong picks auto-flagged
-- **Browse** — searchable list (questions and answer text) with click-to-reveal answers
-- **Spaced review** — "Got it" schedules the card's next review at 1/3/7/14/30-day intervals; "Again" resets it. The "Due" filter shows only what's scheduled to be reviewed
-- **Session resume** — exam, mode, position, and filters are restored on reload
-- **Case-study panels** — AI-500 case-study scenarios are stored once and shown as an expandable panel per question
-- **Visual questions** — drag-and-drop/hotspot items are flagged and show the answer image on reveal
-- **Progress export/import** — move progress between devices (Mac and iPhone have separate localStorage)
-- **Per-exam progress on the picker** — learned counts at a glance
+- **Study mode** — question and choices are always visible; Show answer highlights the correct choice(s), multi-select keys included
+- **Answers-on mode** — keep answers visible while paging through a bank
+- **Shuffle** — randomize the order; the shuffled order is persisted and restored on reload
+- **Session resume** — exam, position, shuffle order, and the last revealed card are restored on load
+- **Case-study panels** — case-study scenarios are stored once and shown as an expandable panel per question
+- **Visual questions** — drag-and-drop/hotspot items show their answer image or text on reveal, with alt text and an offline fallback
+- **Progress export/import** — move progress between devices (Mac and iPhone have separate localStorage); imports are validated and clamped
+- **PWA** — installable shell, offline question data, and keyboard shortcuts (`space`, `←`, `→`)
 
 ## Data provenance
 
@@ -39,7 +39,11 @@ Flashcard study app for three certification exams, served via GitHub Pages:
 
 ## Adding / updating an exam
 
-Each `data-*.js` registers into `window.EXAM_DATA['<id>'] = { exam:{code,title,subtitle}, contexts:[], questions:[{n,domain,ctx,q,choices:{A..},answer:'D'|'BC',visual?,answerHtml?}] }`. Update the array (or re-scrape) and push — Pages redeploys automatically.
+Each `data-*.js` registers into `window.EXAM_DATA['<id>'] = { exam:{code,title,subtitle}, contexts:[], questions:[{n,domain,ctx,q,choices:{A..},answer:'D'|'BC',visual?,answerHtml?}] }`. Update the array (or re-scrape), bump the asset query/`sw.js` `VER`, and push — Pages redeploys automatically.
+
+## Tests
+
+`bash tests/run.sh` runs the headless leak audit (requires Chrome or `CHROME_BIN`). It loads the real app in an iframe and checks every card: reveal/hide, forward/back navigation, answer text/image clearing, alt text, Answers mode, bad saved positions, and shuffle-order restore.
 
 ## Disclaimer
 

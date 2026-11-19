@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>pending</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:20px}iframe{width:900px;height:500px;border:1px solid #ccc}pre{white-space:pre-wrap}</style>
+</head>
+<body>
+<iframe id="app" title="flashcards app under test"></iframe>
+<pre id="out">running…</pre>
+<script>
+const frame=document.getElementById('app');
+frame.onload=()=>{
+  const w=frame.contentWindow, d=frame.contentDocument;
+  if(!w||!w.__app)return;
+  const out={alerts:[],failures:[]};
+  const chk=(cond,msg)=>{if(!cond)out.failures.push(msg)};
+  const input=d.getElementById('io-file');
+  w.alert=m=>out.alerts.push(String(m));
+  try{localStorage.clear()}catch(e){}
+
+  const importPayload=(payload,cb)=>{
+    const before=out.alerts.length;
+    try{
+      const file=new w.File([typeof payload==='string'?payload:JSON.stringify(payload)],'progress.json',{type:'application/json'});
+      const dt=new w.DataTransfer();
+      dt.items.add(file);
+      input.files=dt.files;
+      input.dispatchEvent(new w.Event('change'));
+    }catch(e){out.failures.push('dispatch threw: '+e.message)}
+    let tries=0;
+    const poll=()=>{
+      if(out.alerts.length>before||tries++>40)return cb();
+      setTimeout(poll,25);
+    };
+    setTimeout(poll,25);
+  };
+
+  importPayload({
+    app:'cert-flashcards',
+    exams:{
+      'cis-df':{sess:{pos:9999,shuffled:'yes',order:[999,1],revealedN:9999,autoAns:'yes'}},
+      'bogus':{sess:{pos:1}}
+    }
+  },()=>{
+    chk(out.alerts[0]==='Progress imported.','valid import alert: '+out.alerts[0]);
+    chk(w.localStorage.getItem('bogus')===null,'unknown exam was written');
+    try{
+      w.openExam('cis-df');
+      const last=w.__app.order.length-1;
+      chk(w.__app.pos===last,'imported pos not clamped: '+w.__app.pos+' last='+last);
+      const saved=JSON.parse(w.localStorage.getItem('fc-cis-df'));
+      chk(saved.sess.shuffled===false,'string shuffled not coerced to false');
+      chk(saved.sess.autoAns===false,'string autoAns not coerced to false');
+      chk(saved.sess.order===null,'invalid shuffle order kept');
+      chk(saved.sess.revealedN===null,'invalid revealedN kept');
+    }catch(e){out.failures.push('post-import openExam threw: '+e.message)}
+
+    importPayload({app:'other',exams:{'cis-df':{sess:{pos:3}}}},()=>{
+      chk(String(out.alerts[1]||'').includes('not a Cert Flashcards export'),'foreign app not rejected: '+out.alerts[1]);
+      const saved=JSON.parse(w.localStorage.getItem('fc-cis-df'));
+      chk(saved.sess.pos!==3,'foreign import overwrote progress');
+
+      importPayload('{',()=>{
+        chk(String(out.alerts[2]||'').startsWith('Import failed:'),'malformed JSON not rejected: '+out.alerts[2]);
+
+        importPayload({app:'cert-flashcards',exams:{}},()=>{
+          chk(String(out.alerts[3]||'').includes('no valid exam progress'),'empty import not rejected: '+out.alerts[3]);
+
+          importPayload({app:'cert-flashcards',exams:{'ai103':{sess:{pos:-5,shuffled:false,autoAns:false}}}},()=>{
+            chk(out.alerts[4]==='Progress imported.','minimal import alert: '+out.alerts[4]);
+            const saved=JSON.parse(w.localStorage.getItem('fc-ai103')||'null');
+            chk(saved&&saved.sess.pos===0,'negative pos not clamped: '+(saved&&saved.sess.pos));
+            out.pass=out.failures.length===0;
+            document.title='IMPORT '+JSON.stringify(out);
+            document.getElementById('out').textContent=JSON.stringify(out,null,2);
+          });
+        });
+      });
+    });
+  });
+};
+try{localStorage.clear()}catch(e){}
+frame.src='../index.html';
+</script>
+</body>
+</html>

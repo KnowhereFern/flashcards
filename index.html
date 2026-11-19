@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Flashcards">
 <meta name="theme-color" content="#0e1116">
+<meta name="app-version" content="v2026-11-19b">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -177,23 +178,48 @@ function buildTiles(){
   $('exam-tiles').querySelectorAll('.tile').forEach(b=>b.onclick=()=>openExam(b.dataset.exam));
 }
 function openExam(id){
+  const e=REG[id];
+  if(!e||!Array.isArray(e.questions))return;
   examId=id;
-  const e=REG[id]; META=e.exam; CONTEXTS=e.contexts||[]; QUESTIONS=e.questions;
+  META=e.exam; CONTEXTS=e.contexts||[]; QUESTIONS=e.questions;
   byN={}; QUESTIONS.forEach(q=>byN[q.n]=q);
   try{store=JSON.parse(localStorage.getItem('fc-'+examId)||'{}')}catch(err){store={}}
   store=Object.assign({sess:{}},store);
+  if(!store.sess||typeof store.sess!=='object')store.sess={};
   $('v-exams').classList.add('hidden');
   $('v-study').classList.remove('hidden');
   $('home').classList.remove('hidden');
   $('brand-name').textContent=META.title;
   $('brand-sub').textContent=META.subtitle;
-  pos=store.sess.pos||0;
   order=QUESTIONS.map(q=>q.n);
-  if(store.sess.shuffled)shuffleOrder(false);
-  autoAns=!!store.sess.autoAns;
+  const isShuffled=store.sess.shuffled===true;
+  if(isShuffled){
+    const saved=store.sess.order;
+    if(Array.isArray(saved)&&sameOrder(saved,order))order=saved.slice();
+    else shuffleOrder(false);
+  }
+  store.sess.shuffled=isShuffled;
+  pos=clampPos(store.sess.pos);
+  autoAns=store.sess.autoAns===true;
+  store.sess.autoAns=autoAns;
+  if(!Number.isInteger(store.sess.revealedN)||!byN[store.sess.revealedN])store.sess.revealedN=null;
   $('f-auto').classList.toggle('on',autoAns);
   revealed=false;
   render();
+  warmAnswerImages(id);
+}
+function sameOrder(a,b){
+  if(!Array.isArray(a)||a.length!==b.length)return false;
+  const want=new Set(b), seen=new Set();
+  return a.every(n=>{
+    if(!want.has(n)||seen.has(n))return false;
+    seen.add(n);
+    return true;
+  });
+}
+function clampPos(p){
+  p=Number.isInteger(p)?p:0;
+  return Math.max(0,Math.min(order.length-1,p));
 }
 $('home').onclick=()=>{
   $('v-study').classList.add('hidden');
@@ -201,15 +227,18 @@ $('home').onclick=()=>{
   $('home').classList.add('hidden');
   $('brand-name').textContent='Cert Flashcards';
   $('brand-sub').textContent='select an exam';
-  localStorage.removeItem('fc-last-exam');
+  try{localStorage.removeItem('fc-last-exam')}catch(e){}
   buildTiles();
 };
 
 /* ---------- persistence ---------- */
 const save=()=>{
-  store.sess={pos,shuffled:!!store.sess.shuffled,revealedN:store.sess.revealedN||null,autoAns:!!autoAns};
-  localStorage.setItem('fc-'+examId,JSON.stringify(store));
-  localStorage.setItem('fc-last-exam',examId);
+  store.sess={pos,shuffled:!!store.sess.shuffled,order:store.sess.shuffled?order.slice():null,
+    revealedN:Number.isInteger(store.sess.revealedN)?store.sess.revealedN:null,autoAns:!!autoAns};
+  try{
+    localStorage.setItem('fc-'+examId,JSON.stringify(store));
+    localStorage.setItem('fc-last-exam',examId);
+  }catch(e){}
 };
 
 const cur=()=>byN[order[pos]];
@@ -234,6 +263,8 @@ function setCtx(elWrap,elBody,c){
 /* ---------- render ---------- */
 function render(){
   const c=cur();
+  if(!c){renderEmpty();return}
+  $('fc-show').disabled=false;
   $('fc-domain').textContent=c.domain||META.code;
   $('fc-visual').classList.toggle('hidden',!c.visual);
   $('fc-num').textContent='Question '+c.n;
@@ -244,30 +275,67 @@ function render(){
     const p=document.createElement('p');p.textContent=par;qEl.appendChild(p);
   });
   if(!qEl.children.length)qEl.textContent=String(c.q||'');
-  // answers-on mode or a card the user had revealed stays revealed
+  // answers-on mode, or restore the card that was revealed before a reload
   setRevealed(c,autoAns||store.sess.revealedN===c.n);
-  $('bar').style.width=Math.round(((pos+1)/order.length)*100)+'%';
+  $('bar').style.width=order.length?Math.round(((pos+1)/order.length)*100)+'%':'0%';
   $('pos').textContent=`${pos+1} / ${order.length}`;
   save();
 }
-function letters(c){return Object.keys(c.choices).sort()}
+function renderEmpty(){
+  revealed=false;
+  $('fc-domain').textContent=META?META.code:'';
+  $('fc-visual').classList.add('hidden');
+  $('fc-num').textContent='';
+  const ctx=$('fc-ctx');ctx.classList.add('hidden');ctx.open=false;
+  $('fc-q').textContent='No questions available for this exam.';
+  $('fc-opts').innerHTML='';
+  const img=$('fc-ansimg');img.innerHTML='';img.classList.remove('show');
+  const ans=$('fc-ans');ans.textContent='';ans.classList.remove('show');
+  const b=$('fc-show');b.textContent='Show answer';b.classList.remove('revealed');b.disabled=true;
+  $('bar').style.width='0%';
+  $('pos').textContent='0 / 0';
+}
+function letters(c){return Object.keys(c.choices||{}).sort()}
 function renderOpts(c,reveal){
   // choices are ALWAYS visible; reveal only highlights the correct one(s)
   $('fc-opts').classList.remove('hidden');
+  const answer=String(c.answer||'');
   $('fc-opts').innerHTML=letters(c).map(L=>
-    `<div class="opt${reveal&&c.answer.includes(L)?' correct':''}"><span class="k">${L}</span><span class="t">${esc(c.choices[L]||'')}</span></div>`).join('');
+    `<div class="opt${reveal&&answer.includes(L)?' correct':''}"><span class="k">${L}</span><span class="t">${esc(c.choices[L]||'')}</span></div>`).join('');
 }
 
 /* ---------- reveal ---------- */
 function setRevealed(c,on){
   revealed=on;
   renderOpts(c,on);
-  // always reset the image slot so a previous card's answer image can't leak onto the next one
+  // always reset the answer-html slot so a previous card's image/text can't leak onto the next one
   const img=$('fc-ansimg');
-  if(on&&c.answerHtml){img.innerHTML=c.answerHtml;img.classList.add('show')}
-  else{img.innerHTML='';img.classList.remove('show')}
+  const html=c.answerHtml||'';
+  const hasImg=/<img\b/i.test(html);
+  if(on&&html){
+    img.innerHTML=html;
+    img.querySelectorAll('img').forEach(el=>{
+      if(!el.getAttribute('alt'))el.setAttribute('alt','Answer image for question '+c.n);
+      const fallback=()=>{
+        const note=document.createElement('div');
+        note.className='hint';
+        note.textContent='Answer image unavailable offline. Reconnect once to cache it.';
+        if(el.parentNode)el.replaceWith(note);
+      };
+      if(el.complete&&el.naturalWidth===0)fallback();
+      else el.addEventListener('error',fallback,{once:true});
+    });
+    img.classList.add('show');
+  }else{
+    img.innerHTML='';
+    img.classList.remove('show');
+  }
   if(on){
-    $('fc-ans').textContent=c.answer?('Correct: '+c.answer):(c.visual?'Answer shown above (image)':'');
+    let line;
+    if(c.answer)line='Correct: '+c.answer;
+    else if(html)line=hasImg?'Answer shown above (image)':'Answer shown above';
+    else line='No answer key available for this question.';
+    $('fc-ans').textContent=line;
     $('fc-ans').classList.add('show');
     store.sess.revealedN=c.n;
   }else{
@@ -280,7 +348,7 @@ function setRevealed(c,on){
   b.classList.toggle('revealed',on);
   save();
 }
-function toggleReveal(){setRevealed(cur(),!revealed)}
+function toggleReveal(){const c=cur();if(c)setRevealed(c,!revealed)}
 $('fc-show').onclick=toggleReveal;
 $('fc-prev').onclick=()=>go(-1);
 $('fc-next').onclick=()=>go(1);
@@ -292,11 +360,38 @@ function shuffleOrder(saveState=true){
 }
 $('f-shuffle').onclick=()=>{shuffleOrder();pos=0;render()};
 
+/* ---------- offline answer images ---------- */
+function answerImageUrls(exam){
+  const urls=new Set();
+  (exam.questions||[]).forEach(q=>{
+    for(const m of String(q.answerHtml||'').matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["']/gi))urls.add(m[1]);
+  });
+  return [...urls];
+}
+const warmed=new Set();
+function warmAnswerImages(id){
+  if(warmed.has(id))return;
+  const exam=REG[id];if(!exam)return;
+  const conn=navigator.connection;
+  if(!navigator.onLine||(conn&&(conn.saveData||/2g|3g/.test(conn.effectiveType||''))))return;
+  const urls=answerImageUrls(exam);
+  if(!urls.length)return;
+  warmed.add(id);
+  let i=0;
+  const next=()=>{
+    if(i>=urls.length)return;
+    const im=new Image();
+    im.onload=im.onerror=()=>setTimeout(next,80);
+    im.src=urls[i++];
+  };
+  setTimeout(next,1500);
+}
+
 /* answers-on: power through cards with the answer always visible */
 $('f-auto').onclick=()=>{
   autoAns=!autoAns;
   $('f-auto').classList.toggle('on',autoAns);
-  setRevealed(cur(),autoAns);
+  const c=cur();if(c)setRevealed(c,autoAns);
 };
 
 /* ---------- export / import ---------- */
@@ -306,10 +401,14 @@ $('io-export').onclick=()=>{
     try{data.exams[id]=JSON.parse(localStorage.getItem('fc-'+id)||'null')}catch(e){}
   });
   const blob=new Blob([JSON.stringify(data,null,1)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
+  a.href=url;
   a.download='flashcards-progress.json';
-  a.click();URL.revokeObjectURL(a.href);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 };
 $('io-import').onclick=()=>$('io-file').click();
 $('io-file').onchange=e=>{
@@ -318,8 +417,21 @@ $('io-file').onchange=e=>{
   r.onload=()=>{
     try{
       const data=JSON.parse(r.result);
-      if(!data.exams)throw new Error('not a progress export');
-      Object.entries(data.exams).forEach(([id,s])=>{if(s)localStorage.setItem('fc-'+id,JSON.stringify(s))});
+      if(!data||typeof data!=='object'||!data.exams||typeof data.exams!=='object')throw new Error('not a progress export');
+      if(data.app&&data.app!=='cert-flashcards')throw new Error('not a Cert Flashcards export');
+      let imported=0;
+      Object.entries(data.exams).forEach(([id,s])=>{
+        const exam=REG[id];
+        if(!exam||!s||typeof s!=='object')return;
+        const sess=(s.sess&&typeof s.sess==='object')?s.sess:{};
+        const ns=new Set(exam.questions.map(q=>q.n));
+        const p=Math.max(0,Math.min(Math.max(0,exam.questions.length-1),Number.isInteger(sess.pos)?sess.pos:0));
+        const revealedN=Number.isInteger(sess.revealedN)&&ns.has(sess.revealedN)?sess.revealedN:null;
+        const order=Array.isArray(sess.order)&&sess.order.length===ns.size&&sess.order.every(n=>ns.has(n))&&new Set(sess.order).size===ns.size?sess.order.slice():null;
+        localStorage.setItem('fc-'+id,JSON.stringify({sess:{pos:p,shuffled:sess.shuffled===true,order:order,revealedN:revealedN,autoAns:sess.autoAns===true}}));
+        imported++;
+      });
+      if(!imported)throw new Error('no valid exam progress found');
       buildTiles();
       alert('Progress imported.');
     }catch(err){alert('Import failed: '+err.message)}
@@ -339,6 +451,7 @@ document.addEventListener('keydown',e=>{
 
 /* debug/test hook (read-only views + position setter) */
 window.__app = {
+  get exams(){return Object.keys(REG);},
   get cur(){return cur();},
   get order(){return order;},
   get pos(){return pos;},
