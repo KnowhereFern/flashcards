@@ -262,12 +262,16 @@ function renderOpts(c,reveal){
 function setRevealed(c,on){
   revealed=on;
   renderOpts(c,on);
-  if(c.answerHtml){$('fc-ansimg').innerHTML=c.answerHtml;$('fc-ansimg').classList.toggle('show',on)}
+  // always reset the image slot so a previous card's answer image can't leak onto the next one
+  const img=$('fc-ansimg');
+  if(on&&c.answerHtml){img.innerHTML=c.answerHtml;img.classList.add('show')}
+  else{img.innerHTML='';img.classList.remove('show')}
   if(on){
     $('fc-ans').textContent=c.answer?('Correct: '+c.answer):(c.visual?'Answer shown above (image)':'');
     $('fc-ans').classList.add('show');
     store.sess.revealedN=c.n;
   }else{
+    $('fc-ans').textContent='';
     $('fc-ans').classList.remove('show');
     store.sess.revealedN=null;
   }
