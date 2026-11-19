@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Flashcards">
 <meta name="theme-color" content="#0e1116">
-<meta name="app-version" content="v2026-11-19c">
+<meta name="app-version" content="v2026-11-19e">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -59,6 +59,8 @@ color:var(--acc);background:rgba(90,169,255,.12);border-radius:999px;padding:3px
 .q{font-size:17px;line-height:1.6;margin:12px 0 0;font-weight:500;overflow-wrap:break-word}
 .q p{margin:0 0 10px;white-space:pre-line}
 .q p:last-child{margin-bottom:0}
+.q img{display:block;max-width:100%;height:auto;margin:10px 0;border-radius:8px;border:1px solid var(--line)}
+.imgfallback{display:block;margin:8px 0;color:var(--mut);font-size:13px}
 .ctx{margin-top:12px;font-size:13px}
 .ctx summary{cursor:pointer;color:var(--acc);font-weight:600;padding:8px 0}
 .ctx-body{border-left:3px solid var(--line);padding:10px 16px;line-height:1.65}
@@ -74,6 +76,12 @@ color:var(--acc);background:rgba(90,169,255,.12);border-radius:999px;padding:3px
 .opt.hidden-opt{display:none}
 .ansline{margin-top:14px;font-weight:800;color:var(--ok);display:none}
 .ansline.show{display:block}
+.exp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;line-height:1.65;color:var(--mut)}
+.exp p{margin:0 0 10px}
+.exp p:last-child{margin-bottom:0}
+.exp strong{color:var(--ink)}
+.exp a{color:var(--acc)}
+.exp img{display:block;max-width:100%;height:auto;margin:10px 0;border-radius:8px}
 .ansimg{display:none;margin-top:12px}
 .ansimg.show{display:block}
 .ansimg img{max-width:100%;border-radius:8px}
@@ -142,6 +150,7 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
     <div class="opts" id="fc-opts"></div>
     <div class="ansimg" id="fc-ansimg"></div>
     <div class="ansline" id="fc-ans"></div>
+    <div class="exp hidden" id="fc-exp"></div>
   </div>
 
   <div class="actions">
@@ -159,11 +168,55 @@ kbd{background:#232c37;border:1px solid var(--line);border-bottom-width:2px;bord
 <script src="data-ccaf.js?v=20261112a"></script>
 <script src="data-ai500.js?v=20261112a"></script>
 <script src="data-cisdf.js?v=20261112a"></script>
-  <script src="data-ai103.js?v=20261116a"></script>
+  <script src="data-ai103.js?v=20261119a"></script>
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const REG=window.EXAM_DATA||{};
+const IMG_FALLBACK='Image unavailable. It may be offline or blocked by the source.';
+// Source dumps contain literal "\ \ " line-break artifacts; normalize them to paragraph breaks.
+function cleanText(t){return String(t||'').replace(/\s*\\\s*\\\s*/g,'\n\n').trim()}
+// Explanations are Markdown-ish: **bold** and [label](https://...) links.
+function formatExp(text){
+  let s=esc(cleanText(text));
+  s=s.replace(/!\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g,'<img src="$2" alt="$1" loading="lazy" decoding="async">');
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  return s.split(/\n{2,}/).map(p=>'<p>'+p.replace(/\n/g,'<br>')+'</p>').join('');
+}
+function addImageFallback(el,msg){
+  const fallback=()=>{
+    const note=document.createElement('span');
+    note.className='imgfallback';
+    note.textContent=msg||'Image unavailable.';
+    if(el.parentNode)el.replaceWith(note);
+  };
+  if(el.complete&&el.naturalWidth===0)fallback();
+  else el.addEventListener('error',fallback,{once:true});
+}
+// Render plain text with line breaks plus any ![alt](https://...) question images.
+function renderQuestion(el,text,n){
+  el.textContent='';
+  const t=cleanText(text);
+  t.split(/\n{2,}/).map(s=>s.trim()).filter(Boolean).forEach(block=>{
+    const p=document.createElement('p');
+    let last=0;
+    for(const m of block.matchAll(/!\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g)){
+      if(m.index>last)p.appendChild(document.createTextNode(block.slice(last,m.index)));
+      const img=document.createElement('img');
+      img.src=m[2];
+      img.alt=m[1]||('Question image for question '+n);
+      img.loading='lazy';
+      img.decoding='async';
+      p.appendChild(img);
+      addImageFallback(img,IMG_FALLBACK);
+      last=m.index+m[0].length;
+    }
+    if(last<block.length)p.appendChild(document.createTextNode(block.slice(last)));
+    if(p.childNodes.length)el.appendChild(p);
+  });
+  if(!el.children.length)el.textContent=t;
+}
 
 /* ---------- state ---------- */
 let examId=null, META=null, CONTEXTS=[], QUESTIONS=[], store={sess:{}};
@@ -208,7 +261,7 @@ function openExam(id){
   $('f-auto').classList.toggle('on',autoAns);
   revealed=false;
   render();
-  warmAnswerImages(id);
+  warmExamImages(id);
 }
 function sameOrder(a,b){
   if(!Array.isArray(a)||a.length!==b.length)return false;
@@ -247,7 +300,7 @@ const cur=()=>byN[order[pos]];
 const CASE_HEADERS=/^(Overview|Existing Environment|Foundry Environment|Knowledge Base|Problem Statements|Requirements|Business Requirements|Safety Requirements?|Security Requirements|Performance Requirements|Consultant Proposal|Planned Changes|Technical Requirements|Claim Project|The Claim Approval workflow|Claim Approval|Contoso, Ltd\.|Litware, Inc\.)$/;
 function renderCtx(body,text){
   body.innerHTML='';
-  text.split('\n').forEach(line=>{
+  cleanText(text).split('\n').forEach(line=>{
     const t=line.trim();
     if(!t)return;
     const d=document.createElement('div');
@@ -271,12 +324,7 @@ function render(){
   $('fc-visual').classList.toggle('hidden',!c.visual);
   $('fc-num').textContent='Question '+c.n;
   setCtx($('fc-ctx'),$('fc-ctx-body'),c);
-  // render question as paragraphs: blank lines split, single newlines preserved
-  const qEl=$('fc-q');qEl.textContent='';
-  String(c.q||'').split(/\n{2,}/).map(s=>s.trim()).filter(Boolean).forEach(par=>{
-    const p=document.createElement('p');p.textContent=par;qEl.appendChild(p);
-  });
-  if(!qEl.children.length)qEl.textContent=String(c.q||'');
+  renderQuestion($('fc-q'),c.q,c.n);
   // answers-on mode, or restore the card that was revealed before a reload
   setRevealed(c,autoAns||store.sess.revealedN===c.n);
   $('bar').style.width=order.length?Math.round(((pos+1)/order.length)*100)+'%':'0%';
@@ -293,6 +341,7 @@ function renderEmpty(){
   $('fc-opts').innerHTML='';
   const img=$('fc-ansimg');img.innerHTML='';img.classList.remove('show');
   const ans=$('fc-ans');ans.textContent='';ans.classList.remove('show');
+  const exp=$('fc-exp');exp.innerHTML='';exp.classList.add('hidden');
   const b=$('fc-show');b.textContent='Show answer';b.classList.remove('revealed');b.disabled=true;
   $('bar').style.width='0%';
   $('pos').textContent='0 / 0';
@@ -303,7 +352,7 @@ function renderOpts(c,reveal){
   $('fc-opts').classList.remove('hidden');
   const answer=String(c.answer||'');
   $('fc-opts').innerHTML=letters(c).map(L=>
-    `<div class="opt${reveal&&answer.includes(L)?' correct':''}"><span class="k">${L}</span><span class="t">${esc(c.choices[L]||'')}</span></div>`).join('');
+    `<div class="opt${reveal&&answer.includes(L)?' correct':''}"><span class="k">${L}</span><span class="t">${esc(cleanText(c.choices[L]||''))}</span></div>`).join('');
 }
 
 /* ---------- reveal ---------- */
@@ -318,19 +367,28 @@ function setRevealed(c,on){
     img.innerHTML=html;
     img.querySelectorAll('img').forEach(el=>{
       if(!el.getAttribute('alt'))el.setAttribute('alt','Answer image for question '+c.n);
-      const fallback=()=>{
-        const note=document.createElement('div');
-        note.className='hint';
-        note.textContent='Answer image unavailable offline. Reconnect once to cache it.';
-        if(el.parentNode)el.replaceWith(note);
-      };
-      if(el.complete&&el.naturalWidth===0)fallback();
-      else el.addEventListener('error',fallback,{once:true});
+      el.loading='lazy';
+      el.decoding='async';
+      addImageFallback(el,IMG_FALLBACK);
     });
     img.classList.add('show');
   }else{
     img.innerHTML='';
     img.classList.remove('show');
+  }
+  // explanations are tied to the current card too; clear them on every navigation/hide
+  const expEl=$('fc-exp');
+  const exp=String(c.exp||'').trim();
+  if(on&&exp){
+    expEl.innerHTML=formatExp(exp);
+    expEl.querySelectorAll('img').forEach(el=>{
+      if(!el.getAttribute('alt'))el.setAttribute('alt','Explanation image for question '+c.n);
+      addImageFallback(el,IMG_FALLBACK);
+    });
+    expEl.classList.remove('hidden');
+  }else{
+    expEl.innerHTML='';
+    expEl.classList.add('hidden');
   }
   if(on){
     let line;
@@ -362,21 +420,23 @@ function shuffleOrder(saveState=true){
 }
 $('f-shuffle').onclick=()=>{shuffleOrder();pos=0;render()};
 
-/* ---------- offline answer images ---------- */
-function answerImageUrls(exam){
+/* ---------- offline question/answer images ---------- */
+function examImageUrls(exam){
   const urls=new Set();
   (exam.questions||[]).forEach(q=>{
+    for(const m of String(q.q||'').matchAll(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/g))urls.add(m[1]);
+    for(const m of String(q.exp||'').matchAll(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/g))urls.add(m[1]);
     for(const m of String(q.answerHtml||'').matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["']/gi))urls.add(m[1]);
   });
   return [...urls];
 }
 const warmed=new Set();
-function warmAnswerImages(id){
+function warmExamImages(id){
   if(warmed.has(id))return;
   const exam=REG[id];if(!exam)return;
   const conn=navigator.connection;
   if(!navigator.onLine||(conn&&(conn.saveData||/2g|3g/.test(conn.effectiveType||''))))return;
-  const urls=answerImageUrls(exam);
+  const urls=examImageUrls(exam);
   if(!urls.length)return;
   warmed.add(id);
   let i=0;

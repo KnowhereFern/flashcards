@@ -15,7 +15,7 @@ frame.onload=()=>{
   if(!w||!w.__app)return; // ignore the initial about:blank load
   try{
     const $=id=>d.getElementById(id);
-    const out={cards:0,transitions:0,answersWithHtml:0,answersWithImg:0,noAnswers:0,failures:[]};
+    const out={cards:0,transitions:0,questionImages:0,answersWithHtml:0,answersWithImg:0,explanations:0,noAnswers:0,failures:[]};
     const chk=(cond,msg)=>{if(!cond&&out.failures.length<40)out.failures.push(msg)};
 
     w.__app.exams.forEach(id=>{
@@ -23,14 +23,25 @@ frame.onload=()=>{
       const total=w.__app.order.length;
       for(let i=0;i<total;i++){
         w.__app.pos=i;
-        const c=w.__app.cur, img=$('fc-ansimg'), ans=$('fc-ans');
+        const c=w.__app.cur, img=$('fc-ansimg'), ans=$('fc-ans'), exp=$('fc-exp');
         if(img.classList.contains('show'))$('fc-show').click();
         $('fc-show').click(); // reveal current
         out.cards++;
         const html=c.answerHtml||'', hasHtml=!!html, hasImg=/<img\b/i.test(html);
+        const hasExp=!!String(c.exp||'').trim();
+        const hasQImg=/!\[[^\]]*\]\(https?:\/\//.test(c.q||'');
+        const qEl=$('fc-q'), qImgs=[...qEl.querySelectorAll('img')];
         if(hasHtml)out.answersWithHtml++;
         if(hasImg)out.answersWithImg++;
+        if(hasExp)out.explanations++;
+        if(hasQImg)out.questionImages++;
         if(!c.answer&&!hasHtml)out.noAnswers++;
+        chk(!hasQImg||qImgs.length>0||!!qEl.querySelector('.imgfallback'), id+' q'+c.n+' question image missing');
+        chk(!hasQImg||!qEl.textContent.includes('!['), id+' q'+c.n+' question image markdown left visible');
+        qImgs.forEach((el,k)=>chk(!!el.getAttribute('alt'), id+' q'+c.n+' question image '+k+' alt'));
+        chk(exp.classList.contains('hidden')===!hasExp, id+' q'+c.n+' explanation visibility');
+        chk(!hasExp||exp.textContent.trim().length>0, id+' q'+c.n+' explanation text');
+        chk(!exp.querySelector('script'), id+' q'+c.n+' explanation script');
         chk(img.classList.contains('show')===hasHtml, id+' q'+c.n+' answer-html visibility');
         chk(!!img.querySelector('img')===hasImg, id+' q'+c.n+' image presence');
         chk(ans.classList.contains('show')&&ans.textContent.trim().length>0, id+' q'+c.n+' answer line');
@@ -52,12 +63,14 @@ frame.onload=()=>{
           chk(!img.classList.contains('show'), id+' q'+c.n+'->q'+c2.n+' image visible after nav');
           chk(!img.querySelector('img'), id+' q'+c.n+'->q'+c2.n+' image node after nav');
           chk(!ans.classList.contains('show'), id+' q'+c.n+'->q'+c2.n+' answer line after nav');
+          chk(exp.classList.contains('hidden')&&exp.innerHTML==='', id+' q'+c.n+'->q'+c2.n+' explanation after nav');
         });
         w.__app.pos=i;
         if(!img.classList.contains('show'))$('fc-show').click(); // ensure revealed
         $('fc-show').click(); // hide
         chk(!img.classList.contains('show')&&!img.querySelector('img'), id+' q'+c.n+' hide did not clear image');
         chk(!ans.classList.contains('show')&&ans.textContent==='', id+' q'+c.n+' hide did not clear answer text');
+        chk(exp.classList.contains('hidden')&&exp.innerHTML==='', id+' q'+c.n+' hide did not clear explanation');
       }
     });
 
@@ -88,6 +101,23 @@ frame.onload=()=>{
       chk(w.__app.pos===3,'shuffle position not restored: '+w.__app.pos);
     }catch(e){
       out.failures.push('shuffle restore throws: '+e.name+': '+e.message);
+    }
+
+    // Regression for the reported AI-103 "blank solution" cards: q19/q20 explanations must render.
+    try{
+      w.openExam('ai103');
+      w.__app.pos=18;
+      $('fc-show').click();
+      chk($('fc-ans').textContent.includes('Correct: B'),'ai103 q19 answer key');
+      chk($('fc-exp').textContent.includes('temperature'),'ai103 q19 explanation');
+      w.__app.pos=19;
+      $('fc-show').click();
+      chk($('fc-exp').textContent.includes('quality gate'),'ai103 q20 explanation');
+      chk(!$('fc-exp').textContent.includes('â'),'ai103 q20 mojibake');
+      const links=[...$('fc-exp').querySelectorAll('a')];
+      chk(links.length>0&&links.every(a=>a.target==='_blank'&&a.rel.includes('noopener')),'ai103 q20 explanation links');
+    }catch(e){
+      out.failures.push('ai103 explanation test throws: '+e.name+': '+e.message);
     }
 
     // An empty bank must render an empty state, not throw from Show/Space/Answers.

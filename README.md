@@ -15,17 +15,18 @@ Flashcard study app for four certification exams, served via GitHub Pages:
 
 - **Installable** — web manifest + service worker (`sw.js`); Add to Home Screen on iOS gives a standalone app with the flashcards icon, no browser chrome
 - **Offline** — app shell and icons are precached; question data is cached on first load and refreshed in the background (stale-while-revalidate); bump `VER` in `sw.js` when changing the shell
-- **Offline answer images** — remote answer images have a long HTTP cache; they are warmed in the background when you open an exam on a non-slow connection and get an offline placeholder if they were never cached
+- **Offline question/answer images** — remote question and answer images have a long HTTP cache; they are warmed in the background when you open an exam on a non-slow connection and get an offline placeholder if they were never cached
 - **Resume** — the last-open exam, position, shuffle order, and revealed card are saved to localStorage and restored on load (or after force-quitting/reinstalling… well, until iOS evicts storage — export/import is the backup)
 
 ## Features
 
 - **Study mode** — question and choices are always visible; Show answer highlights the correct choice(s), multi-select keys included
+- **Explanations** — when a bank has an explanation for a question, it appears under the answer with its source links
 - **Answers-on mode** — keep answers visible while paging through a bank
 - **Shuffle** — randomize the order; the shuffled order is persisted and restored on reload
 - **Session resume** — exam, position, shuffle order, and the last revealed card are restored on load
 - **Case-study panels** — case-study scenarios are stored once and shown as an expandable panel per question
-- **Visual questions** — drag-and-drop/hotspot items show their answer image or text on reveal, with alt text and an offline fallback
+- **Visual questions** — question images render inline; drag-and-drop/hotspot items show their answer image or text on reveal, with alt text and an offline/blocked-source fallback
 - **Progress export/import** — move progress between devices (Mac and iPhone have separate localStorage); imports are validated and clamped
 - **PWA** — installable shell, offline question data, and keyboard shortcuts (`space`, `←`, `→`)
 

@@ -91,7 +91,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "the custom speech endpoint URL"
       },
       "answer": "B",
-      "exp": "When you call the Speech to text REST API for custom speech, you set the project property to the ID of your custom speech project â the GUID that appears in the fine-tuning URL in the Microsoft Foundry portal (for example, 00001111-aaaa-2222-bbbb-3333cccc4444). Microsoft's documentation explicitly warns that this custom speech project ID is NOT the same as the Microsoft Foundry project ID, so supplying the generic \"project ID\" (the Foundry project ID) is what produces the \"project ID is invalid\" error described, and you must use the custom speech project ID instead. The project URL and the custom speech endpoint URL are self/reference links returned in API responses rather than the value you assign to the project property, so neither the project URL nor the endpoint URL is correct.\n\n**Learn more:** [Get the project ID for the REST API](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/how-to-custom-speech-create-project)"
+      "exp": "When you call the Speech to text REST API for custom speech, you set the project property to the ID of your custom speech project — the GUID that appears in the fine-tuning URL in the Microsoft Foundry portal (for example, 00001111-aaaa-2222-bbbb-3333cccc4444). Microsoft's documentation explicitly warns that this custom speech project ID is NOT the same as the Microsoft Foundry project ID, so supplying the generic \"project ID\" (the Foundry project ID) is what produces the \"project ID is invalid\" error described, and you must use the custom speech project ID instead. The project URL and the custom speech endpoint URL are self/reference links returned in API responses rather than the value you assign to the project property, so neither the project URL nor the endpoint URL is correct.\n\n**Learn more:** [Get the project ID for the REST API](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/how-to-custom-speech-create-project)"
     },
     {
       "n": 8,
@@ -102,7 +102,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Unsupported responses:</b> Groundedness evaluation metrics<br><b>Policy violations:</b> Risk and safety metrics",
-      "exp": "Groundedness evaluation measures whether a generated response is actually supported by the content retrieved from the grounding documents, so it is the correct signal for catching answers that are not backed by retrieved documents. Risk and safety metrics assess generated content for policy-violating material such as harmful, unsafe, or non-compliant output, so they are the correct signal for responses flagged for policy violations. Latency breakdown traces and token usage analytics measure performance and cost, not answer quality or safety, so they do not address either issue.\n\n**Learn more:** [Built-in Evaluators Reference - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators) Â· [Risk and Safety Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/risk-safety-evaluators)"
+      "exp": "Groundedness evaluation measures whether a generated response is actually supported by the content retrieved from the grounding documents, so it is the correct signal for catching answers that are not backed by retrieved documents. Risk and safety metrics assess generated content for policy-violating material such as harmful, unsafe, or non-compliant output, so they are the correct signal for responses flagged for policy violations. Latency breakdown traces and token usage analytics measure performance and cost, not answer quality or safety, so they do not address either issue.\n\n**Learn more:** [Built-in Evaluators Reference - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators) · [Risk and Safety Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/risk-safety-evaluators)"
     },
     {
       "n": 9,
@@ -148,7 +148,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> DefaultAzureCredential<br><b></b> create",
-      "exp": "A managed identity is consumed in the Azure SDK through azure.identity.DefaultAzureCredential, which automatically discovers and uses the assigned managed identity (or other available credential sources) without requiring a stored key or client secret - unlike AzureKeyCredential (API-key auth) or ClientSecretCredential (requires a stored application secret). Once an AIProjectClient exposes an OpenAI-compatible client through get_openai_client(), sending a new prompt through the Responses API is done by calling responses.create(model=..., input=...); create() issues a new model response, while retrieve() only fetches an existing response and compact() is unrelated to submitting a prompt.\n\n**Learn more:** [Use the Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses) Â· [Quickstart: Build agents using the Responses API](https://learn.microsoft.com/en-us/azure/foundry/agents/quickstarts/responses-api)"
+      "exp": "A managed identity is consumed in the Azure SDK through azure.identity.DefaultAzureCredential, which automatically discovers and uses the assigned managed identity (or other available credential sources) without requiring a stored key or client secret - unlike AzureKeyCredential (API-key auth) or ClientSecretCredential (requires a stored application secret). Once an AIProjectClient exposes an OpenAI-compatible client through get_openai_client(), sending a new prompt through the Responses API is done by calling responses.create(model=..., input=...); create() issues a new model response, while retrieve() only fetches an existing response and compact() is unrelated to submitting a prompt.\n\n**Learn more:** [Use the Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses) · [Quickstart: Build agents using the Responses API](https://learn.microsoft.com/en-us/azure/foundry/agents/quickstarts/responses-api)"
     },
     {
       "n": 13,
@@ -156,10 +156,10 @@ window.EXAM_DATA["ai103"] = {
       "ctx": -1,
       "q": "You have a Microsoft Foundry project that contains an agent, and the agent has a Model Context Protocol (MCP) tool that queries a knowledge base stored in Azure AI Search.  \n  \nSome agent runs return answers straight from the base model without invoking the knowledge base, so those responses lack grounded citations.  \n  \nYou are given the following code snippet, which runs the agent:  \n  \n![Question Image](https://cdn.examcademy.com/images/questions/1783676238651-7e94yywb.png)  \n  \nYou need to add the correct `tool_choice` parameter to the code so that the agent is deterministically forced to invoke the MCP tool on every run.  \n  \nWhat should you add?",
       "choices": {
-        "A": "tool_choice={ârequiredâ}",
-        "B": "tool_choice={âautoâ}",
-        "C": "tool_choice={âtypeâ:âknowledge_baseâ}",
-        "D": "tool_choice ={âtypeâ:âmcpâ}"
+        "A": "tool_choice={“required”}",
+        "B": "tool_choice={“auto”}",
+        "C": "tool_choice={“type”:“knowledge_base”}",
+        "D": "tool_choice ={“type”:“mcp”}"
       },
       "answer": "D"
     },
@@ -189,7 +189,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "prebuilt-layout"
       },
       "answer": "D",
-      "exp": "The prebuilt-layout analyzer extracts content and layout elements â words, paragraphs, tables, and section structure â while preserving document layout, and it also detects and decodes barcodes, including QR codes, as part of its output; it runs as a layout/OCR-based analyzer and does not require deploying a language model. prebuilt-read performs OCR text extraction only, without table or layout structure, and prebuilt-documentFieldSchema and prebuilt-documentSearch are not the layout-and-barcode extraction analyzer.\n\n**Learn more:** [Azure Content Understanding in Foundry Tools - analyzer reference](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference) Â· [Document layout analysis - Document Intelligence](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/layout?view=doc-intel-4.0.0)"
+      "exp": "The prebuilt-layout analyzer extracts content and layout elements — words, paragraphs, tables, and section structure — while preserving document layout, and it also detects and decodes barcodes, including QR codes, as part of its output; it runs as a layout/OCR-based analyzer and does not require deploying a language model. prebuilt-read performs OCR text extraction only, without table or layout structure, and prebuilt-documentFieldSchema and prebuilt-documentSearch are not the layout-and-barcode extraction analyzer.\n\n**Learn more:** [Azure Content Understanding in Foundry Tools - analyzer reference](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference) · [Document layout analysis - Document Intelligence](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/layout?view=doc-intel-4.0.0)"
     },
     {
       "n": 16,
@@ -203,7 +203,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Implement image moderation."
       },
       "answer": "D",
-      "exp": "Azure AI Content Safety's image moderation capability analyzes images and returns, for each harm category (such as violence, sexual content, self-harm, and hate), a severity level (0-Safe, 2-Low, 4-Medium, 6-High). An application can configure allowed/prohibited severity thresholds per category so the service returns an accept/reject decision, letting harmful uploads be blocked automatically based on severity. Running OCR keyword scanning only detects text embedded in an image and misses purely visual harm; prompt shields defend against prompt-injection attacks rather than classifying image content; and blocklists match specific known terms rather than assessing visual harm severity.\n\n**Learn more:** [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image) Â· [Harm categories in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/harm-categories)"
+      "exp": "Azure AI Content Safety's image moderation capability analyzes images and returns, for each harm category (such as violence, sexual content, self-harm, and hate), a severity level (0-Safe, 2-Low, 4-Medium, 6-High). An application can configure allowed/prohibited severity thresholds per category so the service returns an accept/reject decision, letting harmful uploads be blocked automatically based on severity. Running OCR keyword scanning only detects text embedded in an image and misses purely visual harm; prompt shields defend against prompt-injection attacks rather than classifying image content; and blocklists match specific known terms rather than assessing visual harm severity.\n\n**Learn more:** [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image) · [Harm categories in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/harm-categories)"
     },
     {
       "n": 17,
@@ -215,7 +215,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "The reported failure is that required regulatory clauses are already present in the retrieved content but are being left out of the generated summary â a content-selection/faithfulness problem, not an output-length limitation. Raising max_tokens only increases the ceiling on how many tokens the model is allowed to generate; it does not instruct or force the model to include the specific clauses it is currently choosing to omit, so it does not reliably fix the omission and does not meet the goal of improving completeness."
+      "exp": "The reported failure is that required regulatory clauses are already present in the retrieved content but are being left out of the generated summary — a content-selection/faithfulness problem, not an output-length limitation. Raising max_tokens only increases the ceiling on how many tokens the model is allowed to generate; it does not instruct or force the model to include the specific clauses it is currently choosing to omit, so it does not reliably fix the omission and does not meet the goal of improving completeness."
     },
     {
       "n": 18,
@@ -251,7 +251,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "An evaluation flow that scores completeness and blocks low-scoring responses is a quality gate, not a corrective mechanism â it can only allow already-complete responses through or withhold incomplete ones; it does not add the missing regulatory clauses or cause the agent to actually produce a complete response. Since the goal is to improve the completeness of the responses users receive (not merely to filter out incomplete ones), a block-only evaluation flow does not by itself meet the goal unless it is paired with a regeneration or reflection step.\n\n**Learn more:** [Agent Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/agent-evaluators)"
+      "exp": "An evaluation flow that scores completeness and blocks low-scoring responses is a quality gate, not a corrective mechanism — it can only allow already-complete responses through or withhold incomplete ones; it does not add the missing regulatory clauses or cause the agent to actually produce a complete response. Since the goal is to improve the completeness of the responses users receive (not merely to filter out incomplete ones), a block-only evaluation flow does not by itself meet the goal unless it is paired with a regeneration or reflection step.\n\n**Learn more:** [Agent Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/agent-evaluators)"
     },
     {
       "n": 21,
@@ -300,7 +300,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "violence content filtering"
       },
       "answer": "B",
-      "exp": "Prompt Shields is the Azure AI Content Safety capability integrated into Microsoft Foundry that detects and blocks both direct user prompt attacks and indirect \"document attacks\" â hidden instructions embedded in third-party content such as documents, images, emails, or web pages that attempt to hijack a model or agent session. Because the product sheets are external PDF files that can contain images with embedded text, enabling Prompt Shields protects the agent from acting on malicious instructions concealed in that embedded text, which is the specific requirement it satisfies. PII Detection instead identifies and redacts personal data in text and does not address instruction-injection attacks, while self-harm and violence content filtering address harmful-content categories rather than injected instructions.\n\n**Learn more:** [Prompt Shields in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields)"
+      "exp": "Prompt Shields is the Azure AI Content Safety capability integrated into Microsoft Foundry that detects and blocks both direct user prompt attacks and indirect \"document attacks\" — hidden instructions embedded in third-party content such as documents, images, emails, or web pages that attempt to hijack a model or agent session. Because the product sheets are external PDF files that can contain images with embedded text, enabling Prompt Shields protects the agent from acting on malicious instructions concealed in that embedded text, which is the specific requirement it satisfies. PII Detection instead identifies and redacts personal data in text and does not address instruction-injection attacks, while self-harm and violence content filtering address harmful-content categories rather than injected instructions.\n\n**Learn more:** [Prompt Shields in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields)"
     },
     {
       "n": 25,
@@ -327,7 +327,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Increase the value of the temperature parameter."
       },
       "answer": "A",
-      "exp": "Restricting an agent's topical scope â instructing it to decline or redirect questions outside a defined product domain â is a persistent behavioral rule, and the system message is the mechanism that defines an agent's role, boundaries, and non-negotiable constraints across every turn of a conversation. Few-shot examples mainly shape output style and format rather than reliably enforcing a hard scope boundary, and top-p sampling and the temperature parameter only control output randomness/diversity, not what topics the agent is permitted to discuss.\n\n**Learn more:** [System message design for Azure OpenAI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering)"
+      "exp": "Restricting an agent's topical scope — instructing it to decline or redirect questions outside a defined product domain — is a persistent behavioral rule, and the system message is the mechanism that defines an agent's role, boundaries, and non-negotiable constraints across every turn of a conversation. Few-shot examples mainly shape output style and format rather than reliably enforcing a hard scope boundary, and top-p sampling and the temperature parameter only control output randomness/diversity, not what topics the agent is permitted to discuss.\n\n**Learn more:** [System message design for Azure OpenAI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering)"
     },
     {
       "n": 27,
@@ -356,7 +356,7 @@ window.EXAM_DATA["ai103"] = {
         "F": "key phrase extraction"
       },
       "answer": "AC",
-      "exp": "The technical requirement calls for an indexing pipeline that supports semantic and vector search over the PDF product sheets. In an Azure AI Search skillset, the Text Split skill chunks the extracted document text into passages sized appropriately for downstream processing, and the Azure OpenAI Embedding skill converts each chunk into a vector that is written to a vector field in the index. Together, these two built-in skills produce the chunked, vectorized content required for a semantic/vector search index; Entity Recognition, Merge, Language Detection, and Key Phrase Extraction are enrichment skills that do not generate the chunks or vectors needed to build the index.\n\n**Learn more:** [Text Split skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-textsplit) Â· [Azure OpenAI Embedding skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-azure-openai-embedding)"
+      "exp": "The technical requirement calls for an indexing pipeline that supports semantic and vector search over the PDF product sheets. In an Azure AI Search skillset, the Text Split skill chunks the extracted document text into passages sized appropriately for downstream processing, and the Azure OpenAI Embedding skill converts each chunk into a vector that is written to a vector field in the index. Together, these two built-in skills produce the chunked, vectorized content required for a semantic/vector search index; Entity Recognition, Merge, Language Detection, and Key Phrase Extraction are enrichment skills that do not generate the chunks or vectors needed to build the index.\n\n**Learn more:** [Text Split skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-textsplit) · [Azure OpenAI Embedding skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-azure-openai-embedding)"
     },
     {
       "n": 29,
@@ -370,7 +370,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Azure Document intelligence in Foundry Tools"
       },
       "answer": "C",
-      "exp": "Azure AI Search is the retrieval service that implements the indexing pipeline described in the technical requirements: it ingests the PDF product sheets, chunks and vectorizes them through a skillset, and exposes a semantic/vector-enabled index that Agent1 can query as grounding data to answer natural-language product questions. Azure Translator only performs language translation, Grounding with Bing Search retrieves public web content rather than the private documents in storage1, and Azure Document Intelligence extracts document content but does not on its own provide indexing or retrieval capability.\n\n**Learn more:** [What's new in Azure AI Search / Integrated vectorization](https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization) Â· [Retrieval Augmented Generation (RAG) overview - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview)"
+      "exp": "Azure AI Search is the retrieval service that implements the indexing pipeline described in the technical requirements: it ingests the PDF product sheets, chunks and vectorizes them through a skillset, and exposes a semantic/vector-enabled index that Agent1 can query as grounding data to answer natural-language product questions. Azure Translator only performs language translation, Grounding with Bing Search retrieves public web content rather than the private documents in storage1, and Azure Document Intelligence extracts document content but does not on its own provide indexing or retrieval capability.\n\n**Learn more:** [What's new in Azure AI Search / Integrated vectorization](https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization) · [Retrieval Augmented Generation (RAG) overview - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview)"
     },
     {
       "n": 30,
@@ -407,7 +407,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Set the output_content_format=ContentFormat.MARKDOWN value."
       },
       "answer": "D",
-      "exp": "The Document Intelligence analyze-document call accepts an output_content_format parameter; setting it to ContentFormat.MARKDOWN (outputContentFormat=markdown at the REST level) instructs the prebuilt-layout model to return the extracted content as GitHub-Flavored Markdown that preserves headings/sections and table structure. This requires only a single parameter change with no custom post-processing. \"output=figures\" and \"content=markdown\" are not valid SDK/API parameter names, and raising the confidence threshold has no bearing on the output format.\n\n**Learn more:** [Document Intelligence supported Markdown elements - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept/markdown-elements?view=doc-intel-4.0.0) Â· [sample_analyze_documents_output_in_markdown.py - azure-sdk-for-python](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/documentintelligence/azure-ai-documentintelligence/samples/sample_analyze_documents_output_in_markdown.py)"
+      "exp": "The Document Intelligence analyze-document call accepts an output_content_format parameter; setting it to ContentFormat.MARKDOWN (outputContentFormat=markdown at the REST level) instructs the prebuilt-layout model to return the extracted content as GitHub-Flavored Markdown that preserves headings/sections and table structure. This requires only a single parameter change with no custom post-processing. \"output=figures\" and \"content=markdown\" are not valid SDK/API parameter names, and raising the confidence threshold has no bearing on the output format.\n\n**Learn more:** [Document Intelligence supported Markdown elements - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept/markdown-elements?view=doc-intel-4.0.0) · [sample_analyze_documents_output_in_markdown.py - azure-sdk-for-python](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/documentintelligence/azure-ai-documentintelligence/samples/sample_analyze_documents_output_in_markdown.py)"
     },
     {
       "n": 33,
@@ -432,7 +432,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Enable a managed identity for each application and call Azure AI Search directly."
       },
       "answer": "B",
-      "exp": "Defining a single Azure AI Search connection at the Project1 level lets every client application reference the same centrally managed search configuration instead of duplicating endpoint and index settings per app. Microsoft Foundry project connections support Microsoft Entra ID (token-based, keyless) authentication, so no API keys need to be issued or rotated, satisfying the shared-configuration, no-key-based-auth, and low-administrative-overhead requirements at once. Building a custom per-app HTTP connection, or having each application call Azure AI Search directly (with or without its own managed identity), duplicates configuration across apps and increases ongoing administrative effort.\n\n**Learn more:** [Add a new connection to your project - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/how-to/connections-add) Â· [Connect an Azure AI Search index to Foundry agents](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search)"
+      "exp": "Defining a single Azure AI Search connection at the Project1 level lets every client application reference the same centrally managed search configuration instead of duplicating endpoint and index settings per app. Microsoft Foundry project connections support Microsoft Entra ID (token-based, keyless) authentication, so no API keys need to be issued or rotated, satisfying the shared-configuration, no-key-based-auth, and low-administrative-overhead requirements at once. Building a custom per-app HTTP connection, or having each application call Azure AI Search directly (with or without its own managed identity), duplicates configuration across apps and increases ongoing administrative effort.\n\n**Learn more:** [Add a new connection to your project - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/how-to/connections-add) · [Connect an Azure AI Search index to Foundry agents](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search)"
     },
     {
       "n": 35,
@@ -487,7 +487,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Replace the model with a smaller deployment."
       },
       "answer": "A",
-      "exp": "A completeness check-and-retry step implemented in the application's own request/response pipeline â evaluating the draft response for required content and re-invoking generation before the response is handed back to the caller â enforces completeness at the code layer without changing the model or the retrieval design. Decreasing max_tokens or deploying a smaller model both reduce the model's ability to produce complete output, and switching to RAG changes how content is retrieved rather than adding an in-code completeness check prior to returning the response.\n\n**Learn more:** [Agent Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/agent-evaluators)"
+      "exp": "A completeness check-and-retry step implemented in the application's own request/response pipeline — evaluating the draft response for required content and re-invoking generation before the response is handed back to the caller — enforces completeness at the code layer without changing the model or the retrieval design. Decreasing max_tokens or deploying a smaller model both reduce the model's ability to produce complete output, and switching to RAG changes how content is retrieved rather than adding an in-code completeness check prior to returning the response.\n\n**Learn more:** [Agent Evaluators for Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/agent-evaluators)"
     },
     {
       "n": 39,
@@ -522,7 +522,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "token usage"
       },
       "answer": "D",
-      "exp": "Token usage telemetry breaks down consumption into prompt (input) tokens, completion (output) tokens, and the additional tokens consumed by tool or function calls on each run, so it can directly attribute a cost increase to whichever of those components grew â larger inputs, longer outputs, or heavier tool invocation â even when the number of requests stays constant. Latency measures response time, evaluation metrics assess response quality, and run success or failure rate measures reliability; none of these decompose cost by input size, output size, or tool usage the way token usage telemetry does.\n\n**Learn more:** [Observability in Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability)"
+      "exp": "Token usage telemetry breaks down consumption into prompt (input) tokens, completion (output) tokens, and the additional tokens consumed by tool or function calls on each run, so it can directly attribute a cost increase to whichever of those components grew — larger inputs, longer outputs, or heavier tool invocation — even when the number of requests stays constant. Latency measures response time, evaluation metrics assess response quality, and run success or failure rate measures reliability; none of these decompose cost by input size, output size, or tool usage the way token usage telemetry does.\n\n**Learn more:** [Observability in Generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability)"
     },
     {
       "n": 42,
@@ -536,7 +536,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Configure the analyzer to use generative extraction for all fields."
       },
       "answer": "C",
-      "exp": "estimateFieldSourceAndConfidence is an opt-in Content Understanding analyzer property (settable at the analyzer level or per field) that, for extractive fields, adds a confidence score between 0 and 1 plus source grounding â the page number and bounding region â for each extracted field value. This is exactly what enables verifying where a value came from in the source PDF and routing low-confidence extractions to human review. enableSegment controls document segmentation rather than confidence/grounding, providing labeled samples improves extraction accuracy over time but does not itself produce confidence-and-grounding output, and configuring generative extraction for all fields changes the extraction method but does not, by itself, enable per-field confidence and source grounding.\n\n**Learn more:** [Document analysis with confidence, grounding, and labeled samples](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/analyzer-improvement)"
+      "exp": "estimateFieldSourceAndConfidence is an opt-in Content Understanding analyzer property (settable at the analyzer level or per field) that, for extractive fields, adds a confidence score between 0 and 1 plus source grounding — the page number and bounding region — for each extracted field value. This is exactly what enables verifying where a value came from in the source PDF and routing low-confidence extractions to human review. enableSegment controls document segmentation rather than confidence/grounding, providing labeled samples improves extraction accuracy over time but does not itself produce confidence-and-grounding output, and configuring generative extraction for all fields changes the extraction method but does not, by itself, enable per-field confidence and source grounding.\n\n**Learn more:** [Document analysis with confidence, grounding, and labeled samples](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/analyzer-improvement)"
     },
     {
       "n": 43,
@@ -577,7 +577,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Cognitive Services Data Reader"
       },
       "answer": "B",
-      "exp": "Cognitive Services OpenAI User is the built-in RBAC role that grants the data-plane permission required to perform inference calls (such as chat completions) against an Azure OpenAI/Foundry model deployment when authenticating with Microsoft Entra ID, for example via DefaultAzureCredential; it grants no control-plane management rights, which satisfies least privilege. Cognitive Services User grants access to other Cognitive Services data actions but not Azure OpenAI inference, Contributor grants broad resource-management permissions far beyond what is needed, and Cognitive Services Data Reader only allows reading metadata/configuration rather than invoking inference â none of these three resolve the 403 with a least-privilege assignment as directly as Cognitive Services OpenAI User.\n\n**Learn more:** [Role-based access control for Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/role-based-access-control)"
+      "exp": "Cognitive Services OpenAI User is the built-in RBAC role that grants the data-plane permission required to perform inference calls (such as chat completions) against an Azure OpenAI/Foundry model deployment when authenticating with Microsoft Entra ID, for example via DefaultAzureCredential; it grants no control-plane management rights, which satisfies least privilege. Cognitive Services User grants access to other Cognitive Services data actions but not Azure OpenAI inference, Contributor grants broad resource-management permissions far beyond what is needed, and Cognitive Services Data Reader only allows reading metadata/configuration rather than invoking inference — none of these three resolve the 403 with a least-privilege assignment as directly as Cognitive Services OpenAI User.\n\n**Learn more:** [Role-based access control for Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/role-based-access-control)"
     },
     {
       "n": 46,
@@ -591,7 +591,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "groundedness evaluation metrics"
       },
       "answer": "D",
-      "exp": "Groundedness evaluation metrics in Microsoft Foundry observability measure whether a generated response is actually supported by the content retrieved for the agent, so a drop in groundedness after a content update points directly at the retrieved content as the source of degraded answer quality. Indexer status and failure history only indicate whether ingestion succeeded, latency breakdown traces show performance timing, and prediction drift metrics track changes in model output distribution over time â none of these directly reveal whether the retrieved content is undermining response accuracy.\n\n**Learn more:** [Observability in generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability) Â· [Generally Available: Evaluations, Monitoring, and Tracing in Microsoft Foundry](https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760)"
+      "exp": "Groundedness evaluation metrics in Microsoft Foundry observability measure whether a generated response is actually supported by the content retrieved for the agent, so a drop in groundedness after a content update points directly at the retrieved content as the source of degraded answer quality. Indexer status and failure history only indicate whether ingestion succeeded, latency breakdown traces show performance timing, and prediction drift metrics track changes in model output distribution over time — none of these directly reveal whether the retrieved content is undermining response accuracy.\n\n**Learn more:** [Observability in generative AI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability) · [Generally Available: Evaluations, Monitoring, and Tracing in Microsoft Foundry](https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760)"
     },
     {
       "n": 47,
@@ -605,7 +605,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "classic Retrieval Augmented Generation (RAG)"
       },
       "answer": "B",
-      "exp": "Agentic retrieval in Azure AI Search uses an LLM-backed knowledge agent that decomposes a complex user question into multiple focused subqueries, incorporates conversation history into query planning, executes the subqueries in parallel against the underlying knowledge source(s), and then semantically reranks and merges the results â satisfying multi-chunk retrieval, conversation-aware planning, and reduced latency at the same time. Classic RAG issues a single retrieval call per turn with no decomposition or parallelism, iterative retrieval performs sequential (not parallel) retrieval rounds, and chain of thought is a prompting technique unrelated to retrieval architecture.\n\n**Learn more:** [Agentic retrieval overview - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/agentic-retrieval-overview)"
+      "exp": "Agentic retrieval in Azure AI Search uses an LLM-backed knowledge agent that decomposes a complex user question into multiple focused subqueries, incorporates conversation history into query planning, executes the subqueries in parallel against the underlying knowledge source(s), and then semantically reranks and merges the results — satisfying multi-chunk retrieval, conversation-aware planning, and reduced latency at the same time. Classic RAG issues a single retrieval call per turn with no decomposition or parallelism, iterative retrieval performs sequential (not parallel) retrieval rounds, and chain of thought is a prompting technique unrelated to retrieval architecture.\n\n**Learn more:** [Agentic retrieval overview - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/agentic-retrieval-overview)"
     },
     {
       "n": 48,
@@ -613,12 +613,12 @@ window.EXAM_DATA["ai103"] = {
       "ctx": -1,
       "q": "You have a customer support agent that uses the Microsoft Foundry Agent Service.  \n  \nCustomers sometimes return to a session days later to continue the same support case, and the agent must resume with the full historical context. The agent must provide:  \n  \n- Multi-turn continuity within the session.  \n- Cross-session continuity for the same case.  \n- Access to the full interaction history, including user messages, agent messages, tool calls, and tool outputs.  \n  \nYou need to ensure that the agent automatically reloads the complete history on every new turn.  \n  \nWhat should you do?",
       "choices": {
-        "A": "Create and reuse a conversation by storing the conversationâs ID and supplying the ID on subsequent requests.",
+        "A": "Create and reuse a conversation by storing the conversation’s ID and supplying the ID on subsequent requests.",
         "B": "Persist only the final model response stored in the client application and prepend the response to future prompts.",
         "C": "Enable memory summarization on the agent definition to persist the context automatically."
       },
       "answer": "A",
-      "exp": "The Foundry Agent Service persists the full interaction history â user messages, agent messages, tool calls, and tool outputs â server-side under a durable conversation identifier. Storing that conversation ID and supplying it on every subsequent request causes the service to automatically reload the complete history for that case on each new turn, giving both multi-turn continuity within a session and cross-session continuity when the customer returns later. Persisting only the final model response discards all tool-call and tool-output detail, and enabling memory summarization condenses the history into a summary rather than reloading it in full.\n\n**Learn more:** [Build with agents, conversations, and responses in Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/runtime-components)"
+      "exp": "The Foundry Agent Service persists the full interaction history — user messages, agent messages, tool calls, and tool outputs — server-side under a durable conversation identifier. Storing that conversation ID and supplying it on every subsequent request causes the service to automatically reload the complete history for that case on each new turn, giving both multi-turn continuity within a session and cross-session continuity when the customer returns later. Persisting only the final model response discards all tool-call and tool-output detail, and enabling memory summarization condenses the history into a summary rather than reloading it in full.\n\n**Learn more:** [Build with agents, conversations, and responses in Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/runtime-components)"
     },
     {
       "n": 49,
@@ -659,7 +659,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Use basic parsing and fixed-size chunking."
       },
       "answer": "A",
-      "exp": "Advanced data parsing for Foundry knowledge-source ingestion performs OCR (including on scanned documents), detects and merges tables that span multiple pages while restoring column headers, preserves headings and document hierarchy, and produces semantic, structure-aware chunks that carry page-number and heading metadata â exactly the combination of OCR plus structure-aware, page-attributed chunking the scenario requires. Reingesting with advanced data parsing replaces the current plain-text extraction and directly resolves the described problem. Basic OCR with page-level chunking, or storing each whole page as a single chunk, still loses row-level table structure because a whole page (or plain OCR run) is not decomposed into structure-aware units, and basic parsing with fixed-size chunking ignores document structure entirely.\n\n**Learn more:** [Data parsing for Agentic Retrieval in Foundry](https://learn.microsoft.com/en-us/azure/azure-arc/agents-tools-foundry-local/advanced-data-parsing)"
+      "exp": "Advanced data parsing for Foundry knowledge-source ingestion performs OCR (including on scanned documents), detects and merges tables that span multiple pages while restoring column headers, preserves headings and document hierarchy, and produces semantic, structure-aware chunks that carry page-number and heading metadata — exactly the combination of OCR plus structure-aware, page-attributed chunking the scenario requires. Reingesting with advanced data parsing replaces the current plain-text extraction and directly resolves the described problem. Basic OCR with page-level chunking, or storing each whole page as a single chunk, still loses row-level table structure because a whole page (or plain OCR run) is not decomposed into structure-aware units, and basic parsing with fixed-size chunking ignores document structure entirely.\n\n**Learn more:** [Data parsing for Agentic Retrieval in Foundry](https://learn.microsoft.com/en-us/azure/azure-arc/agents-tools-foundry-local/advanced-data-parsing)"
     },
     {
       "n": 52,
@@ -683,7 +683,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "Azure AI Content Safety image moderation screens visual content against harm categories such as violence, sexual content, self-harm, and hate, which addresses the unsafe-image half of the risk. It does not analyze any text extracted from the image for embedded instructions, so hidden prompt-injection content passed through OCR/text-extraction still reaches the model unmitigated, leaving the goal only partially met.\n\n**Learn more:** [Harm categories in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/harm-categories) Â· [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image)"
+      "exp": "Azure AI Content Safety image moderation screens visual content against harm categories such as violence, sexual content, self-harm, and hate, which addresses the unsafe-image half of the risk. It does not analyze any text extracted from the image for embedded instructions, so hidden prompt-injection content passed through OCR/text-extraction still reaches the model unmitigated, leaving the goal only partially met.\n\n**Learn more:** [Harm categories in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/harm-categories) · [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image)"
     },
     {
       "n": 54,
@@ -695,7 +695,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "Prompt Shields for Documents inspects content the model did not receive directly from the user â such as text extracted from an uploaded image â for embedded, indirect prompt-injection instructions, which addresses the hidden-instruction half of the risk. It performs no visual content moderation, however, so it does not detect or block unsafe (violent, explicit, or otherwise inappropriate) image content, leaving that half of the stated risk unaddressed.\n\n**Learn more:** [Prompt Shields in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection) Â· [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image)"
+      "exp": "Prompt Shields for Documents inspects content the model did not receive directly from the user — such as text extracted from an uploaded image — for embedded, indirect prompt-injection instructions, which addresses the hidden-instruction half of the risk. It performs no visual content moderation, however, so it does not detect or block unsafe (violent, explicit, or otherwise inappropriate) image content, leaving that half of the stated risk unaddressed.\n\n**Learn more:** [Prompt Shields in Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection) · [Quickstart: Analyze image content - Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image)"
     },
     {
       "n": 55,
@@ -759,7 +759,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "an Azure Content Understanding in Foundry Tools analyzer"
       },
       "answer": "D",
-      "exp": "Azure Content Understanding in Foundry Tools is purpose-built to convert mixed-format documents â including scanned text, tables, and multicolumn layouts â into structured, layout-preserving Markdown output that downstream agents and reasoning models can consume. It is the recommended first step in a document-processing pipeline because it produces structure-aware output before any generative reasoning happens. An Azure Language text-analysis deployment performs text analytics (not structural extraction), a generic chat-completion request has no document-parsing capability of its own, and calling the Responses API with a multimodal model reasons over content but does not itself perform structure-preserving OCR and Markdown conversion.\n\n**Learn more:** [Azure Content Understanding document overview](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview)"
+      "exp": "Azure Content Understanding in Foundry Tools is purpose-built to convert mixed-format documents — including scanned text, tables, and multicolumn layouts — into structured, layout-preserving Markdown output that downstream agents and reasoning models can consume. It is the recommended first step in a document-processing pipeline because it produces structure-aware output before any generative reasoning happens. An Azure Language text-analysis deployment performs text analytics (not structural extraction), a generic chat-completion request has no document-parsing capability of its own, and calling the Responses API with a multimodal model reasons over content but does not itself perform structure-preserving OCR and Markdown conversion.\n\n**Learn more:** [Azure Content Understanding document overview](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview)"
     },
     {
       "n": 60,
@@ -784,7 +784,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Enable mask_inpainting and supply both the input image and a mask indicating which part of the image to modify."
       },
       "answer": "D",
-      "exp": "Mask-based inpainting is the built-in image-editing mode designed to constrain edits to a specific region: you supply the original image together with a mask that marks exactly which pixels may change, and the model regenerates content only inside the masked region while leaving everything outside it â including the surrounding lighting and style â untouched. image_variation and text_to_image regenerate broadly without any mask constraint, and image_to_image at high strength regenerates the entire image rather than a bounded region.\n\n**Learn more:** [How to use image generation models from OpenAI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e)"
+      "exp": "Mask-based inpainting is the built-in image-editing mode designed to constrain edits to a specific region: you supply the original image together with a mask that marks exactly which pixels may change, and the model regenerates content only inside the masked region while leaving everything outside it — including the surrounding lighting and style — untouched. image_variation and text_to_image regenerate broadly without any mask constraint, and image_to_image at high strength regenerates the entire image rather than a bounded region.\n\n**Learn more:** [How to use image generation models from OpenAI - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e)"
     },
     {
       "n": 62,
@@ -812,7 +812,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Use speech translation to convert the audio into another language and return the translated text."
       },
       "answer": "B",
-      "exp": "Real-time speech to text continuously converts streaming audio into text with low latency as the user speaks, while text to speech synthesizes the agent's textual response into audio; used together, this pairing supports the low-latency, turn-taking conversational dynamics the scenario requires, including the agent beginning to respond before the user has fully finished speaking. Batch transcription processes recorded files asynchronously and cannot support live turn-taking, an embeddings model encodes data for similarity/retrieval rather than performing transcription or synthesis, and speech translation changes the spoken language rather than enabling a spoken response to be generated.\n\n**Learn more:** [What is real-time speech to text?](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text) Â· [What is text to speech?](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/text-to-speech)"
+      "exp": "Real-time speech to text continuously converts streaming audio into text with low latency as the user speaks, while text to speech synthesizes the agent's textual response into audio; used together, this pairing supports the low-latency, turn-taking conversational dynamics the scenario requires, including the agent beginning to respond before the user has fully finished speaking. Batch transcription processes recorded files asynchronously and cannot support live turn-taking, an embeddings model encodes data for similarity/retrieval rather than performing transcription or synthesis, and speech translation changes the spoken language rather than enabling a spoken response to be generated.\n\n**Learn more:** [What is real-time speech to text?](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text) · [What is text to speech?](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/text-to-speech)"
     },
     {
       "n": 64,
@@ -823,7 +823,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Set tool_choice to:</b> required<br><b>Configure the tool to authenticate by:</b> Using a distinct agent identity bound to the client application",
-      "exp": "Setting tool_choice to required forces the model to invoke a tool on every run instead of leaving that decision to the model, guaranteeing the retrieval step happens before a response is generated; auto lets the model skip tool calls entirely and none disables tool use. Configuring the tool to authenticate using a distinct agent identity bound to the client application gives the published agent its own dedicated Microsoft Entra ID identity, which is isolated from other resources in the project and whose calls can be individually audit-traced; storing API keys in prompts is an insecure anti-pattern and a shared project agent identity is not isolated to the published agent.\n\n**Learn more:** [Tool best practices for Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice) Â· [What is Microsoft Foundry Agent Service?](https://learn.microsoft.com/en-us/azure/foundry/agents/overview)"
+      "exp": "Setting tool_choice to required forces the model to invoke a tool on every run instead of leaving that decision to the model, guaranteeing the retrieval step happens before a response is generated; auto lets the model skip tool calls entirely and none disables tool use. Configuring the tool to authenticate using a distinct agent identity bound to the client application gives the published agent its own dedicated Microsoft Entra ID identity, which is isolated from other resources in the project and whose calls can be individually audit-traced; storing API keys in prompts is an insecure anti-pattern and a shared project agent identity is not isolated to the published agent.\n\n**Learn more:** [Tool best practices for Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice) · [What is Microsoft Foundry Agent Service?](https://learn.microsoft.com/en-us/azure/foundry/agents/overview)"
     },
     {
       "n": 65,
@@ -861,7 +861,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "tools"
       },
       "answer": "B",
-      "exp": "The business requirement specifies that Agent1 must retain conversation context and recall relevant information from prior interactions to deliver a personalized experience in future conversations. This capability is provided by the agent's memory feature in Microsoft Foundry Agent Service, which allows an agent to persist state and recall details from earlier sessions with a user, enabling continuity and personalization across interactions. Knowledge sources (such as indexed product sheets) provide grounding data for answering domain questions, guardrails enforce safety and content policies, and tools enable the agent to invoke external functions or services â none of these directly address retaining and recalling conversational history for personalization.\n\n**Learn more:** [Agent memory - Azure AI Foundry Agent Service](https://learn.microsoft.com/en-us/azure/ai-services/agents/concepts/memory)"
+      "exp": "The business requirement specifies that Agent1 must retain conversation context and recall relevant information from prior interactions to deliver a personalized experience in future conversations. This capability is provided by the agent's memory feature in Microsoft Foundry Agent Service, which allows an agent to persist state and recall details from earlier sessions with a user, enabling continuity and personalization across interactions. Knowledge sources (such as indexed product sheets) provide grounding data for answering domain questions, guardrails enforce safety and content policies, and tools enable the agent to invoke external functions or services — none of these directly address retaining and recalling conversational history for personalization.\n\n**Learn more:** [Agent memory - Azure AI Foundry Agent Service](https://learn.microsoft.com/en-us/azure/ai-services/agents/concepts/memory)"
     },
     {
       "n": 68,
@@ -930,10 +930,10 @@ window.EXAM_DATA["ai103"] = {
       "ctx": -1,
       "q": "You have a Microsoft Foundry project containing an agent. The agent uses two tools:  \n  \n- Azure AI Search, to retrieve answers from a private product documentation index.  \n- The web search tool, to retrieve public information from the internet.  \n  \nFor a specific run, you need the agent to deterministically retrieve information only from the internet.  \n  \nWhat should you set `tool_choice` to?",
       "choices": {
-        "A": "{âtypeâ: âbing_groudingâ}",
-        "B": "{âtypeâ: âazure_ai-searchâ}",
-        "C": "âautoâ",
-        "D": "ârequiredâ"
+        "A": "{“type”: “bing_grouding”}",
+        "B": "{“type”: “azure_ai-search”}",
+        "C": "“auto”",
+        "D": "“required”"
       },
       "answer": "A"
     },
@@ -1012,7 +1012,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Enable Application Insights for Agent1."
       },
       "answer": "D",
-      "exp": "Foundry Control Plane's monitoring dashboards and Traces tab depend on OpenTelemetry data sent to an Azure Monitor Application Insights resource connected to the agent's hosting resource. Without Application Insights enabled, agents lack health metrics, cost/token tracking, and drill-down traces, which explains the missing error rate, runs, token usage, and empty Traces tab. Enabling and connecting Application Insights for Agent1 allows this telemetry (operation names, durations, model calls, tool invocations, token usage) to populate Control Plane views within minutes of agent execution.\n\n**Learn more:** [Monitor agents with the Agent Monitoring Dashboard - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/how-to-monitor-agents-dashboard) Â· [Monitor AI agent fleet health and performance - Microsoft Foundry Control Plane](https://learn.microsoft.com/en-us/azure/foundry/control-plane/monitoring-across-fleet)"
+      "exp": "Foundry Control Plane's monitoring dashboards and Traces tab depend on OpenTelemetry data sent to an Azure Monitor Application Insights resource connected to the agent's hosting resource. Without Application Insights enabled, agents lack health metrics, cost/token tracking, and drill-down traces, which explains the missing error rate, runs, token usage, and empty Traces tab. Enabling and connecting Application Insights for Agent1 allows this telemetry (operation names, durations, model calls, tool invocations, token usage) to populate Control Plane views within minutes of agent execution.\n\n**Learn more:** [Monitor agents with the Agent Monitoring Dashboard - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/how-to-monitor-agents-dashboard) · [Monitor AI agent fleet health and performance - Microsoft Foundry Control Plane](https://learn.microsoft.com/en-us/azure/foundry/control-plane/monitoring-across-fleet)"
     },
     {
       "n": 80,
@@ -1039,7 +1039,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "analyzers"
       },
       "answer": "A",
-      "exp": "Vector search in Azure AI Search indexes content as high-dimensional embeddings that capture semantic meaning rather than exact text. This allows queries phrased differently from the source documents to still match relevant content based on conceptual/semantic similarity, which is essential for RAG scenarios where user questions may not use the same terminology as the underlying product manuals. Semantic ranking only re-ranks results from an initial keyword or hybrid search and does not itself generate the embeddings needed for similarity matching; suggesters provide autocomplete functionality; and analyzers process text for lexical (keyword) search, not semantic understanding.\n\n**Learn more:** [Vector search in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/vector-search-overview) Â· [Retrieval Augmented Generation (RAG) in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview)"
+      "exp": "Vector search in Azure AI Search indexes content as high-dimensional embeddings that capture semantic meaning rather than exact text. This allows queries phrased differently from the source documents to still match relevant content based on conceptual/semantic similarity, which is essential for RAG scenarios where user questions may not use the same terminology as the underlying product manuals. Semantic ranking only re-ranks results from an initial keyword or hybrid search and does not itself generate the embeddings needed for similarity matching; suggesters provide autocomplete functionality; and analyzers process text for lexical (keyword) search, not semantic understanding.\n\n**Learn more:** [Vector search in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/vector-search-overview) · [Retrieval Augmented Generation (RAG) in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview)"
     },
     {
       "n": 82,
@@ -1080,7 +1080,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Image Analysis"
       },
       "answer": "C",
-      "exp": "Because the invoices exist only as scanned images, there is no extractable text layer for the indexer to use directly. The built-in Optical Character Recognition (OCR) skill in Azure AI Search reads printed and handwritten text out of image content during the enrichment process, and that extracted text can then be projected into searchable index fields, enabling full-text search over the invoice data. Text Split only chunks already-extracted text, Text Translation converts existing text between languages, and Image Analysis produces image tags/captions/visual descriptions rather than extracting the actual textual content needed for searching invoice fields.\n\n**Learn more:** [OCR Skill - Azure AI Search | Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-ocr) Â· [Extract Text from Images by Using AI Enrichment - Azure AI Search | Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/cognitive-search-concept-image-scenarios)"
+      "exp": "Because the invoices exist only as scanned images, there is no extractable text layer for the indexer to use directly. The built-in Optical Character Recognition (OCR) skill in Azure AI Search reads printed and handwritten text out of image content during the enrichment process, and that extracted text can then be projected into searchable index fields, enabling full-text search over the invoice data. Text Split only chunks already-extracted text, Text Translation converts existing text between languages, and Image Analysis produces image tags/captions/visual descriptions rather than extracting the actual textual content needed for searching invoice fields.\n\n**Learn more:** [OCR Skill - Azure AI Search | Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-ocr) · [Extract Text from Images by Using AI Enrichment - Azure AI Search | Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/cognitive-search-concept-image-scenarios)"
     },
     {
       "n": 85,
@@ -1117,7 +1117,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Apply a mask-based inpainting edit to the affected part of the video."
       },
       "answer": "D",
-      "exp": "Azure AI Foundry's Sora 2 video generation feature supports video-to-video inpainting, where you supply a mask over the specific region of an existing, already-generated video (such as the watermark area) and the model edits only that masked region. This targeted approach preserves the rest of the approved video content and avoids the need to regenerate the entire clip, unlike changing the prompt, adjusting the guidance scale (both of which require a new generation run), or cropping (which alters the frame/composition rather than surgically removing the artifact).\n\n**Learn more:** [Video generation with Sora 2 (preview) - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/video-generation) Â· [Sora 2 video generation overview (preview) - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/video-generation-quickstart)"
+      "exp": "Azure AI Foundry's Sora 2 video generation feature supports video-to-video inpainting, where you supply a mask over the specific region of an existing, already-generated video (such as the watermark area) and the model edits only that masked region. This targeted approach preserves the rest of the approved video content and avoids the need to regenerate the entire clip, unlike changing the prompt, adjusting the guidance scale (both of which require a new generation run), or cropping (which alters the frame/composition rather than surgically removing the artifact).\n\n**Learn more:** [Video generation with Sora 2 (preview) - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/video-generation) · [Sora 2 video generation overview (preview) - Microsoft Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/video-generation-quickstart)"
     },
     {
       "n": 88,
@@ -1211,7 +1211,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "a small language model (SLM)"
       },
       "answer": "A",
-      "exp": "An embedding model is designed to convert text (documents and queries) into numerical vector representations that capture semantic meaning. These vectors enable similarity-based search, such as vector search or retrieval-augmented generation (RAG), by allowing the system to compare the vector of a user query against the vectors of indexed documents to find the most relevant matches. The Azure AI Foundry (Microsoft Foundry) model catalog includes embedding models such as text-embedding-ada-002 and other embedding models specifically for this purpose, distinct from LLMs or SLMs which are optimized for text generation rather than producing embeddings.\n\n**Learn more:** [Embeddings - Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/understand-embeddings) Â· [Model catalog and collections in Azure AI Foundry portal](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/model-catalog-overview)"
+      "exp": "An embedding model is designed to convert text (documents and queries) into numerical vector representations that capture semantic meaning. These vectors enable similarity-based search, such as vector search or retrieval-augmented generation (RAG), by allowing the system to compare the vector of a user query against the vectors of indexed documents to find the most relevant matches. The Azure AI Foundry (Microsoft Foundry) model catalog includes embedding models such as text-embedding-ada-002 and other embedding models specifically for this purpose, distinct from LLMs or SLMs which are optimized for text generation rather than producing embeddings.\n\n**Learn more:** [Embeddings - Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/understand-embeddings) · [Model catalog and collections in Azure AI Foundry portal](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/model-catalog-overview)"
     },
     {
       "n": 96,
@@ -1225,7 +1225,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "standard"
       },
       "answer": "A",
-      "exp": "Serverless API (Models-as-a-Service) deployments in Azure AI Foundry are hosted and billed on a pay-as-you-go basis by Microsoft rather than being provisioned onto dedicated VM instances in the customer's subscription, so they do not draw from the subscription's vCPU quota. They expose a real-time REST API endpoint and are authenticated using an API key (key-based authentication), satisfying all stated requirements. In contrast, standard (managed compute) and self-hosted container deployments provision dedicated VM instances that consume subscription vCPU quota, and batch deployments are designed for asynchronous/offline processing rather than real-time REST calls.\n\n**Learn more:** [Deploy models as serverless API deployments - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/deploy-models-serverless) Â· [Overview: Deploy models, flows, and web apps with Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/deployments-overview)"
+      "exp": "Serverless API (Models-as-a-Service) deployments in Azure AI Foundry are hosted and billed on a pay-as-you-go basis by Microsoft rather than being provisioned onto dedicated VM instances in the customer's subscription, so they do not draw from the subscription's vCPU quota. They expose a real-time REST API endpoint and are authenticated using an API key (key-based authentication), satisfying all stated requirements. In contrast, standard (managed compute) and self-hosted container deployments provision dedicated VM instances that consume subscription vCPU quota, and batch deployments are designed for asynchronous/offline processing rather than real-time REST calls.\n\n**Learn more:** [Deploy models as serverless API deployments - Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/deploy-models-serverless) · [Overview: Deploy models, flows, and web apps with Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/deployments-overview)"
     },
     {
       "n": 97,
@@ -1272,7 +1272,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br>The code will display the name of each detected brand with a confidence equal to or higher than 75 percent. — <b>Yes</b><br>The code will display coordinates for the top-left corner of the rectangle that contains the brand logo of the displayed brands. — <b>Yes</b><br>The code will display coordinates for the bottom-right corner of the rectangle that contains the brand logo of the displayed brands. — <b>No</b>",
-      "exp": "In the Azure Vision (Image Analysis) brand detection response, each detected brand object includes a name, a confidence score, and a rectangle object with properties x, y, w, and h. The x and y values represent the coordinates of the top-left corner of the bounding box around the logo, while w and h represent the width and height of that box â they do not represent the coordinates of the bottom-right corner. To compute the bottom-right corner, one would need to calculate x + w and y + h, which the code segment does not do; it only prints rectangle.w and rectangle.h directly. Therefore the code correctly displays each detected brand's name when confidence is at least 0.75, and correctly displays the top-left corner coordinates (x, y), but does not display the bottom-right corner coordinates.\n\n**Learn more:** [Brand detection - Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/concept-brand-detection)"
+      "exp": "In the Azure Vision (Image Analysis) brand detection response, each detected brand object includes a name, a confidence score, and a rectangle object with properties x, y, w, and h. The x and y values represent the coordinates of the top-left corner of the bounding box around the logo, while w and h represent the width and height of that box — they do not represent the coordinates of the bottom-right corner. To compute the bottom-right corner, one would need to calculate x + w and y + h, which the code segment does not do; it only prints rectangle.w and rectangle.h directly. Therefore the code correctly displays each detected brand's name when confidence is at least 0.75, and correctly displays the top-left corner coordinates (x, y), but does not display the bottom-right corner coordinates.\n\n**Learn more:** [Brand detection - Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/concept-brand-detection)"
     },
     {
       "n": 101,
@@ -1340,7 +1340,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>1</b> Create a project.<br><b>2</b> Upload and tag images.<br><b>3</b> Train the classifier model.",
-      "exp": "To detect faults using Azure Custom Vision, you first create a Custom Vision project, specifying the project type (Classification, since you are determining whether a component is faulty). Next, you upload representative images of components and tag them (e.g., 'faulty' or 'good') so the service has labeled training data. Finally, you train the classifier model, which uses the tagged images to learn the visual qualities that distinguish faulty from non-faulty components. Object detection training is unnecessary here because the goal is to classify the overall condition of a component, not to identify and locate multiple distinct objects or defect regions within each image.\n\n**Learn more:** [Quickstart: Build an image classification model with the Custom Vision portal](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/getting-started-build-a-classifier) Â· [What is Custom Vision?](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/overview)"
+      "exp": "To detect faults using Azure Custom Vision, you first create a Custom Vision project, specifying the project type (Classification, since you are determining whether a component is faulty). Next, you upload representative images of components and tag them (e.g., 'faulty' or 'good') so the service has labeled training data. Finally, you train the classifier model, which uses the tagged images to learn the visual qualities that distinguish faulty from non-faulty components. Object detection training is unnecessary here because the goal is to classify the overall condition of a component, not to identify and locate multiple distinct objects or defect regions within each image.\n\n**Learn more:** [Quickstart: Build an image classification model with the Custom Vision portal](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/getting-started-build-a-classifier) · [What is Custom Vision?](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/overview)"
     },
     {
       "n": 107,
@@ -1354,7 +1354,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "reliability and safety"
       },
       "answer": "B",
-      "exp": "Transparency is one of Microsoft's six Responsible AI principles (fairness, reliability and safety, privacy and security, inclusiveness, transparency, and accountability). It requires that organizations be open about how data is collected, used, and stored, and that people understand how AI systems process their information and reach decisions. Notifying users that their data has been processed satisfies this requirement for transparency about data collection and use, helping build user trust and enabling informed choices about how their data is handled.\n\n**Learn more:** [What is Responsible AI - Azure Machine Learning | Microsoft Learn](https://learn.microsoft.com/en-us/azure/machine-learning/concept-responsible-ai?view=azureml-api-2) Â· [Responsible AI Principles and Approach | Microsoft AI](https://www.microsoft.com/en-us/ai/principles-and-approach)"
+      "exp": "Transparency is one of Microsoft's six Responsible AI principles (fairness, reliability and safety, privacy and security, inclusiveness, transparency, and accountability). It requires that organizations be open about how data is collected, used, and stored, and that people understand how AI systems process their information and reach decisions. Notifying users that their data has been processed satisfies this requirement for transparency about data collection and use, helping build user trust and enabling informed choices about how their data is handled.\n\n**Learn more:** [What is Responsible AI - Azure Machine Learning | Microsoft Learn](https://learn.microsoft.com/en-us/azure/machine-learning/concept-responsible-ai?view=azureml-api-2) · [Responsible AI Principles and Approach | Microsoft AI](https://www.microsoft.com/en-us/ai/principles-and-approach)"
     },
     {
       "n": 108,
@@ -1391,7 +1391,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>1</b> Add a new query key<br><b>2</b> Change the app to use the new key<br><b>3</b> Delete the compromised key",
-      "exp": "Azure AI Search query keys (unlike admin keys) cannot be regenerated in place â there is no primary/secondary rotation mechanism for them. To replace a suspected compromised query key without causing downtime, you first provision a new query key, update the application configuration to use that new key so the app continues functioning, and finally delete the compromised key to revoke its access. Query keys are inherently read-only, so this approach satisfies the requirement that users retain read-only access to the documents collection while eliminating the exposed key.\n\n**Learn more:** [Create and manage api keys - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-api-keys)"
+      "exp": "Azure AI Search query keys (unlike admin keys) cannot be regenerated in place — there is no primary/secondary rotation mechanism for them. To replace a suspected compromised query key without causing downtime, you first provision a new query key, update the application configuration to use that new key so the app continues functioning, and finally delete the compromised key to revoke its access. Query keys are inherently read-only, so this approach satisfies the requirement that users retain read-only access to the documents collection while eliminating the exposed key.\n\n**Learn more:** [Create and manage api keys - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-api-keys)"
     },
     {
       "n": 111,
@@ -1402,7 +1402,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Orchestration pattern:</b> The sequential template that passes outputs node by-node<br><b>Approval checkpoints:</b> Add an Ask a question node.",
-      "exp": "A sequential Foundry workflow passes each agentâs result to the next in a defined order, making the PolicyWriter-to-RiskReviewer process predictable. An Ask a question node waits for user input, so it can serve as the approval checkpoint for high-risk updates while low-risk updates proceed automatically.\n\n**Learn more:** [Build a workflow in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow)"
+      "exp": "A sequential Foundry workflow passes each agent’s result to the next in a defined order, making the PolicyWriter-to-RiskReviewer process predictable. An Ask a question node waits for user input, so it can serve as the approval checkpoint for high-risk updates while low-risk updates proceed automatically.\n\n**Learn more:** [Build a workflow in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow)"
     },
     {
       "n": 112,
@@ -1428,7 +1428,7 @@ window.EXAM_DATA["ai103"] = {
         "F": "Supply the groups as a filter for the search requests"
       },
       "answer": "AEF",
-      "exp": "Azure AI Search does not provide built-in row-level or document-level security, so filtering must be implemented manually using the security filter pattern documented by Microsoft. This pattern requires: adding a filterable field to each index document that lists the group IDs (or user IDs) allowed to view that document; retrieving the group memberships of the requesting user (e.g., via Microsoft Graph or a token claim) at query time; and supplying those group IDs as an OData filter expression on the search request (such as group_ids/any(g:search.in(g, 'group_id1,group_id2'))) so that only documents matching the user's group memberships are returned in the results.\n\n**Learn more:** [Security filters for trimming results - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-trimming-for-azure-search) Â· [Security trimming example using Microsoft Entra ID - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-trimming-for-azure-search-with-aad)"
+      "exp": "Azure AI Search does not provide built-in row-level or document-level security, so filtering must be implemented manually using the security filter pattern documented by Microsoft. This pattern requires: adding a filterable field to each index document that lists the group IDs (or user IDs) allowed to view that document; retrieving the group memberships of the requesting user (e.g., via Microsoft Graph or a token claim) at query time; and supplying those group IDs as an OData filter expression on the search request (such as group_ids/any(g:search.in(g, 'group_id1,group_id2'))) so that only documents matching the user's group memberships are returned in the results.\n\n**Learn more:** [Security filters for trimming results - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-trimming-for-azure-search) · [Security trimming example using Microsoft Entra ID - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-trimming-for-azure-search-with-aad)"
     },
     {
       "n": 114,
@@ -1439,7 +1439,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> PUT<br><b></b> CognitiveServices",
-      "exp": "Creating or replacing an Azure resource via the Azure Resource Manager REST API is done with the PUT verb targeting the resource's URI. To satisfy the requirement of using one key and endpoint for multiple AI services (Text Analytics for sentiment analysis and Computer Vision for OCR), with consolidated billing and future support for Azure AI Vision within Azure AI Foundry, the account must be provisioned as a multi-service Cognitive Services resource, specified by \"kind\": \"CognitiveServices\". The single-service kinds \"ComputerVision\" and \"TextAnalytics\" only expose one service each and would not meet the multi-service, single key/endpoint requirement.\n\n**Learn more:** [Create a Cognitive Services resource - Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource) Â· [Accounts - Create - REST API (Azure Cognitive Services)](https://learn.microsoft.com/en-us/rest/api/aiservices/accountmanagement/accounts/create)"
+      "exp": "Creating or replacing an Azure resource via the Azure Resource Manager REST API is done with the PUT verb targeting the resource's URI. To satisfy the requirement of using one key and endpoint for multiple AI services (Text Analytics for sentiment analysis and Computer Vision for OCR), with consolidated billing and future support for Azure AI Vision within Azure AI Foundry, the account must be provisioned as a multi-service Cognitive Services resource, specified by \"kind\": \"CognitiveServices\". The single-service kinds \"ComputerVision\" and \"TextAnalytics\" only expose one service each and would not meet the multi-service, single key/endpoint requirement.\n\n**Learn more:** [Create a Cognitive Services resource - Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource) · [Accounts - Create - REST API (Azure Cognitive Services)](https://learn.microsoft.com/en-us/rest/api/aiservices/accountmanagement/accounts/create)"
     },
     {
       "n": 115,
@@ -1453,7 +1453,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "GenAI Prompt"
       },
       "answer": "C",
-      "exp": "The Azure Content Understanding skill (Microsoft.Skills.Util.ContentUnderstandingSkill) extracts text and images and, when extractionOptions includes \"images\" and \"locationMetadata\", returns location metadata (page range and positional polygon data) for both text chunks and images, which supports page-level citations. It can also recognize tables that span multiple pages and extract each cross-page table as a single unit. The Document Layout skill also returns location metadata but outputs tables as plain text and does not offer cross-page table handling; Document Extraction provides no location metadata; GenAI Prompt is for generative enrichment, not structural extraction.\n\n**Learn more:** [Azure Content Understanding Skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-content-understanding) Â· [Document Layout Skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-document-intelligence-layout)"
+      "exp": "The Azure Content Understanding skill (Microsoft.Skills.Util.ContentUnderstandingSkill) extracts text and images and, when extractionOptions includes \"images\" and \"locationMetadata\", returns location metadata (page range and positional polygon data) for both text chunks and images, which supports page-level citations. It can also recognize tables that span multiple pages and extract each cross-page table as a single unit. The Document Layout skill also returns location metadata but outputs tables as plain text and does not offer cross-page table handling; Document Extraction provides no location metadata; GenAI Prompt is for generative enrichment, not structural extraction.\n\n**Learn more:** [Azure Content Understanding Skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-content-understanding) · [Document Layout Skill - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-document-intelligence-layout)"
     },
     {
       "n": 116,
@@ -1485,7 +1485,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Model evaluation:</b> Use model catalog leaderboards and model cards.<br><b>Deployment option:</b> Use a serverless deployment.",
-      "exp": "Microsoft Foundry model leaderboards benchmark models by quality, cost, and throughput, enabling candidate-model comparison. Serverless deployments provide API access to models hosted and managed by Microsoft, rather than deploying model weights to compute in the Azure subscription.\n\n**Learn more:** [Model benchmarks and leaderboards in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/model-benchmarks) Â· [Microsoft Foundry Models overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview)"
+      "exp": "Microsoft Foundry model leaderboards benchmark models by quality, cost, and throughput, enabling candidate-model comparison. Serverless deployments provide API access to models hosted and managed by Microsoft, rather than deploying model weights to compute in the Azure subscription.\n\n**Learn more:** [Model benchmarks and leaderboards in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/concepts/model-benchmarks) · [Microsoft Foundry Models overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview)"
     },
     {
       "n": 119,
@@ -1496,7 +1496,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Extract text:</b> Azure Document Intelligence in Foundry Tools<br><b>Perform sentiment analysis:</b> Azure Language in Foundry Tools",
-      "exp": "Azure Document Intelligence extracts text from PDF documents through its document analysis and OCR capabilities. Azure Language provides sentiment analysis for text, identifying positive, negative, neutral, and mixed sentiment.\n\n**Learn more:** [Azure AI Document Intelligence documentation](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/) Â· [Sentiment analysis and opinion mining](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview)"
+      "exp": "Azure Document Intelligence extracts text from PDF documents through its document analysis and OCR capabilities. Azure Language provides sentiment analysis for text, identifying positive, negative, neutral, and mixed sentiment.\n\n**Learn more:** [Azure AI Document Intelligence documentation](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/) · [Sentiment analysis and opinion mining](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview)"
     },
     {
       "n": 120,
@@ -1507,7 +1507,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Project Types:</b> Classification<br><b>Classification Types:</b> Multiclass (Single tag per image)<br><b>Domains:</b> General (compact)",
-      "exp": "Classification assigns a label to an entire image, which fits images containing exactly one cat or one dog. A multiclass classifier is appropriate when each image has exactly one tag. The compact General domain is intended for export to mobile and edge devices, which supports deployment in an iOS app.\n\n**Learn more:** [Microsoft Learn: Build a classifier with Custom Vision](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/getting-started-build-a-classifier) Â· [Microsoft Learn: Custom Vision domains](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/select-domain)"
+      "exp": "Classification assigns a label to an entire image, which fits images containing exactly one cat or one dog. A multiclass classifier is appropriate when each image has exactly one tag. The compact General domain is intended for export to mobile and edge devices, which supports deployment in an iOS app.\n\n**Learn more:** [Microsoft Learn: Build a classifier with Custom Vision](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/getting-started-build-a-classifier) · [Microsoft Learn: Custom Vision domains](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/select-domain)"
     },
     {
       "n": 121,
@@ -1546,7 +1546,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br>Going to http://localhost:5000/status will query the Azure endpoint to verify whether the API key used to start the container is valid. — <b>No</b><br>The container logging provider will write log data. — <b>No</b><br>Going to http://localhost:5000/swagger will provide the details to access the documentation for the available endpoints. — <b>Yes</b>",
-      "exp": "GET /status validates the startup API key without making an endpoint query, so the first statement is false. No logging provider or output mount is configured; disk logging requires both configuration and an output mount, so the second statement is false. The /swagger endpoint provides documentation for the container endpoints, so the third statement is true.\n\n**Learn more:** [Install and run Docker containers for Sentiment Analysis - Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/how-to/use-containers) Â· [Configure containers - Language service - Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/configure-containers)"
+      "exp": "GET /status validates the startup API key without making an endpoint query, so the first statement is false. No logging provider or output mount is configured; disk logging requires both configuration and an output mount, so the second statement is false. The /swagger endpoint provides documentation for the container endpoints, so the third statement is true.\n\n**Learn more:** [Install and run Docker containers for Sentiment Analysis - Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/how-to/use-containers) · [Configure containers - Language service - Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/configure-containers)"
     },
     {
       "n": 124,
@@ -1557,7 +1557,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br>The response will contain an explanation of large language models (LLMs) that has a high degree of certainty. — <b>No</b><br>Changing &quot;What is an LLM?&quot; to &quot;What is an LLM in the context of AI models?&quot; will produce the intended response. — <b>Yes</b><br>Changing &quot;You are a helpful assistant.&quot; to &quot;You must answer only within the context of AI language models.&quot; will give a higher likelihood of producing the intended response. — <b>Yes</b>",
-      "exp": "Language-model output is probabilistic, so a broad prompt cannot ensure a certain explanation. Making the user prompt more specific supplies clearer context, while a system message that limits the answerâs domain steers the model toward the intended subject and increases the likelihood of the desired response.\n\n**Learn more:** [System message design for Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering)"
+      "exp": "Language-model output is probabilistic, so a broad prompt cannot ensure a certain explanation. Making the user prompt more specific supplies clearer context, while a system message that limits the answer’s domain steers the model toward the intended subject and increases the likelihood of the desired response.\n\n**Learn more:** [System message design for Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering)"
     },
     {
       "n": 125,
@@ -1571,7 +1571,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "London and Tour only"
       },
       "answer": "A",
-      "exp": "Azure Text Analytics Named Entity Recognition returns recognized entities from the document, and iterating through `response.entities` prints each entityâs `text`. London is recognized as a location, and Buckingham Palace as a named location/landmark, so those two entity texts are printed. [Microsoft Learn: Use the NER client library](https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/quickstart)\n\n**Learn more:** [Microsoft Learn: Use the NER client library](https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/quickstart) Â· [Microsoft Learn: Azure Text Analytics client library for Python](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-textanalytics-readme?view=azure-python)"
+      "exp": "Azure Text Analytics Named Entity Recognition returns recognized entities from the document, and iterating through `response.entities` prints each entity’s `text`. London is recognized as a location, and Buckingham Palace as a named location/landmark, so those two entity texts are printed. [Microsoft Learn: Use the NER client library](https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/quickstart)\n\n**Learn more:** [Microsoft Learn: Use the NER client library](https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/quickstart) · [Microsoft Learn: Azure Text Analytics client library for Python](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-textanalytics-readme?view=azure-python)"
     },
     {
       "n": 126,
@@ -1664,7 +1664,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>1</b> Provision an on-premises Kubernetes cluster that has internet connectivity.<br><b>2</b> Pull an image from the Microsoft Container Registry (MCR).<br><b>3</b> Run the container and specify an API key and the Endpoint URL of the Azure AI resource.",
-      "exp": "Azure AI Language containers analyze content locally, so confidential documents remain on-premises. A connected container needs outbound connectivity to report billing to Azure, its image is pulled from Microsoft Container Registry, and it must be started with the Azure AI resource endpoint and API key.\n\n**Learn more:** [Use language detection Docker containers on-premises - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/language-detection/how-to/use-containers) Â· [Configure containers - Language service - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/configure-containers)"
+      "exp": "Azure AI Language containers analyze content locally, so confidential documents remain on-premises. A connected container needs outbound connectivity to report billing to Azure, its image is pulled from Microsoft Container Registry, and it must be started with the Azure AI resource endpoint and API key.\n\n**Learn more:** [Use language detection Docker containers on-premises - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/language-detection/how-to/use-containers) · [Configure containers - Language service - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/configure-containers)"
     },
     {
       "n": 133,
@@ -1692,7 +1692,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Azure Machine Learning"
       },
       "answer": "C",
-      "exp": "Azure AI Custom Vision supports training custom image-classification and object-detection models from labeled images, then deploying the trained model for prediction. A production-line video feed can be evaluated by submitting frames to that custom model, while the managed training and prediction service minimizes implementation effort compared with building a model in Azure Machine Learning.\n\n**Learn more:** [What is Custom Vision? - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/overview) Â· [Quickstart: Build an object detector with the Custom Vision website - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/get-started-build-detector)"
+      "exp": "Azure AI Custom Vision supports training custom image-classification and object-detection models from labeled images, then deploying the trained model for prediction. A production-line video feed can be evaluated by submitting frames to that custom model, while the managed training and prediction service minimizes implementation effort compared with building a model in Azure Machine Learning.\n\n**Learn more:** [What is Custom Vision? - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/overview) · [Quickstart: Build an object detector with the Custom Vision website - Foundry Tools | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/custom-vision-service/get-started-build-detector)"
     },
     {
       "n": 135,
@@ -1703,7 +1703,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br>The code will detect the language of documents. — <b>No</b><br>The url attribute returned for each linked entity will be a Bing search link. — <b>No</b><br>The matches attribute returned for each linked entity will provide the location in a document where the entity is referenced. — <b>Yes</b>",
-      "exp": "Entity linking identifies and disambiguates entities and supplies a URL to a knowledge-base entry, commonly Wikipedia; it is not a document-language detection operation. A linked entity can include a Bing entity-search ID, but its `url` is the entity page URL rather than a Bing search-results link. The `matches` collection contains each occurrence of the entity, with offset and length values that locate it in the document.\n\n**Learn more:** [Entity linking quickstart â Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/entity-linking/quickstart) Â· [LinkedEntityMatch class â Azure SDK for Python](https://learn.microsoft.com/en-us/python/api/azure-ai-textanalytics/azure.ai.textanalytics.linkedentitymatch?view=azure-python)"
+      "exp": "Entity linking identifies and disambiguates entities and supplies a URL to a knowledge-base entry, commonly Wikipedia; it is not a document-language detection operation. A linked entity can include a Bing entity-search ID, but its `url` is the entity page URL rather than a Bing search-results link. The `matches` collection contains each occurrence of the entity, with offset and length values that locate it in the document.\n\n**Learn more:** [Entity linking quickstart — Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/language-service/entity-linking/quickstart) · [LinkedEntityMatch class — Azure SDK for Python](https://learn.microsoft.com/en-us/python/api/azure-ai-textanalytics/azure.ai.textanalytics.linkedentitymatch?view=azure-python)"
     },
     {
       "n": 136,
@@ -1714,7 +1714,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>To prevent access from the internet:</b> Create a private endpoint.<br><b>To limit access to query specific indexes:</b> Use Azure roles.",
-      "exp": "A private endpoint connects Azure AI Search through Private Link and enables public network access to be disabled, preventing public-internet access. Azure RBAC can assign search data roles at an individual index scope, allowing each app identity to query only its permitted indexes. API query keys grant service-level read access and do not isolate indexes.\n\n**Learn more:** [Create a Private Endpoint for a Secure Connection - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/service-create-private-endpoint) Â· [Connect Using Azure Roles - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-rbac)"
+      "exp": "A private endpoint connects Azure AI Search through Private Link and enables public network access to be disabled, preventing public-internet access. Azure RBAC can assign search data roles at an individual index scope, allowing each app identity to query only its permitted indexes. API query keys grant service-level read access and do not isolate indexes.\n\n**Learn more:** [Create a Private Endpoint for a Secure Connection - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/service-create-private-endpoint) · [Connect Using Azure Roles - Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-rbac)"
     },
     {
       "n": 137,
@@ -1734,7 +1734,7 @@ window.EXAM_DATA["ai103"] = {
       "n": 138,
       "domain": "",
       "ctx": -1,
-      "q": "You are developing an internet-based training solution that requires each userâs camera and microphone to stay enabled.  \n  \nYou need to monitor the userâs video stream and confirm that the user is alone and not collaborating with another user. The solution must minimize development effort.  \n  \nWhat should you include in the solution?",
+      "q": "You are developing an internet-based training solution that requires each user’s camera and microphone to stay enabled.  \n  \nYou need to monitor the user’s video stream and confirm that the user is alone and not collaborating with another user. The solution must minimize development effort.  \n  \nWhat should you include in the solution?",
       "choices": {
         "A": "content moderation in Azure AI Azure Video Indexer",
         "B": "speech-to-text in the Azure Speech in Foundry Tools",
@@ -1742,7 +1742,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Spatial Analysis in Azure Vision in Foundry Tools"
       },
       "answer": "D",
-      "exp": "Spatial Analysis in Azure Vision in Foundry Tools is intended to analyze live video streams for people in a physical space and supports person-counting operations. It can therefore detect when more than one person is present without requiring a custom object-detection model.\n\n**Learn more:** [What's new in Azure Vision in Foundry Tools?](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/whats-new) Â· [Analyze videos in near real time - Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/analyze-video)"
+      "exp": "Spatial Analysis in Azure Vision in Foundry Tools is intended to analyze live video streams for people in a physical space and supports person-counting operations. It can therefore detect when more than one person is present without requiring a custom object-detection model.\n\n**Learn more:** [What's new in Azure Vision in Foundry Tools?](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/whats-new) · [Analyze videos in near real time - Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/analyze-video)"
     },
     {
       "n": 139,
@@ -1756,18 +1756,18 @@ window.EXAM_DATA["ai103"] = {
         "D": "Wrap the call to get_read_result within a loop that contains a delay."
       },
       "answer": "AD",
-      "exp": "Azure Read OCR is asynchronous. Poll `get_read_result(operation_id)` in a loop, pausing between requests, and inspect `read_result.status` until it is no longer `notStarted` or `running` before processing the result. The `Operation-Location` value supplies the operation ID rather than reporting completion status.\n\n**Learn more:** [Quickstart: Optical character recognition (OCR) - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/quickstarts-sdk/client-library) Â· [Get Read Result - REST API](https://learn.microsoft.com/en-us/rest/api/computervision/get-read-result/get-read-result?view=rest-computervision-v3.1)"
+      "exp": "Azure Read OCR is asynchronous. Poll `get_read_result(operation_id)` in a loop, pausing between requests, and inspect `read_result.status` until it is no longer `notStarted` or `running` before processing the result. The `Operation-Location` value supplies the operation ID rather than reporting completion status.\n\n**Learn more:** [Quickstart: Optical character recognition (OCR) - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/quickstarts-sdk/client-library) · [Get Read Result - REST API](https://learn.microsoft.com/en-us/rest/api/computervision/get-read-result/get-read-result?view=rest-computervision-v3.1)"
     },
     {
       "n": 140,
       "domain": "",
       "ctx": -1,
-      "q": "You have a Microsoft Foundry resource named AI1 that hosts three GPT-3.5 deployments. Each deployment is optimized for a distinct workload.  \n  \nYou plan to deploy three apps. Each app will use the REST API to access AI1 and the deployment optimized for that appâs intended workload.  \n  \nYou must give each app access to AI1 and its appropriate deployment, while ensuring that only the apps can access AI1.  \n  \nWhat should you use to provide access to AI1, and what should each app use to connect to its appropriate deployment?\n\nProvide access to AI1 by using: An API key / A bearer token / A shared access signature (SAS) token\n\nConnect to the deployment by using: An API key / A deployment endpoint / A deployment name / A deployment type",
+      "q": "You have a Microsoft Foundry resource named AI1 that hosts three GPT-3.5 deployments. Each deployment is optimized for a distinct workload.  \n  \nYou plan to deploy three apps. Each app will use the REST API to access AI1 and the deployment optimized for that app’s intended workload.  \n  \nYou must give each app access to AI1 and its appropriate deployment, while ensuring that only the apps can access AI1.  \n  \nWhat should you use to provide access to AI1, and what should each app use to connect to its appropriate deployment?\n\nProvide access to AI1 by using: An API key / A bearer token / A shared access signature (SAS) token\n\nConnect to the deployment by using: An API key / A deployment endpoint / A deployment name / A deployment type",
       "choices": {},
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Provide access to AI1 by using:</b> A bearer token<br><b>Connect to the deployment by using:</b> A deployment name",
-      "exp": "Microsoft Entra ID bearer-token authentication supports granting the required Azure role to each app identity, so only authorized apps can access the resource. Azure OpenAI/Microsoft Foundry REST inference requests identify the target model by deployment name; the resource endpoint is shared by the deployments.\n\n**Learn more:** [Azure OpenAI image and audio REST API reference](https://learn.microsoft.com/en-us/azure/foundry/openai/reference-preview) Â· [Configure keyless authentication with Microsoft Entra ID](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/configure-entra-id)"
+      "exp": "Microsoft Entra ID bearer-token authentication supports granting the required Azure role to each app identity, so only authorized apps can access the resource. Azure OpenAI/Microsoft Foundry REST inference requests identify the target model by deployment name; the resource endpoint is shared by the deployments.\n\n**Learn more:** [Azure OpenAI image and audio REST API reference](https://learn.microsoft.com/en-us/azure/foundry/openai/reference-preview) · [Configure keyless authentication with Microsoft Entra ID](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/configure-entra-id)"
     },
     {
       "n": 141,
@@ -1784,7 +1784,7 @@ window.EXAM_DATA["ai103"] = {
       "n": 142,
       "domain": "",
       "ctx": -1,
-      "q": "You plan to build an app that generates a list of tags for uploaded images. The app must meet these requirements:  \n  \n- Generate tags in a userâs preferred language.  \n- Support English, French, and Spanish.  \n- Minimize development effort.  \n  \nYou need to create a function that generates the tags for the app.  \n  \nWhich Azure service endpoint should you use?",
+      "q": "You plan to build an app that generates a list of tags for uploaded images. The app must meet these requirements:  \n  \n- Generate tags in a user’s preferred language.  \n- Support English, French, and Spanish.  \n- Minimize development effort.  \n  \nYou need to create a function that generates the tags for the app.  \n  \nWhich Azure service endpoint should you use?",
       "choices": {
         "A": "Azure Vision in Foundry Tools Image Analysis",
         "B": "Azure Custom Vision image classification",
@@ -1792,7 +1792,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Custom Translator"
       },
       "answer": "A",
-      "exp": "Azure Vision in Foundry Tools Image Analysis is a prebuilt service that generates image tags and supports localized tag output through its language parameter, including English, French, and Spanish. It avoids the custom training required by Custom Vision, while Content Safety and Custom Translator do not perform general image-tag generation.\n\n**Learn more:** [Language support for Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/language-support?view=form-recog-2.1.0) Â· [Tag Image in Stream - REST API](https://learn.microsoft.com/en-us/rest/api/computervision/tag-image-in-stream/tag-image-in-stream?view=rest-computervision-v3.2)"
+      "exp": "Azure Vision in Foundry Tools Image Analysis is a prebuilt service that generates image tags and supports localized tag output through its language parameter, including English, French, and Spanish. It avoids the custom training required by Custom Vision, while Content Safety and Custom Translator do not perform general image-tag generation.\n\n**Learn more:** [Language support for Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/language-support?view=form-recog-2.1.0) · [Tag Image in Stream - REST API](https://learn.microsoft.com/en-us/rest/api/computervision/tag-image-in-stream/tag-image-in-stream?view=rest-computervision-v3.2)"
     },
     {
       "n": 143,
@@ -1806,7 +1806,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Azure Document Intelligence in Foundry Tools"
       },
       "answer": "B",
-      "exp": "Azure Language custom question answering is intended for static information sources, including PDFs, and returns the same answer when different users submit the same question. Azure OpenAI chat completions are nondeterministic by default, so using them would require additional controls and development without providing the same direct guarantee.\n\n**Learn more:** [What is custom question answering?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/question-answering/how-to/azure-openai-integration) Â· [How to generate reproducible output with Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/reproducible-output)"
+      "exp": "Azure Language custom question answering is intended for static information sources, including PDFs, and returns the same answer when different users submit the same question. Azure OpenAI chat completions are nondeterministic by default, so using them would require additional controls and development without providing the same direct guarantee.\n\n**Learn more:** [What is custom question answering?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/question-answering/how-to/azure-openai-integration) · [How to generate reproducible output with Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/reproducible-output)"
     },
     {
       "n": 144,
@@ -1832,7 +1832,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "Safety metaprompts guide a modelâs behavior as a complementary safety layer; they are not a mechanism for testing or optimizing content-filter configurations. Content Safetyâs text-moderation testing experience evaluates sample text against configured severity thresholds and returns moderation results, which supports filter tuning.\n\n**Learn more:** [Safety system messages - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/system-message) Â· [Quickstart: Analyze text content - Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text)"
+      "exp": "Safety metaprompts guide a model’s behavior as a complementary safety layer; they are not a mechanism for testing or optimizing content-filter configurations. Content Safety’s text-moderation testing experience evaluates sample text against configured severity thresholds and returns moderation results, which supports filter tuning.\n\n**Learn more:** [Safety system messages - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/system-message) · [Quickstart: Analyze text content - Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text)"
     },
     {
       "n": 146,
@@ -1843,7 +1843,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Extract the text:</b> Azure Vision in Foundry Tools<br><b>Identify well-known locations:</b> Azure Language in Foundry Tools",
-      "exp": "Azure Vision in Foundry Tools OCR extracts printed text from images such as street signs. Azure Language in Foundry Tools provides named entity recognition and entity linking to identify places and other well-known entities in text, avoiding custom OCR and location-recognition development. Azure AI Search is an indexing and retrieval service rather than the appropriate service for this entity analysis.\n\n**Learn more:** [OCR - Optical Character Recognition - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr) Â· [What is named entity recognition (NER) in Azure Language?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/overview)"
+      "exp": "Azure Vision in Foundry Tools OCR extracts printed text from images such as street signs. Azure Language in Foundry Tools provides named entity recognition and entity linking to identify places and other well-known entities in text, avoiding custom OCR and location-recognition development. Azure AI Search is an indexing and retrieval service rather than the appropriate service for this entity analysis.\n\n**Learn more:** [OCR - Optical Character Recognition - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr) · [What is named entity recognition (NER) in Azure Language?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/overview)"
     },
     {
       "n": 147,
@@ -1861,7 +1861,7 @@ window.EXAM_DATA["ai103"] = {
       "n": 148,
       "domain": "",
       "ctx": -1,
-      "q": "You operate a factory that produces cardboard packaging for food products, and the factoryâs internet connectivity is intermittent.  \n  \nPackages must contain four samples of every product.  \n  \nYou need to build an Azure Custom Vision model that identifies packaging defects, provides their locations to an operator, and ensures that every package contains the four products.  \n  \nWhich project type and domain should you use? Each option may be used once, more than once, or not at all.\n\nItems:\n- Food\n- General\n- General (compact)\n- Image classification\n- Logo\n- Object detection",
+      "q": "You operate a factory that produces cardboard packaging for food products, and the factory’s internet connectivity is intermittent.  \n  \nPackages must contain four samples of every product.  \n  \nYou need to build an Azure Custom Vision model that identifies packaging defects, provides their locations to an operator, and ensures that every package contains the four products.  \n  \nWhich project type and domain should you use? Each option may be used once, more than once, or not at all.\n\nItems:\n- Food\n- General\n- General (compact)\n- Image classification\n- Logo\n- Object detection",
       "choices": {},
       "answer": "",
       "visual": true,
@@ -1880,7 +1880,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "output"
       },
       "answer": "A",
-      "exp": "A tool call intervention point evaluates the action and arguments an agent is about to send to an external tool, including the data in the request. Blocking Violence-tagged content there prevents that content from being transmitted to the MCP server before the call executes.\n\n**Learn more:** [Intervention points concepts - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/guardrails/intervention-points) Â· [Guardrails and controls overview in Microsoft Foundry](https://learn.microsoft.com/en-in/azure/ai-foundry/guardrails/guardrails-overview?view=foundry-classic)"
+      "exp": "A tool call intervention point evaluates the action and arguments an agent is about to send to an external tool, including the data in the request. Blocking Violence-tagged content there prevents that content from being transmitted to the MCP server before the call executes.\n\n**Learn more:** [Intervention points concepts - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/guardrails/intervention-points) · [Guardrails and controls overview in Microsoft Foundry](https://learn.microsoft.com/en-in/azure/ai-foundry/guardrails/guardrails-overview?view=foundry-classic)"
     },
     {
       "n": 150,
@@ -1891,7 +1891,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> AnalyzeTextOptions<br><b></b> client.analyze_text",
-      "exp": "`AnalyzeTextOptions` creates a text-moderation request and supports `blocklist_names` to supply the existing blocklist. `client.analyze_text(request)` submits that request for text analysis; image analysis and blocklist-management methods do not perform the required text moderation.\n\n**Learn more:** [AnalyzeTextOptions Class â Azure AI Content Safety Python](https://learn.microsoft.com/en-us/python/api/azure-ai-contentsafety/azure.ai.contentsafety.models.analyzetextoptions?view=azure-python) Â· [ContentSafetyClient Class â Azure AI Content Safety Python](https://learn.microsoft.com/en-us/python/api/azure-ai-contentsafety/azure.ai.contentsafety.contentsafetyclient?view=azure-python)"
+      "exp": "`AnalyzeTextOptions` creates a text-moderation request and supports `blocklist_names` to supply the existing blocklist. `client.analyze_text(request)` submits that request for text analysis; image analysis and blocklist-management methods do not perform the required text moderation.\n\n**Learn more:** [AnalyzeTextOptions Class — Azure AI Content Safety Python](https://learn.microsoft.com/en-us/python/api/azure-ai-contentsafety/azure.ai.contentsafety.models.analyzetextoptions?view=azure-python) · [ContentSafetyClient Class — Azure AI Content Safety Python](https://learn.microsoft.com/en-us/python/api/azure-ai-contentsafety/azure.ai.contentsafety.contentsafetyclient?view=azure-python)"
     },
     {
       "n": 151,
@@ -1902,7 +1902,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>Step 1</b> Request approval to run the container.<br><b>Step 2</b> Export model1 to Host1.<br><b>Step 3</b> Run the container.",
-      "exp": "A custom Speech-to-Text container requires approval for disconnected use. The trained custom model is then downloaded to the Docker host and supplied to the container when it starts. The model is already trained and the base image is already present, so retraining and disk logging are not required.\n\n**Learn more:** [Custom speech to text containers with Docker](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-container-cstt) Â· [Speech containers overview](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-container-overview)"
+      "exp": "A custom Speech-to-Text container requires approval for disconnected use. The trained custom model is then downloaded to the Docker host and supplied to the container when it starts. The model is already trained and the base image is already present, so retraining and disk logging are not required.\n\n**Learn more:** [Custom speech to text containers with Docker](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-container-cstt) · [Speech containers overview](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-container-overview)"
     },
     {
       "n": 152,
@@ -1916,7 +1916,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "GPT-4"
       },
       "answer": "D",
-      "exp": "GPT-4 can understand a product description and generate a suitable product name as natural-language text. Embedding models produce numerical vectors for similarity tasks, DALL-E generates images, and Whisper handles speech-to-text. Microsoft Foundry documentation describes GPT-4 models as able to understand and generate natural language and code.\n\n**Learn more:** [Foundry Models sold by Azure â Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?context=%2Fazure%2Fai-foundry%2Fcontext%2Fcontext&pivots=azure-direct-others&view=foundry-classic)"
+      "exp": "GPT-4 can understand a product description and generate a suitable product name as natural-language text. Embedding models produce numerical vectors for similarity tasks, DALL-E generates images, and Whisper handles speech-to-text. Microsoft Foundry documentation describes GPT-4 models as able to understand and generate natural language and code.\n\n**Learn more:** [Foundry Models sold by Azure — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?context=%2Fazure%2Fai-foundry%2Fcontext%2Fcontext&pivots=azure-direct-others&view=foundry-classic)"
     },
     {
       "n": 153,
@@ -1928,7 +1928,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "Protected material detection scans AI-generated output for known protected text or code, such as lyrics, articles, recipes, selected web content, or code from public repositories. It does not evaluate objectionable-content categories and their severity thresholds, which are required when optimizing harmful-content filter configurations.\n\n**Learn more:** [Azure AI Foundry content filtering](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/content-filtering) Â· [Quickstart: Protected Material for Text](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-protected-material)"
+      "exp": "Protected material detection scans AI-generated output for known protected text or code, such as lyrics, articles, recipes, selected web content, or code from public repositories. It does not evaluate objectionable-content categories and their severity thresholds, which are required when optimizing harmful-content filter configurations.\n\n**Learn more:** [Azure AI Foundry content filtering](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/content-filtering) · [Quickstart: Protected Material for Text](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-protected-material)"
     },
     {
       "n": 154,
@@ -1939,7 +1939,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment<br><b></b> http://contoso.cognitiveservices.azure.com",
-      "exp": "The Sentiment Analysis container uses the `mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment` image. Its required `Billing` argument is the endpoint URI of the Azure AI Language resource that meters container usage; the API key must correspond to that same resource.\n\n**Learn more:** [Install and run Docker containers for Sentiment Analysis - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/how-to/use-containers) Â· [Configure Language Docker containers - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/configure-containers)"
+      "exp": "The Sentiment Analysis container uses the `mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment` image. Its required `Billing` argument is the endpoint URI of the Azure AI Language resource that meters container usage; the API key must correspond to that same resource.\n\n**Learn more:** [Install and run Docker containers for Sentiment Analysis - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/how-to/use-containers) · [Configure Language Docker containers - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/configure-containers)"
     },
     {
       "n": 155,
@@ -1947,13 +1947,13 @@ window.EXAM_DATA["ai103"] = {
       "ctx": -1,
       "q": "You are developing an AI solution that will use Sentiment Analysis results from surveys to calculate bonuses for customer-service staff.  \n  \nYou need to ensure that the solution complies with Microsoft responsible AI principles.  \n  \nWhat should you do?",
       "choices": {
-        "A": "Add a human review and approval step before making decisions that affect the staffâs financial situation.",
+        "A": "Add a human review and approval step before making decisions that affect the staff’s financial situation.",
         "B": "Include the Sentiment Analysis results when surveys return a low confidence score.",
         "C": "Use all the surveys, including surveys by customers who requested that their account be deleted and their data be removed.",
         "D": "Publish the raw survey data to a central location and provide the staff with access to the location."
       },
       "answer": "A",
-      "exp": "Bonus determinations have a consequential financial and employment impact on staff. Such AI-supported decisions require meaningful human oversight, including review and approval before the result affects an individual. Microsoft guidance identifies human-in-the-loop checkpoints and approval for high-impact actions as responsible-AI safeguards.\n\n**Learn more:** [Responsible AI in Azure Workloads](https://learn.microsoft.com/en-us/azure/well-architected/ai/responsible-ai) Â· [Code of Conduct for Microsoft AI Services](https://learn.microsoft.com/sv-se/legal/ai-code-of-conduct?context=%2Fazure%2Fai-services%2Fspeech-service%2Fcontext%2Fcontext)"
+      "exp": "Bonus determinations have a consequential financial and employment impact on staff. Such AI-supported decisions require meaningful human oversight, including review and approval before the result affects an individual. Microsoft guidance identifies human-in-the-loop checkpoints and approval for high-impact actions as responsible-AI safeguards.\n\n**Learn more:** [Responsible AI in Azure Workloads](https://learn.microsoft.com/en-us/azure/well-architected/ai/responsible-ai) · [Code of Conduct for Microsoft AI Services](https://learn.microsoft.com/sv-se/legal/ai-code-of-conduct?context=%2Fazure%2Fai-services%2Fspeech-service%2Fcontext%2Fcontext)"
     },
     {
       "n": 156,
@@ -1967,7 +1967,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "the virtual network settings for ta1"
       },
       "answer": "D",
-      "exp": "Azure Language in Foundry Tools restricts network access through the resourceâs networking settings, where selected virtual networks and private endpoints can be configured. Allowing only vnet1 there limits access to that resource from the designated virtual network.\n\n**Learn more:** [Network isolation and Private Link - custom question answering - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/question-answering/how-to/network-isolation)"
+      "exp": "Azure Language in Foundry Tools restricts network access through the resource’s networking settings, where selected virtual networks and private endpoints can be configured. Allowing only vnet1 there limits access to that resource from the designated virtual network.\n\n**Learn more:** [Network isolation and Private Link - custom question answering - Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/language-service/question-answering/how-to/network-isolation)"
     },
     {
       "n": 157,
@@ -1981,7 +1981,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "guardrails"
       },
       "answer": "B",
-      "exp": "Memory retains user preferences and relevant conversation context across sessions, allowing an agent to recall information in later interactions and deliver personalized responses.\n\n**Learn more:** [What is Memory? - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory) Â· [Build with runtime components in Foundry Agent Service - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/runtime-components)"
+      "exp": "Memory retains user preferences and relevant conversation context across sessions, allowing an agent to recall information in later interactions and deliver personalized responses.\n\n**Learn more:** [What is Memory? - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory) · [Build with runtime components in Foundry Agent Service - Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/runtime-components)"
     },
     {
       "n": 158,
@@ -1993,7 +1993,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "A",
-      "exp": "Content Safety Studioâs Moderate text content feature supports testing sample text against configurable content-filter severity thresholds and rerunning the tests to evaluate the filtering results. This enables optimization of text content-filter configurations.\n\n**Learn more:** [Quickstart: Analyze text content - Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text)"
+      "exp": "Content Safety Studio’s Moderate text content feature supports testing sample text against configurable content-filter severity thresholds and rerunning the tests to evaluate the filtering results. This enables optimization of text content-filter configurations.\n\n**Learn more:** [Quickstart: Analyze text content - Azure AI services](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text)"
     },
     {
       "n": 159,
@@ -2007,13 +2007,13 @@ window.EXAM_DATA["ai103"] = {
         "D": "Set the temperature parameter to 1."
       },
       "answer": "C",
-      "exp": "A concise natural-language instruction such as `// what does function F do?` explicitly asks GPT-35 Turbo to explain the code while retaining the lower-cost model. GPT-35 Turbo can generate natural-language and code-related responses, and adding the instruction adds only a small number of prompt tokens. Increasing temperature changes output randomness, not the requested task; changing to GPT-4-32k is unnecessary for this simple explanation and would not minimize cost.\n\n**Learn more:** [Foundry Models sold directly by Azure](https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models?view=azure-node-latest) Â· [Using your data with Azure OpenAI in Microsoft Foundry Models (classic)](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/concepts/use-your-data)"
+      "exp": "A concise natural-language instruction such as `// what does function F do?` explicitly asks GPT-35 Turbo to explain the code while retaining the lower-cost model. GPT-35 Turbo can generate natural-language and code-related responses, and adding the instruction adds only a small number of prompt tokens. Increasing temperature changes output randomness, not the requested task; changing to GPT-4-32k is unnecessary for this simple explanation and would not minimize cost.\n\n**Learn more:** [Foundry Models sold directly by Azure](https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models?view=azure-node-latest) · [Using your data with Azure OpenAI in Microsoft Foundry Models (classic)](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/concepts/use-your-data)"
     },
     {
       "n": 160,
       "domain": "",
       "ctx": -1,
-      "q": "You are developing an app that will share usersâ images.  \n  \nYou need to configure the app to:  \n  \n- Categorize every image as either a photograph or a drawing.  \n- Generate a caption for each image while minimizing development effort.  \n  \nWhich two services should you include?",
+      "q": "You are developing an app that will share users’ images.  \n  \nYou need to configure the app to:  \n  \n- Categorize every image as either a photograph or a drawing.  \n- Generate a caption for each image while minimizing development effort.  \n  \nWhich two services should you include?",
       "choices": {
         "A": "Image type detection in Azure Vision in Foundry Tools",
         "B": "Object detection in Azure Vision in Foundry Tools",
@@ -2022,7 +2022,7 @@ window.EXAM_DATA["ai103"] = {
         "E": "Image descriptions in Azure Vision in Foundry Tools"
       },
       "answer": "AE",
-      "exp": "Azure Vision Image Type detects image characteristics such as whether an image is a line drawing or the likelihood that it is clip art, which supports distinguishing drawings from photographs. Azure Vision Image Descriptions generates human-readable captions, so it meets the caption requirement without building a custom solution.\n\n**Learn more:** [Image type detection - Azure Vision in Foundry Tools](https://learn.microsoft.com/ga-ie/azure/ai-services/computer-vision/concept-detecting-image-types) Â· [Image descriptions - Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/concept-describing-images)"
+      "exp": "Azure Vision Image Type detects image characteristics such as whether an image is a line drawing or the likelihood that it is clip art, which supports distinguishing drawings from photographs. Azure Vision Image Descriptions generates human-readable captions, so it meets the caption requirement without building a custom solution.\n\n**Learn more:** [Image type detection - Azure Vision in Foundry Tools](https://learn.microsoft.com/ga-ie/azure/ai-services/computer-vision/concept-detecting-image-types) · [Image descriptions - Azure Vision in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/concept-describing-images)"
     },
     {
       "n": 161,
@@ -2036,7 +2036,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Azure Vision in Foundry Tools"
       },
       "answer": "C",
-      "exp": "Azure Language in Foundry Tools provides sentiment analysis and opinion mining, which analyze text for positive, neutral, or negative sentiment and can identify opinions about specific aspects of a brand or topic. These capabilities are designed to understand public perception from sources such as social media.\n\n**Learn more:** [What are sentiment analysis and opinion mining in Azure Language service?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview) Â· [Choose an Azure AI targeted language processing technology](https://learn.microsoft.com/en-us/azure/architecture/data-guide/ai-services/targeted-language-processing)"
+      "exp": "Azure Language in Foundry Tools provides sentiment analysis and opinion mining, which analyze text for positive, neutral, or negative sentiment and can identify opinions about specific aspects of a brand or topic. These capabilities are designed to understand public perception from sources such as social media.\n\n**Learn more:** [What are sentiment analysis and opinion mining in Azure Language service?](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview) · [Choose an Azure AI targeted language processing technology](https://learn.microsoft.com/en-us/azure/architecture/data-guide/ai-services/targeted-language-processing)"
     },
     {
       "n": 162,
@@ -2050,7 +2050,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Object detection in Azure Custom Vision"
       },
       "answer": "C",
-      "exp": "Azure Vision in Foundry Tools Spatial Analysis is designed to analyze live video streams and understand peopleâs movement in physical spaces. Its `personcrossingpolygon` operation can define a zone and raise a person-zone entry or exit event, providing the required high-risk-area alert without building and training a custom object-detection solution.\n\n**Learn more:** [What's new in Azure Vision in Foundry Tools?](https://learn.microsoft.com/en-in/azure/ai-services/computer-vision/whats-new)"
+      "exp": "Azure Vision in Foundry Tools Spatial Analysis is designed to analyze live video streams and understand people’s movement in physical spaces. Its `personcrossingpolygon` operation can define a zone and raise a person-zone entry or exit event, providing the required high-risk-area alert without building and training a custom object-detection solution.\n\n**Learn more:** [What's new in Azure Vision in Foundry Tools?](https://learn.microsoft.com/en-in/azure/ai-services/computer-vision/whats-new)"
     },
     {
       "n": 163,
@@ -2091,7 +2091,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "The primary subscription key and the secondary subscription key were rotated."
       },
       "answer": "B",
-      "exp": "The `regenerateKey` operation regenerates the specified Cognitive Services account key. Because `keyName` is `Key2`, it replaces the secondary resource subscription key; it does not rotate `Key1`. ([learn.microsoft.com](https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/regenerate-key?view=rest-aifoundry-accountmanagement-2025-06-01&utm_source=openai))\n\n**Learn more:** [Accounts - Regenerate Key](https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/regenerate-key?view=rest-aifoundry-accountmanagement-2025-06-01) Â· [Accounts - List Keys](https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/list-keys?view=rest-aifoundry-accountmanagement-2025-06-01)"
+      "exp": "The `regenerateKey` operation regenerates the specified Cognitive Services account key. Because `keyName` is `Key2`, it replaces the secondary resource subscription key; it does not rotate `Key1`. ([learn.microsoft.com](https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/regenerate-key?view=rest-aifoundry-accountmanagement-2025-06-01&utm_source=openai))\n\n**Learn more:** [Accounts - Regenerate Key](https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/regenerate-key?view=rest-aifoundry-accountmanagement-2025-06-01) · [Accounts - List Keys](https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/list-keys?view=rest-aifoundry-accountmanagement-2025-06-01)"
     },
     {
       "n": 166,
@@ -2106,7 +2106,7 @@ window.EXAM_DATA["ai103"] = {
         "E": "Request an X.509 certificate."
       },
       "answer": "BC",
-      "exp": "Microsoft Entra authentication for a Speech resource requires two things: a custom subdomain (the Entra token is presented to the custom-domain endpoint, https://{name}.cognitiveservices.azure.com) and an Azure RBAC role assignment (Cognitive Services Speech User or Cognitive Services Speech Contributor) for the user or application that requests the token. A virtual network service endpoint only restricts network access, a Conditional Access policy governs sign-in conditions for users, and an X.509 certificate is not part of Speech token authentication; none of these is required to authenticate with an Entra token.\n\n**Learn more:** [How to configure Microsoft Entra authentication for Speech](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/how-to-configure-azure-ad-auth) Â· [Custom subdomain names for Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/cognitive-services-custom-subdomains)"
+      "exp": "Microsoft Entra authentication for a Speech resource requires two things: a custom subdomain (the Entra token is presented to the custom-domain endpoint, https://{name}.cognitiveservices.azure.com) and an Azure RBAC role assignment (Cognitive Services Speech User or Cognitive Services Speech Contributor) for the user or application that requests the token. A virtual network service endpoint only restricts network access, a Conditional Access policy governs sign-in conditions for users, and an X.509 certificate is not part of Speech token authentication; none of these is required to authenticate with an Entra token.\n\n**Learn more:** [How to configure Microsoft Entra authentication for Speech](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/how-to-configure-azure-ad-auth) · [Custom subdomain names for Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/cognitive-services-custom-subdomains)"
     },
     {
       "n": 167,
@@ -2120,7 +2120,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Content Safety in Foundry Control Plane Studio"
       },
       "answer": "D",
-      "exp": "Azure AI Content Safety can classify images for sexual content at multiple severity levels. Its studio lets developers test images, configure thresholds, and export sample code for integration, reducing development effort. The application can use the moderation result to prevent inappropriate images from being shared. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image?pivots=programming-language-rest&utm_source=openai))\n\n**Learn more:** [Quickstart: Analyze image content](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image) Â· [What is Azure AI Content Safety?](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview/)"
+      "exp": "Azure AI Content Safety can classify images for sexual content at multiple severity levels. Its studio lets developers test images, configure thresholds, and export sample code for integration, reducing development effort. The application can use the moderation result to prevent inappropriate images from being shared. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image?pivots=programming-language-rest&utm_source=openai))\n\n**Learn more:** [Quickstart: Analyze image content](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-image) · [What is Azure AI Content Safety?](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview/)"
     },
     {
       "n": 168,
@@ -2131,7 +2131,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> subscriptions/8d3591aa-96b8-4737-ad09-00f9b1ed35ad<br><b></b> Microsoft.CognitiveServices",
-      "exp": "The account-creation URI identifies the target subscription using its subscription ID and uses the Microsoft.CognitiveServices resource provider. A multi-service AI Services account can use one key and endpoint across supported language and vision services; the request body must specify the appropriate multi-service account kind. ([learn.microsoft.com](https://learn.microsoft.com/rest/api/cognitiveservices/accountmanagement/accounts/create?utm_source=openai))\n\n**Learn more:** [Accounts - Create](https://learn.microsoft.com/rest/api/cognitiveservices/accountmanagement/accounts/create) Â· [Authentication in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/authentication)"
+      "exp": "The account-creation URI identifies the target subscription using its subscription ID and uses the Microsoft.CognitiveServices resource provider. A multi-service AI Services account can use one key and endpoint across supported language and vision services; the request body must specify the appropriate multi-service account kind. ([learn.microsoft.com](https://learn.microsoft.com/rest/api/cognitiveservices/accountmanagement/accounts/create?utm_source=openai))\n\n**Learn more:** [Accounts - Create](https://learn.microsoft.com/rest/api/cognitiveservices/accountmanagement/accounts/create) · [Authentication in Foundry Tools](https://learn.microsoft.com/en-us/azure/ai-services/authentication)"
     },
     {
       "n": 169,
@@ -2145,7 +2145,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "model fine-tuning"
       },
       "answer": "A",
-      "exp": "A RAG evaluator can assess how well Agent1's responses align with the product information retrieved from storage1. In particular, a groundedness evaluator measures whether a response is supported by the supplied context rather than containing fabricated information. A coherence evaluator instead measures the logical flow and consistency of the response. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators?utm_source=openai))\n\n**Learn more:** [Retrieval-Augmented Generation (RAG) evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) Â· [Built-in evaluators reference](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators)"
+      "exp": "A RAG evaluator can assess how well Agent1's responses align with the product information retrieved from storage1. In particular, a groundedness evaluator measures whether a response is supported by the supplied context rather than containing fabricated information. A coherence evaluator instead measures the logical flow and consistency of the response. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators?utm_source=openai))\n\n**Learn more:** [Retrieval-Augmented Generation (RAG) evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) · [Built-in evaluators reference](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators)"
     },
     {
       "n": 170,
@@ -2205,7 +2205,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> assistants<br><b></b> tools=[{",
-      "exp": "The classic agent API uses the assistants endpoint to create an agent, and its tools array declares the functions available to that agent. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/agents/quickstart?tabs=dotnet&utm_source=openai)) The displayed tools=[{ choice is the intended answer, but valid JSON requires \"tools\": [{ instead. The URL also needs the project endpoint path. Creating an agent only registers the tool definition; testing the custom API requires running the agent and executing the function when requested.\n\n**Learn more:** [Create a Foundry Agent Service project (classic)](https://learn.microsoft.com/en-us/azure/ai-services/agents/quickstart?tabs=dotnet) Â· [Azure AI Foundry Agent Service connector](https://learn.microsoft.com/en-us/connectors/azureagentservice/)"
+      "exp": "The classic agent API uses the assistants endpoint to create an agent, and its tools array declares the functions available to that agent. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/agents/quickstart?tabs=dotnet&utm_source=openai)) The displayed tools=[{ choice is the intended answer, but valid JSON requires \"tools\": [{ instead. The URL also needs the project endpoint path. Creating an agent only registers the tool definition; testing the custom API requires running the agent and executing the function when requested.\n\n**Learn more:** [Create a Foundry Agent Service project (classic)](https://learn.microsoft.com/en-us/azure/ai-services/agents/quickstart?tabs=dotnet) · [Azure AI Foundry Agent Service connector](https://learn.microsoft.com/en-us/connectors/azureagentservice/)"
     },
     {
       "n": 175,
@@ -2225,7 +2225,7 @@ window.EXAM_DATA["ai103"] = {
       "n": 176,
       "domain": "",
       "ctx": -1,
-      "q": "You have an Azure subscription that contains a Microsoft Foundry resource hosting a GPT-3.5 Turbo model named Model1.  \n  \nYou configure Model1 with the following system message: âYou are an AI assistant that helps people solve mathematical puzzles. Explain your answers as if the request is by a 4-year-old.â  \n  \nWhich prompt engineering technique does this illustrate?",
+      "q": "You have an Azure subscription that contains a Microsoft Foundry resource hosting a GPT-3.5 Turbo model named Model1.  \n  \nYou configure Model1 with the following system message: “You are an AI assistant that helps people solve mathematical puzzles. Explain your answers as if the request is by a 4-year-old.”  \n  \nWhich prompt engineering technique does this illustrate?",
       "choices": {
         "A": "affordance",
         "B": "chain of thought",
@@ -2233,7 +2233,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "priming"
       },
       "answer": "D",
-      "exp": "Priming, in the broad sense used here, guides a modelâs subsequent responses by establishing context and expectations. The system message sets the assistantâs role as a mathematical-puzzle helper and directs it to explain answers for a 4-year-old. It supplies neither examples for few-shot learning nor a step-by-step reasoning instruction. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/advanced-prompt-engineering?pivots=programming-language-chat-completions&s=09&utm_source=openai))\n\n**Learn more:** [System message design for Azure OpenAI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/advanced-prompt-engineering) Â· [Prompt engineering techniques](https://learn.microsoft.com/azure/cognitive-services/openai/concepts/prompt-engineering)"
+      "exp": "Priming, in the broad sense used here, guides a model’s subsequent responses by establishing context and expectations. The system message sets the assistant’s role as a mathematical-puzzle helper and directs it to explain answers for a 4-year-old. It supplies neither examples for few-shot learning nor a step-by-step reasoning instruction. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/advanced-prompt-engineering?pivots=programming-language-chat-completions&s=09&utm_source=openai))\n\n**Learn more:** [System message design for Azure OpenAI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/advanced-prompt-engineering) · [Prompt engineering techniques](https://learn.microsoft.com/azure/cognitive-services/openai/concepts/prompt-engineering)"
     },
     {
       "n": 177,
@@ -2247,7 +2247,7 @@ window.EXAM_DATA["ai103"] = {
         "D": "Decrease the value of the top_p parameter."
       },
       "answer": "B",
-      "exp": "Setting `input_fidelity` to `high` directs a supported image-editing model to make more effort to preserve the input imageâs style and features. This helps maintain product identity and visual details when changing the surrounding environment, although it does not guarantee an unchanged product. Support for the parameter depends on the deployed model. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/images-create-image-edit-multipart-images-create-image-edit-json?utm_source=openai))\n\n**Learn more:** [Create an image edit](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/images-create-image-edit-multipart-images-create-image-edit-json) Â· [What's new in Azure OpenAI in Microsoft Foundry Models?](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/whats-new)"
+      "exp": "Setting `input_fidelity` to `high` directs a supported image-editing model to make more effort to preserve the input image’s style and features. This helps maintain product identity and visual details when changing the surrounding environment, although it does not guarantee an unchanged product. Support for the parameter depends on the deployed model. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/images-create-image-edit-multipart-images-create-image-edit-json?utm_source=openai))\n\n**Learn more:** [Create an image edit](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/images-create-image-edit-multipart-images-create-image-edit-json) · [What's new in Azure OpenAI in Microsoft Foundry Models?](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/whats-new)"
     },
     {
       "n": 178,
@@ -2259,7 +2259,7 @@ window.EXAM_DATA["ai103"] = {
         "B": "No"
       },
       "answer": "B",
-      "exp": "Increasing `top_p` broadens the range of tokens considered during sampling; it does not reliably improve coverage of required regulatory clauses. Explicit instructions to include all required clauses and evaluation for completeness are more directly suited to the goal. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/agents-create-agent-from-manifest?utm_source=openai))\n\n**Learn more:** [Create an agent from a manifest](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/agents-create-agent-from-manifest) Â· [Develop a RAG solution on Azure: Prompt engineering](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-prompt-engineering)"
+      "exp": "Increasing `top_p` broadens the range of tokens considered during sampling; it does not reliably improve coverage of required regulatory clauses. Explicit instructions to include all required clauses and evaluation for completeness are more directly suited to the goal. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/agents-create-agent-from-manifest?utm_source=openai))\n\n**Learn more:** [Create an agent from a manifest](https://learn.microsoft.com/en-us/azure/foundry/reference/rest/agents-create-agent-from-manifest) · [Develop a RAG solution on Azure: Prompt engineering](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-prompt-engineering)"
     },
     {
       "n": 179,
@@ -2270,7 +2270,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b>1</b> Change Domains to General (compact).<br><b>2</b> Retrain the model.<br><b>3</b> Export the model.",
-      "exp": "Compact-domain models can be exported to run locally. After changing an existing project to a compact domain, retrain it to create a compact-domain iteration, and then export that iteration for use offline. A new classification model or a change to the classification type is unnecessary. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/Custom-Vision-Service/export-your-model?utm_source=openai))\n\n**Learn more:** [Export your model for use with mobile devices](https://learn.microsoft.com/en-us/azure/ai-services/Custom-Vision-Service/export-your-model) Â· [Select a domain for a Custom Vision project](https://learn.microsoft.com/en-us/azure/ai-services/Custom-Vision-Service/select-domain)"
+      "exp": "Compact-domain models can be exported to run locally. After changing an existing project to a compact domain, retrain it to create a compact-domain iteration, and then export that iteration for use offline. A new classification model or a change to the classification type is unnecessary. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/Custom-Vision-Service/export-your-model?utm_source=openai))\n\n**Learn more:** [Export your model for use with mobile devices](https://learn.microsoft.com/en-us/azure/ai-services/Custom-Vision-Service/export-your-model) · [Select a domain for a Custom Vision project](https://learn.microsoft.com/en-us/azure/ai-services/Custom-Vision-Service/select-domain)"
     },
     {
       "n": 180,
@@ -2281,7 +2281,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br>The code will perform face recognition. — <b>No</b><br>The code will list tags and their associated confidence. — <b>Yes</b><br>The code will read an image file from the local file system. — <b>Yes</b>",
-      "exp": "1. No: The requested visual features are tags and description; neither performs face recognition. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/computer-vision/image-analysis-transparency-note?source=recommendations&utm_source=openai))\n2. Yes: The loop prints each tag's name and confidence. ([learn.microsoft.com](https://learn.microsoft.com/en-us/rest/api/computervision/analyze-image/analyze-image?view=rest-computervision-v3.2&utm_source=openai))\n3. Yes: `open(local_image, \"rb\")` opens the local file as a binary stream, which is passed to the analysis method.\n\n**Learn more:** [Image Analysis transparency note](https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/computer-vision/image-analysis-transparency-note) Â· [Analyze Image REST API, version 3.2](https://learn.microsoft.com/en-us/rest/api/computervision/analyze-image/analyze-image?view=rest-computervision-v3.2)"
+      "exp": "1. No: The requested visual features are tags and description; neither performs face recognition. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/computer-vision/image-analysis-transparency-note?source=recommendations&utm_source=openai))\n2. Yes: The loop prints each tag's name and confidence. ([learn.microsoft.com](https://learn.microsoft.com/en-us/rest/api/computervision/analyze-image/analyze-image?view=rest-computervision-v3.2&utm_source=openai))\n3. Yes: `open(local_image, \"rb\")` opens the local file as a binary stream, which is passed to the analysis method.\n\n**Learn more:** [Image Analysis transparency note](https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/computer-vision/image-analysis-transparency-note) · [Analyze Image REST API, version 3.2](https://learn.microsoft.com/en-us/rest/api/computervision/analyze-image/analyze-image?view=rest-computervision-v3.2)"
     },
     {
       "n": 181,
@@ -2294,7 +2294,7 @@ window.EXAM_DATA["ai103"] = {
         "C": "Azure Video Analyzer for Media (formerly Video Indexer)"
       },
       "answer": "A",
-      "exp": "Azure AI Face can detect faces in images and return built-in mask and glasses attributes, reducing the need to develop a custom model. An application can schedule image checks every 15 minutes rather than continuously process video. The attributes are predictions, however, and do not specifically certify that detected eyewear is safety glasses. Face service access is subject to eligibility restrictions. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-face-detection?utm_source=openai))\n\n**Learn more:** [Face detection, attributes, and input data](https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-face-detection) Â· [Face Detection Operations - Detect](https://learn.microsoft.com/en-us/rest/api/face/face-detection-operations/detect)"
+      "exp": "Azure AI Face can detect faces in images and return built-in mask and glasses attributes, reducing the need to develop a custom model. An application can schedule image checks every 15 minutes rather than continuously process video. The attributes are predictions, however, and do not specifically certify that detected eyewear is safety glasses. Face service access is subject to eligibility restrictions. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-face-detection?utm_source=openai))\n\n**Learn more:** [Face detection, attributes, and input data](https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-face-detection) · [Face Detection Operations - Detect](https://learn.microsoft.com/en-us/rest/api/face/face-detection-operations/detect)"
     },
     {
       "n": 182,
@@ -2305,7 +2305,7 @@ window.EXAM_DATA["ai103"] = {
       "answer": "",
       "visual": true,
       "answerHtml": "<b>Answers:</b><br><b></b> &quot;kind&quot;: &quot;PiiEntityRecognition&quot;<br><b></b> &quot;piiCategories&quot;: [&quot;Person&quot;]",
-      "exp": "PiiEntityRecognition returns text with detected PII redacted. Specifying only Person in piiCategories limits redaction to that category, leaving other entity types, such as email addresses and phone numbers, unchanged. Person does not distinguish customer names from other people's names. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii?utm_source=openai))\n\n**Learn more:** [Detect and redact Personally Identifiable Information in text](https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii) Â· [Transparency note: Named Entity Recognition](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/language-service/transparency-note-named-entity-recognition)"
+      "exp": "PiiEntityRecognition returns text with detected PII redacted. Specifying only Person in piiCategories limits redaction to that category, leaving other entity types, such as email addresses and phone numbers, unchanged. Person does not distinguish customer names from other people's names. ([learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii?utm_source=openai))\n\n**Learn more:** [Detect and redact Personally Identifiable Information in text](https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii) · [Transparency note: Named Entity Recognition](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/language-service/transparency-note-named-entity-recognition)"
     }
   ]
 };
