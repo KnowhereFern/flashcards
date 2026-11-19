@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Flashcards">
 <meta name="theme-color" content="#0e1116">
-<meta name="app-version" content="v2026-11-19b">
+<meta name="app-version" content="v2026-11-19c">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -30,6 +30,8 @@ button,input,select{font:inherit}
 button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink);
 padding:10px 14px;border-radius:12px;transition:.15s;min-height:44px}
 button:hover{border-color:#3a4654}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:disabled:hover{border-color:var(--line)}
 button.primary{background:var(--acc);border-color:var(--acc);color:#04121f;font-weight:700}
 button.primary.revealed{background:var(--panel2);border-color:var(--line);color:var(--ink);font-weight:500}
 button.on{background:#2a2110;border-color:var(--warn);color:var(--warn);font-weight:700}

@@ -14,7 +14,7 @@ Flashcard study app for four certification exams, served via GitHub Pages:
 ## PWA
 
 - **Installable** — web manifest + service worker (`sw.js`); Add to Home Screen on iOS gives a standalone app with the flashcards icon, no browser chrome
-- **Offline** — app shell, icons, and question data are precached and refreshed in the background (stale-while-revalidate); bump `VER` in `sw.js` when changing the shell
+- **Offline** — app shell and icons are precached; question data is cached on first load and refreshed in the background (stale-while-revalidate); bump `VER` in `sw.js` when changing the shell
 - **Offline answer images** — remote answer images have a long HTTP cache; they are warmed in the background when you open an exam on a non-slow connection and get an offline placeholder if they were never cached
 - **Resume** — the last-open exam, position, shuffle order, and revealed card are saved to localStorage and restored on load (or after force-quitting/reinstalling… well, until iOS evicts storage — export/import is the backup)
 
