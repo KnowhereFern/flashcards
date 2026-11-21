@@ -81,7 +81,17 @@ frame.onload=()=>{
       w.__app.pos=i;
       const c=w.__app.cur, img=$('fc-ansimg');
       chk(img.classList.contains('show')===!!c.answerHtml,'answers-on q'+c.n+' image visibility');
+      // Answers-on mode must hide every distractor and show only the correct choice(s).
+      const keys=Object.keys(c.choices||{});
+      if(keys.length){
+        const want=keys.filter(L=>String(c.answer||'').includes(L));
+        const got=[...$('fc-opts').querySelectorAll('.opt .k')].map(el=>el.textContent);
+        chk(got.length===want.length&&want.every(L=>got.includes(L)),'answers-on q'+c.n+' choices: '+got.join('')+' want '+want.join(''));
+      }
     }
+    $('f-auto').click(); // back to normal study view
+    const cur=w.__app.cur, keys=Object.keys(cur.choices||{});
+    if(keys.length)chk($('fc-opts').querySelectorAll('.opt').length===keys.length,'answers-off restores all choices');
 
     // A corrupt/imported out-of-range position must clamp, not throw and leave the old card visible.
     try{
@@ -124,6 +134,19 @@ frame.onload=()=>{
       chk(links.length>0&&links.every(a=>a.target==='_blank'&&a.rel.includes('noopener')),'ai103 q20 explanation links');
     }catch(e){
       out.failures.push('ai103 explanation test throws: '+e.name+': '+e.message);
+    }
+
+    // Multi-select answers-on shows every correct letter and no distractors.
+    try{
+      w.openExam('ai103');
+      $('f-auto').click(); // on (this exam starts with the filter off)
+      w.__app.pos=27;
+      const got=[...$('fc-opts').querySelectorAll('.opt .k')].map(el=>el.textContent);
+      chk(w.__app.cur.answer==='AC','ai103 q28 answer key changed: '+w.__app.cur.answer);
+      chk(got.join('')==='AC','ai103 q28 answers-on choices: '+got.join('')+' want AC');
+      $('f-auto').click(); // off again
+    }catch(e){
+      out.failures.push('answers-on multi-select test throws: '+e.name+': '+e.message);
     }
 
     // An empty bank must render an empty state, not throw from Show/Space/Answers.

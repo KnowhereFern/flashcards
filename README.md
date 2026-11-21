@@ -22,7 +22,7 @@ Flashcard study app for four certification exams, served via GitHub Pages:
 
 - **Study mode** — question and choices are always visible; Show answer highlights the correct choice(s), multi-select keys included
 - **Explanations** — when a bank has an explanation for a question, it appears under the answer with its source links
-- **Answers-on mode** — keep answers visible while paging through a bank
+- **Answers-on mode** — keep answers visible while paging through a bank; multiple-choice cards show only the correct choice(s), not the distractors
 - **Shuffle** — randomize the order; the shuffled order is persisted and restored on reload
 - **Session resume** — exam, position, shuffle order, and the last revealed card are restored on load
 - **Case-study panels** — case-study scenarios are stored once and shown as an expandable panel per question

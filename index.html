@@ -348,10 +348,14 @@ function renderEmpty(){
 }
 function letters(c){return Object.keys(c.choices||{}).sort()}
 function renderOpts(c,reveal){
-  // choices are ALWAYS visible; reveal only highlights the correct one(s)
+  // normal study: all choices stay visible; reveal only highlights the correct one(s).
+  // answers-on: show just the correct choice(s), so distractors don't add noise.
   $('fc-opts').classList.remove('hidden');
   const answer=String(c.answer||'');
-  $('fc-opts').innerHTML=letters(c).map(L=>
+  const all=letters(c);
+  const correct=all.filter(L=>answer.includes(L));
+  const shown=autoAns&&reveal&&correct.length?correct:all;
+  $('fc-opts').innerHTML=shown.map(L=>
     `<div class="opt${reveal&&answer.includes(L)?' correct':''}"><span class="k">${L}</span><span class="t">${esc(cleanText(c.choices[L]||''))}</span></div>`).join('');
 }
 
